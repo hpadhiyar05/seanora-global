@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@font-face {
+  font-family: "Manrope";
+  src: url("./assets/fonts/Manrope-Variable.woff2") format("woff2");
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    /* Brand colors */
+    --color-primary: #f1c735; /* Yellow */
+    --color-primary-dark: #dcae27; /* Darker Yellow */
+    --color-primary-light: #fbe68e; /* Lighter Yellow */
+    --color-accent: #000000; /* Black accent */
+
+    /* Text colors */
+    --color-text: #000000; /* Pure Black */
+    --color-text-muted: #555555; /* Medium Dark Grey */
+    --color-text-subtle: #999999; /* Light Grey */
+
+    /* Background colors */
+    --color-bg: #fafafa; /* Neutral Light Grey */
+    --color-surface: #ffffff; /* Clean White */
+
+    /* Border color */
+    --color-border: #e6e6e6; /* Base border */
+
+    /* Status colors */
+    --color-success: #10b981;
+    --color-error: #ef4444;
+
+    /* Radius scale */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.5rem;
+
+    /* Shadow presets */
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+
+    /* Layout */
+    --container-width: 1280px;
+    --section-spacing: 6rem;
+  }
+
+  /* Reset & Base Rules */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    @apply font-sans;
+  }
+
+  /* Base Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-text);
+  }
+
+  p {
+    color: var(--color-text-muted);
+  }
+
+  /* Global Image Defaults */
+  img {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Default Link Behavior */
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Accessible Focus Styles */
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .container {
+    max-width: var(--container-width);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .section {
+    padding-top: var(--section-spacing);
+    padding-bottom: var(--section-spacing);
+  }
+}
