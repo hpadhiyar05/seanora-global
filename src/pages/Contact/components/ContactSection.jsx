@@ -170,8 +170,12 @@ const ContactSection = () => {
                   ) : (
                     <>
                       <span className="font-semibold text-sm tracking-wide mr-6">Send Message</span>
-                      <span className="w-12 h-12 rounded-full bg-[var(--color-primary)] text-black flex items-center justify-center group-hover:-rotate-12 transition-transform duration-300 shadow-inner">
-                        <Send className="w-5 h-5 ml-1" strokeWidth={2} />
+                      <span className="w-12 h-12 rounded-full bg-[var(--color-primary)] text-black flex items-center justify-center shadow-inner overflow-hidden relative">
+                        {/* Visible icon that slides out */}
+                        <Send className="w-5 h-5 ml-1 absolute transition-transform duration-500 group-hover:translate-x-8 group-hover:-translate-y-8" strokeWidth={2} />
+                        
+                        {/* Hidden icon that slides in */}
+                        <Send className="w-5 h-5 ml-1 absolute -translate-x-8 translate-y-8 transition-transform duration-500 group-hover:translate-x-0 group-hover:translate-y-0" strokeWidth={2} />
                       </span>
                     </>
                   )}

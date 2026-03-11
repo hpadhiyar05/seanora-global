@@ -47,7 +47,7 @@ const Testimonials = () => {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="py-24 overflow-hidden bg-[var(--color-surface)] text-left relative">
+    <section className="py-16 overflow-hidden bg-[var(--color-surface)] text-left relative">
       <div className="container relative z-10 mx-auto px-4 lg:px-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
           <motion.div 
@@ -104,7 +104,7 @@ const Testimonials = () => {
                 >
                   {/* Custom Testimonial Card */}
                   <div className={`h-full bg-white p-10 rounded-2xl border border-[var(--color-border)] hover:border-[var(--color-text-subtle)] shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col group`}>
-                    <div className="flex gap-1 mb-8 text-[var(--color-text)] opacity-40 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex gap-1 mb-8 text-yellow-400">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star key={star} className="w-4 h-4 fill-current" />
                       ))}

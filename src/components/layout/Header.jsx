@@ -23,35 +23,36 @@ const Header = () => {
     { name: 'Contact', path: '/contact' }
   ];
 
-  const headerClasses = scrolled 
-    ? 'bg-white/95 backdrop-blur-md py-0 shadow-lg border-b border-[var(--color-border)]' 
-    : 'bg-white/90 backdrop-blur-sm py-0 border-b border-transparent shadow-sm';
+  const isHome = location.pathname === '/';
+  
+  const headerClasses = (scrolled || !isHome)
+    ? 'bg-white shadow-sm border-b border-gray-200 fixed' 
+    : 'bg-transparent border-b border-transparent shadow-none absolute';
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-700 ${headerClasses}`}>
-      <div className="px-6 md:px-12 lg:px-24 w-full mx-auto">
-        <div className="flex items-center justify-between w-full h-16 md:h-20">
+    <header className={`top-0 left-0 w-full z-50 transition-all duration-700 ${headerClasses}`}>
+      <div className="max-w-7xl mx-auto px-6 md:px-10 w-full">
+        <div className="flex items-center justify-between w-full h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group h-full py-2">
-            <img src={logo} alt="Seanora Global" className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+          <Link to="/" className="flex items-center gap-2 group py-4">
+            <img src={logo} alt="Seanora Global" className="h-10 md:h-11 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
           </Link>
           
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-10">
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link 
                   key={link.name}
                   to={link.path} 
-                  className={`text-sm font-bold tracking-wide transition-colors duration-500 ease-in-out relative group drop-shadow-sm ${
-                    isActive ? 'text-[#f97316]' : 'text-[#0f172a]'
-                  } hover:text-[#f97316]`}
+                  className={`text-sm transition-colors duration-200 ${
+                    (scrolled || !isHome)
+                      ? (isActive ? 'text-[#1E5AA5] font-medium' : 'text-gray-700 hover:text-[#1E5AA5]')
+                      : (isActive ? 'text-white font-medium' : 'text-white hover:text-blue-300')
+                  }`}
                 >
                   {link.name}
-                  <span className={`absolute -bottom-2 right-0 h-[2px] bg-[#f97316] transition-all duration-500 ease-in-out origin-right ${
-                    isActive ? 'w-1/2' : 'w-0 group-hover:w-1/2'
-                  }`}></span>
                 </Link>
               );
             })}

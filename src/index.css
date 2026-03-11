@@ -14,23 +14,69 @@
 
 @layer base {
   :root {
-    /* Brand colors */
-    --color-primary: #f1c735; /* Yellow */
-    --color-primary-dark: #dcae27; /* Darker Yellow */
-    --color-primary-light: #fbe68e; /* Lighter Yellow */
-    --color-accent: #000000; /* Black accent */
+    /* ===== BRAND COLORS ===== */
+    --primary: #1E5AA5;
+    --primary-dark: #0B1F3B;
+    --primary-light: #3B82F6;
+    --accent: #29A8E0;
+    --accent-light: #7DD3FC;
 
-    /* Text colors */
-    --color-text: #000000; /* Pure Black */
-    --color-text-muted: #555555; /* Medium Dark Grey */
-    --color-text-subtle: #999999; /* Light Grey */
+    /* ===== BACKGROUNDS ===== */
+    --bg-main: #F8FAFC;
+    --bg-section: #FFFFFF;
+    --bg-soft: #F1F5F9;
 
-    /* Background colors */
-    --color-bg: #fafafa; /* Neutral Light Grey */
-    --color-surface: #ffffff; /* Clean White */
+    /* ===== TEXT COLORS ===== */
+    --text-primary: #0F172A;
+    --text-secondary: #64748B;
+    --text-white: #FFFFFF;
 
-    /* Border color */
-    --color-border: #e6e6e6; /* Base border */
+    /* ===== BORDERS & DIVIDERS ===== */
+    --border: #E2E8F0;
+    --divider: #CBD5E1;
+
+    /* ===== BUTTON COLORS ===== */
+    --btn-primary-bg: #1E5AA5;
+    --btn-primary-text: #FFFFFF;
+    --btn-secondary-bg: #29A8E0;
+    --btn-secondary-text: #FFFFFF;
+    --btn-hover: #0B1F3B;
+
+    /* ===== NAVBAR ===== */
+    --navbar-bg: #FFFFFF;
+    --navbar-text: #0F172A;
+    --navbar-hover: #1E5AA5;
+    --navbar-border: #E2E8F0;
+
+    /* ===== HERO SECTION ===== */
+    --hero-bg-start: #0B1F3B;
+    --hero-bg-end: #1E5AA5;
+    --hero-text: #FFFFFF;
+
+    /* ===== CTA SECTION ===== */
+    --cta-bg: #1E5AA5;
+    --cta-text: #FFFFFF;
+    --cta-button: #29A8E0;
+
+    /* ===== FOOTER ===== */
+    --footer-bg: #0B1F3B;
+    --footer-text: #CBD5F5;
+    --footer-link-hover: #29A8E0;
+    
+    /* ===== BACKWARDS COMPATIBILITY PRESETS ===== */
+    --color-primary: var(--primary);
+    --color-primary-dark: var(--primary-dark);
+    --color-primary-light: var(--primary-light);
+    --color-accent: var(--accent);
+
+    --color-text: var(--text-primary);
+    --color-text-muted: var(--text-secondary);
+    --color-text-subtle: #94a3b8;
+
+    --color-bg: var(--bg-main);
+    --color-surface: var(--bg-section);
+
+    --color-border: var(--border);
 
     /* Status colors */
     --color-success: #10b981;
@@ -62,6 +108,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
   }
 
   body {
@@ -116,5 +163,18 @@
   .section {
     padding-top: var(--section-spacing);
     padding-bottom: var(--section-spacing);
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
   }
 }

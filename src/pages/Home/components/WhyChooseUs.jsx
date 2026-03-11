@@ -1,7 +1,9 @@
+import React, { useRef, useEffect } from 'react';
 import { Lightbulb, Award, Clock, PenTool } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const features = [
+  // ... (features remain the same)
   {
     icon: Lightbulb,
     title: 'Best Solutions',
@@ -25,62 +27,115 @@ const features = [
 ];
 
 const WhyChooseUs = () => {
-  return (
-    <section className="py-24 bg-[var(--color-bg)] relative overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-12 relative z-10">
-        {/* Header Section */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-20"
-        >
-          <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-4 block">
-            Why Choose Us
-          </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--color-text)] leading-tight font-light">
-            Expertise and <br className="hidden md:block" />
-            <span className="relative inline-block font-semibold">
-              <span className="relative z-10 italic">dedication</span>
-              <span className="absolute bottom-2 md:bottom-3 left-0 w-full h-[40%] bg-[var(--color-primary)]/80 -z-10 rounded-sm"></span>
-            </span> <br className="hidden md:block" />
-            to exceed expectations.
-          </h2>
-        </motion.div>
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
 
-        {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {features.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const handleWheel = (e) => {
+      // Only lock scroll on desktop sizes where the split layout exists
+      if (window.innerWidth >= 1024) {
+        const track = trackRef.current;
+        if (!track) return;
+
+        const isAtTop = track.scrollTop === 0;
+        const isAtBottom = Math.abs(track.scrollHeight - track.clientHeight - track.scrollTop) < 1;
+
+        // If scrolling UP and already at TOP, let page scroll normally
+        if (e.deltaY < 0 && isAtTop) {
+          return;
+        }
+        
+        // If scrolling DOWN and already at BOTTOM, let page scroll normally
+        if (e.deltaY > 0 && isAtBottom) {
+          return;
+        }
+
+        // Otherwise, WE have control. Prevent the page from scrolling,
+        // and manually push the delta into our scroll track.
+        e.preventDefault();
+        track.scrollTop += e.deltaY;
+      }
+    };
+
+    // We must use a native listener to use { passive: false } which allows preventDefault()
+    section.addEventListener('wheel', handleWheel, { passive: false });
+
+    return () => {
+      section.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="py-24 relative bg-[var(--color-bg)] w-full">
+      <div className="max-w-6xl mx-auto px-6 relative w-full">
+        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-24 items-start lg:h-[600px] relative">
+          
+          {/* Left: Static Title */}
+          <div className="w-full relative h-auto flex items-center lg:h-full z-20 pointer-events-none">
+            <div className="flex items-center w-full z-20 pointer-events-auto">
               <motion.div 
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: index * 0.15 }}
-                className="group p-8 rounded-2xl bg-[var(--color-surface)] border border-[var(--color-border)] hover:border-[var(--color-text-subtle)] hover:shadow-lg transition-all duration-500 hover:-translate-y-1 flex flex-col items-start text-left cursor-pointer"
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8 }}
+                className="max-w-xl"
               >
-                <div className="w-12 h-12 mb-8 rounded-full bg-[var(--color-bg)] text-[var(--color-text)] flex items-center justify-center border border-[var(--color-border)] group-hover:border-[var(--color-text-subtle)] transition-colors duration-500">
-                  <Icon className="w-5 h-5" strokeWidth={1.5} />
-                </div>
-                
-                <h3 className="text-xl font-serif text-[var(--color-text)] mb-4 transition-colors duration-300">
-                  {feature.title}
-                </h3>
-                
-                {/* Thin divider */}
-                <div className="w-8 h-[1px] bg-[var(--color-text-subtle)] mb-4 scale-x-50 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                
-                <p className="text-[var(--color-text-muted)] leading-relaxed text-sm font-light">
-                  {feature.description}
-                </p>
+                <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-4 block">
+                  Why Choose Us
+                </span>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--color-text)] leading-tight font-light">
+                  Expertise and <br className="hidden md:block" />
+                  <span className="font-semibold text-[var(--color-primary)]">
+                    dedication
+                  </span> <br className="hidden md:block" />
+                  to exceed expectations.
+                </h2>
               </motion.div>
-            );
-          })}
+            </div>
+          </div>
+
+          {/* Right: Snap Scrolling Features */}
+          <div 
+            ref={trackRef}
+            className="flex flex-col w-full h-[60vh] lg:h-full max-w-lg mx-auto lg:mx-0 lg:ml-auto overflow-y-auto snap-y snap-mandatory scroll-smooth hide-scrollbar relative pr-4 lg:py-24 z-40"
+            style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+          >
+            {features.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div 
+                  key={index} 
+                  className="w-full flex-shrink-0 h-full snap-center flex flex-col justify-center transition-all duration-500"
+                  style={{ scrollSnapStop: 'always' }}
+                >
+                  <div className="w-12 h-12 flex items-center justify-center rounded-[1rem] bg-white shadow-sm border border-[var(--color-border)] mb-6">
+                    <Icon className="w-6 h-6 text-[var(--color-text)]" strokeWidth={1.5} />
+                  </div>
+                  
+                  <h3 className="text-2xl font-semibold text-[var(--color-text)]">
+                    {feature.title}
+                  </h3>
+                  
+                  <p className="text-base text-[var(--color-text-muted)] leading-relaxed mt-3 max-w-md">
+                    {feature.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
         </div>
       </div>
+      
+      {/* Hide scrollbar injected CSS */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}} />
     </section>
   );
 };
