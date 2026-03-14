@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
 import img1 from '../../../assets/images/testimonial-image (1).jpg';
 import img2 from '../../../assets/images/testimonial-image (2).jpg';
@@ -30,8 +31,8 @@ const Testimonials = () => {
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(false);
   
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
   
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -47,92 +48,130 @@ const Testimonials = () => {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="py-16 overflow-hidden bg-[var(--color-surface)] text-left relative">
-      <div className="container relative z-10 mx-auto px-4 lg:px-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
-          <motion.div 
+    <section className="py-16 md:py-24 overflow-hidden text-left relative bg-[#F8F3EC]">
+
+      {/* Warm sand gradient — distinct from the blue-cream sections above & below */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#F5EFE4] via-[#F9F4EE] to-[#FCF8F2] z-0" />
+
+      <div className="container relative z-10 mx-auto px-4 lg:px-12 max-w-[1400px]">
+
+        {/* Header Region */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-20 gap-8">
+          <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
             className="max-w-3xl"
           >
-            <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-4 block">
+            {/* Eyebrow — matches Contact page label style */}
+            <span className="text-xs font-sans tracking-[0.22em] text-[#6B6B6B] font-medium uppercase mb-5 block">
               Testimonials
             </span>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--color-text)] mb-6 font-light leading-tight">
-              Loved by <span className="italic text-[var(--color-text-muted)]">forward-thinking</span> teams
-            </h2>
-            <p className="text-lg text-[var(--color-text-muted)] font-light max-w-xl">
-              See how our platform is helping companies transform their regional data into actionable insights and scalable growth.
+
+            <AnimatedHeading className="text-[40px] md:text-[48px] lg:text-[56px] font-serif font-light text-[#1B1D1E] mb-6 leading-[1.08] tracking-tight">
+              <AnimatedText text="Loved by " />
+              <AnimatedText text=" forward-thinking" className="italic text-[#1B1D1E]/65" />
+              <AnimatedText text=" teams" />
+            </AnimatedHeading>
+
+            <p className="text-[16px] md:text-[17px] text-[#6B6B6B] max-w-xl font-light leading-relaxed">
+              See how our platform is helping companies transform their technology
+              into actionable insights and scalable growth.
             </p>
           </motion.div>
-          
+
           {/* Navigation Buttons */}
-          <div className="flex gap-4">
-            <button 
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex gap-3"
+          >
+            <button
+              type="button"
               onClick={scrollPrev}
               disabled={prevBtnDisabled}
-              className="w-14 h-14 flex items-center justify-center rounded-full border border-[var(--color-border)] bg-transparent text-[var(--color-text)] hover:border-[var(--color-text)] transition-colors duration-500 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-black/8 text-[#1B1D1E] shadow-sm hover:bg-[#1B1D1E] hover:text-white hover:border-[#1B1D1E] transition-all duration-300 disabled:opacity-25 disabled:cursor-not-allowed group"
               aria-label="Previous slide"
             >
-              <ChevronLeft className="w-6 h-6" strokeWidth={1} />
+              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-300" strokeWidth={2} />
             </button>
-            <button 
+            <button
+              type="button"
               onClick={scrollNext}
               disabled={nextBtnDisabled}
-              className="w-14 h-14 flex items-center justify-center rounded-full border border-[var(--color-border)] bg-transparent text-[var(--color-text)] hover:border-[var(--color-text)] transition-colors duration-500 disabled:opacity-30 disabled:cursor-not-allowed"
+              className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-black/8 text-[#1B1D1E] shadow-sm hover:bg-[#1B1D1E] hover:text-white hover:border-[#1B1D1E] transition-all duration-300 disabled:opacity-25 disabled:cursor-not-allowed group"
               aria-label="Next slide"
             >
-              <ChevronRight className="w-6 h-6" strokeWidth={1} />
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" strokeWidth={2} />
             </button>
-          </div>
+          </motion.div>
         </div>
 
         {/* Embla Carousel Viewport */}
-        <div className="overflow-hidden cursor-grab active:cursor-grabbing pb-12 -ml-6" ref={emblaRef}>
+        <div className="overflow-hidden cursor-grab active:cursor-grabbing pb-4 -ml-6" ref={emblaRef}>
           <div className="flex pl-6">
-            {testimonials.map((t) => {
-              return (
-                <motion.div 
-                  key={t.id} 
-                  initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true, margin: "0px" }}
-                  transition={{ duration: 0.7 }}
-                  className="flex-[0_0_100%] min-w-0 pr-6 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
-                >
-                  {/* Custom Testimonial Card */}
-                  <div className={`h-full bg-white p-10 rounded-2xl border border-[var(--color-border)] hover:border-[var(--color-text-subtle)] shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col group`}>
-                    <div className="flex gap-1 mb-8 text-yellow-400">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star key={star} className="w-4 h-4 fill-current" />
-                      ))}
-                    </div>
-                    
-                    <p className="text-[var(--color-text)] text-lg mb-10 flex-grow font-serif italic leading-relaxed">
-                      "{t.text}"
-                    </p>
-                    
-                    <div className="w-8 h-[1px] bg-[var(--color-border)] mb-8"></div>
+            {testimonials.map((t) => (
+              <motion.div
+                key={t.id}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '0px' }}
+                transition={{ duration: 0.65 }}
+                className="flex-[0_0_100%] min-w-0 pr-6 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
+              >
+                {/* Card — same treatment as Contact page form card */}
+                <div className="h-full bg-white p-8 lg:p-10 rounded-[28px] border border-black/[0.04] shadow-[0_8px_40px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.10)] transition-all duration-500 flex flex-col group hover:-translate-y-2 relative overflow-hidden">
 
-                    <div className="flex items-center gap-4 mt-auto">
-                      <img 
-                        src={t.img} 
-                        alt={t.name} 
-                        className="w-12 h-12 rounded-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                  {/* Decorative quote watermark */}
+                  <div className="absolute top-6 right-7 text-[72px] leading-none text-black/[0.03] font-serif select-none pointer-events-none group-hover:text-black/[0.055] transition-colors duration-500">
+                    "
+                  </div>
+
+                  {/* Stars */}
+                  <div className="flex gap-1 mb-7 z-10">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star key={star} className="w-[15px] h-[15px] fill-[#F5A623] text-[#F5A623]" />
+                    ))}
+                  </div>
+
+                  {/* Quote text */}
+                  <p className="text-[#1B1D1E]/75 text-[17px] mb-10 grow font-serif italic leading-[1.65] z-10 relative">
+                    "{t.text}"
+                  </p>
+
+                  {/* Divider */}
+                  <div className="w-full h-px bg-black/[0.05] mb-7" />
+
+                  {/* Author */}
+                  <div className="flex items-center gap-4 mt-auto z-10">
+                    <div className="w-12 h-12 rounded-full overflow-hidden border border-black/8 shadow-sm shrink-0">
+                      <img
+                        src={t.img}
+                        alt={t.name}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
+                        decoding="async"
                       />
-                      <div>
-                        <h4 className="font-semibold text-sm tracking-wide text-[var(--color-text)] uppercase">{t.name}</h4>
-                        <p className="text-xs text-[var(--color-text-muted)] mt-1 font-light tracking-wider">{t.role}</p>
-                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-[14px] tracking-tight text-[#1B1D1E]">
+                        {t.name}
+                      </h4>
+                      <p className="text-[12px] text-[#6B6B6B] mt-0.5 font-medium">
+                        {t.role}
+                      </p>
                     </div>
                   </div>
-                </motion.div>
-              );
-            })}
+
+                </div>
+              </motion.div>
+            ))}
           </div>
         </div>
+
       </div>
     </section>
   );

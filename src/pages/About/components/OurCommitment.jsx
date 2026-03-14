@@ -3,33 +3,62 @@ import { Quote } from 'lucide-react';
 
 const OurCommitment = () => {
   return (
-    <section className="py-24 bg-[var(--color-surface)] overflow-hidden relative">
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-black/5 blur-[100px] rounded-full pointer-events-none translate-x-1/3 translate-y-1/3"></div>
-      
-      <div className="container mx-auto px-4 lg:px-12 max-w-5xl relative z-10">
+    <section className="py-16 md:py-24 bg-[#1B1D1E] relative overflow-hidden">
+
+      {/* Subtle inner-glow blobs */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute left-0 top-1/2 w-[700px] h-[700px] bg-[#4F46E5]/10 rounded-full blur-[140px] -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute right-0 bottom-0 w-[600px] h-[600px] bg-[#5BAACC]/10 rounded-full blur-[120px] translate-x-1/3 translate-y-1/3" />
+      </div>
+
+      <div className="container mx-auto px-4 lg:px-12 max-w-5xl relative z-10 text-center">
+
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center p-12 md:p-20 bg-white rounded-3xl border border-[var(--color-border)] relative overflow-hidden group"
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.65, ease: 'easeOut' }}
         >
-          {/* Subtle decorative accent */}
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--color-text-subtle)] to-transparent opacity-20 group-hover:opacity-50 transition-opacity duration-700"></div>
-          
-          <Quote className="w-12 h-12 mx-auto text-[var(--color-text-subtle)] opacity-30 mb-8 transform -scale-x-100" strokeWidth={1} />
-          
-          <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-6 block">
+          <Quote
+            className="w-10 h-10 mx-auto mb-8 -scale-x-100"
+            strokeWidth={1}
+            style={{ color: 'rgba(255,255,255,0.12)' }}
+          />
+
+          <span className="text-[11px] font-sans tracking-[0.24em] text-white/40 font-semibold uppercase mb-8 block">
             Our Commitment to You
           </span>
-          <p className="text-xl md:text-3xl font-serif text-[var(--color-text)] leading-relaxed md:leading-snug font-light max-w-4xl mx-auto">
-            At Seanora Global, we believe in building long-lasting relationships with our clients. 
-            Our success is measured by your success, and we are committed to helping you achieve 
-            your business objectives through reliable and <span className="italic">innovative</span> IT solutions. We strive to be 
-            more than just a service provider; we aim to be a trusted partner in your journey 
-            towards a seamless and efficient digital future.
-          </p>
         </motion.div>
+
+        {/* Quote text — single clean fade-up */}
+        <motion.p
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.7, ease: 'easeOut', delay: 0.1 }}
+          className="text-2xl md:text-3xl lg:text-[34px] font-serif text-white font-light leading-[1.6] max-w-4xl mx-auto"
+        >
+          At Seanora Global, we believe in building long-lasting relationships
+          with our clients. Our success is measured by yours, and we are
+          committed to helping you achieve your business objectives through
+          reliable and{' '}
+          <em className="italic text-white/60">innovative</em> IT solutions.
+        </motion.p>
+
+        {/* Divider + attribution */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.65, ease: 'easeOut', delay: 0.2 }}
+          className="mt-12 flex flex-col items-center gap-4"
+        >
+          <div className="w-16 h-px bg-white/10" />
+          <span className="text-[11px] uppercase tracking-[0.22em] text-white/30 font-semibold">
+            Seanora Global
+          </span>
+        </motion.div>
+
       </div>
     </section>
   );

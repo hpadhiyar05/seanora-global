@@ -6,10 +6,28 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "PUPPETEER_EXECUTABLE_PATH=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" react-snap",
+    "build:prerender": "PUPPETEER_EXECUTABLE_PATH=\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" vite build && react-snap",
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "reactSnap": {
+    "source": "dist",
+    "include": [
+      "/",
+      "/about",
+      "/services",
+      "/careers",
+      "/contact"
+    ],
+    "puppeteerArgs": [
+      "--headless=new",
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
+  },
   "dependencies": {
+    "@sanity/client": "^7.17.0",
     "@tailwindcss/vite": "^4.2.1",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.35.0",

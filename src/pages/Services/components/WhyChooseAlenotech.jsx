@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Award, Lightbulb, Heart, ShieldCheck } from 'lucide-react';
+import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
 const reasons = [
   {
@@ -26,7 +27,7 @@ const reasons = [
 
 const WhyChooseAlenotech = () => {
   return (
-    <section className="py-24 bg-[var(--color-bg)] text-[var(--color-text)] relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-white text-[#1B1D1E] relative overflow-hidden">
       
       <div className="container mx-auto px-4 lg:px-12 relative z-10">
         <motion.div
@@ -34,48 +35,62 @@ const WhyChooseAlenotech = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-20"
+          className="text-center max-w-3xl mx-auto mb-16 md:mb-20"
         >
-          <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-4 block">
+          <span className="text-xs font-sans tracking-[0.2em] text-[#6B6B6B] font-medium uppercase mb-4 block">
             Why Choose Seanora Global?
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif leading-tight mb-8 font-light">
-            Partnering for <span className="italic text-[var(--color-text-muted)]">Success</span>
-          </h2>
-          <p className="text-lg text-[var(--color-text-muted)] font-light leading-relaxed">
+          <AnimatedHeading className="text-4xl md:text-5xl lg:text-6xl font-serif leading-tight mb-8 font-light tracking-tight">
+            <AnimatedText text="Partnering for " />
+            <AnimatedText text="Success" className="italic text-[#1B1D1E]/80" />
+          </AnimatedHeading>
+          <p className="text-lg text-[#6B6B6B] font-light leading-relaxed">
             At Seanora Global, we are committed to delivering exceptional IT services that drive business success. Here's why businesses choose us as their trusted IT partner:
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.15
+              }
+            }
+          }}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+        >
           {reasons.map((reason, index) => {
             const Icon = reason.icon;
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: index * 0.15 }}
-                className="group p-8 rounded-2xl bg-[var(--color-bg)] border border-[var(--color-border)] hover:border-[var(--color-text-subtle)] hover:shadow-lg transition-all duration-500 hover:-translate-y-1 flex flex-col items-center text-center cursor-pointer"
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: "easeOut" } }
+                }}
+                className="group p-8 rounded-[24px] bg-white border border-black/5 hover:border-black/10 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-500 hover:-translate-y-1 flex flex-col items-center text-center cursor-default"
               >
-                <div className="w-12 h-12 mb-8 rounded-full bg-white text-[var(--color-text)] flex items-center justify-center border border-[var(--color-border)] group-hover:border-[var(--color-text-subtle)] transition-colors duration-500">
-                  <Icon className="w-5 h-5" strokeWidth={1.5} />
+                <div className="w-14 h-14 mb-8 rounded-full bg-[#F3F3F3] text-[#1B1D1E] flex items-center justify-center transition-all duration-500 group-hover:scale-110 group-hover:bg-[#1B1D1E] group-hover:text-white">
+                  <Icon className="w-6 h-6" strokeWidth={1.5} />
                 </div>
                 
-                <h3 className="text-2xl font-serif text-[var(--color-text)] mb-4 transition-colors duration-300">
+                <h3 className="text-2xl font-serif text-[#1B1D1E] mb-4 transition-colors duration-300">
                   {reason.title}
                 </h3>
                 
-                <div className="w-8 h-[1px] bg-[var(--color-text-subtle)] mb-4 scale-x-50 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                <div className="w-8 h-[1px] bg-black/10 mb-5 scale-x-50 group-hover:scale-x-100 transition-transform duration-500 origin-center"></div>
                 
-                <p className="text-[var(--color-text-muted)] leading-relaxed font-light">
+                <p className="text-[#6B6B6B] leading-relaxed font-light text-[15px]">
                   {reason.description}
                 </p>
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,116 +1,120 @@
-import { Globe, Mail, Phone, Linkedin, Instagram, Twitter, Facebook, ArrowRight } from 'lucide-react';
+import { Linkedin, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/logos/logo_1.png';
 
 const Footer = () => {
-  return (
-    <footer className="bg-[var(--footer-bg)] border-t border-[var(--color-border)] pt-20 pb-10 mt-auto relative overflow-hidden">
-      {/* Decorative background element */}
-      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-[var(--primary)]/10 blur-[100px] rounded-full pointer-events-none translate-y-1/2 translate-x-1/2"></div>
+  const socialLinks = [
+    { label: 'Facebook', href: 'https://www.facebook.com', Icon: Facebook },
+    { label: 'Twitter', href: 'https://x.com', Icon: Twitter },
+    { label: 'Instagram', href: 'https://www.instagram.com', Icon: Instagram },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com', Icon: Linkedin },
+  ];
 
-      <div className="container mx-auto px-4 lg:px-12 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
+  return (
+    <footer className="bg-white border-t border-black/5 pt-20 pb-10 mt-auto relative overflow-hidden">
+      <div className="max-w-[1280px] mx-auto px-4 lg:px-12 relative z-10 w-full flex flex-col">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 mb-24">
           
           {/* Brand Column */}
-          <div className="lg:col-span-1">
-            <Link to="/" className="flex items-center gap-3 mb-6 group">
-              <div className="w-10 h-10 rounded-full border border-[var(--footer-text)]/20 flex items-center justify-center text-[var(--footer-text)] font-serif italic text-xl group-hover:border-[var(--footer-link-hover)] transition-colors duration-500">
-                S
-              </div>
-              <span className="font-serif text-xl tracking-wide text-[var(--footer-text)] uppercase text-xs">
-                Seanora Global
-              </span>
+          <div className="lg:col-span-5">
+            <Link to="/" className="flex items-center gap-2 group mb-6 justify-self-start" aria-label="Seanora Global home">
+              <img
+                src={logo}
+                alt="Seanora Global logo"
+                className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+              />
             </Link>
-            <p className="text-[var(--footer-text)]/70 font-light leading-relaxed mb-8 text-sm">
+            <p className="text-[#1B1D1E]/40 font-medium leading-relaxed mb-2 text-[13px] max-w-[280px] italic">
+              A Legacy of Trust, A Future of Excellence
+            </p>
+            <p className="text-[#1B1D1E]/40 font-medium leading-relaxed mb-8 text-[14px] max-w-[280px]">
               Empowering businesses with transformative IT solutions, robust cloud systems, and cutting-edge software development.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="w-10 h-10 rounded-full border border-[var(--footer-text)]/20 flex items-center justify-center text-[var(--footer-text)]/70 hover:border-[var(--footer-link-hover)] hover:text-[var(--footer-link-hover)] transition-all duration-300">
-                <Facebook className="w-4 h-4" strokeWidth={1.5} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-[var(--footer-text)]/20 flex items-center justify-center text-[var(--footer-text)]/70 hover:border-[var(--footer-link-hover)] hover:text-[var(--footer-link-hover)] transition-all duration-300">
-                <Twitter className="w-4 h-4" strokeWidth={1.5} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-[var(--footer-text)]/20 flex items-center justify-center text-[var(--footer-text)]/70 hover:border-[var(--footer-link-hover)] hover:text-[var(--footer-link-hover)] transition-all duration-300">
-                <Instagram className="w-4 h-4" strokeWidth={1.5} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-[var(--footer-text)]/20 flex items-center justify-center text-[var(--footer-text)]/70 hover:border-[var(--footer-link-hover)] hover:text-[var(--footer-link-hover)] transition-all duration-300">
-                <Linkedin className="w-4 h-4" strokeWidth={1.5} />
-              </a>
+            <div className="flex gap-4" aria-label="Social media links">
+              {socialLinks.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Visit ${label}`}
+                  className="flex items-center justify-center text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors duration-300"
+                >
+                  <Icon className="w-[18px] h-[18px]" strokeWidth={2} />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div>
-            <h4 className="text-sm tracking-[0.1em] font-sans uppercase mb-6 text-[var(--footer-text)] pb-2 border-b border-[var(--footer-text)]/20 inline-block">Quick Links</h4>
-            <ul className="space-y-4 font-light text-sm">
+          <div className="lg:col-span-2">
+            <h4 className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 inline-block font-medium">Quick Links</h4>
+            <ul className="space-y-4 font-medium text-[13px]">
               <li>
-                <Link to="/" className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] transition-colors flex items-center group">
-                  <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 inline-block mr-0 group-hover:mr-2">
-                    <ArrowRight className="w-3 h-3" />
-                  </span>
-                  <span>Home</span>
+                <Link to="/" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">
+                  Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] transition-colors flex items-center group">
-                  <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 inline-block mr-0 group-hover:mr-2">
-                    <ArrowRight className="w-3 h-3" />
-                  </span>
-                  <span>About Us</span>
+                <Link to="/about" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">
+                  About Us
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] transition-colors flex items-center group">
-                  <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 inline-block mr-0 group-hover:mr-2">
-                    <ArrowRight className="w-3 h-3" />
-                  </span>
-                  <span>Our Services</span>
+                <Link to="/services" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">
+                  Our Services
                 </Link>
               </li>
               <li>
-                <Link to="/careers" className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] transition-colors flex items-center group">
-                  <span className="w-0 overflow-hidden group-hover:w-4 transition-all duration-300 inline-block mr-0 group-hover:mr-2">
-                    <ArrowRight className="w-3 h-3" />
-                  </span>
-                  <span>Careers</span>
+                <Link to="/careers" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">
+                  Careers
                 </Link>
               </li>
             </ul>
           </div>
 
           {/* IT Services */}
-          <div>
-            <h4 className="text-sm tracking-[0.1em] font-sans uppercase mb-6 text-[var(--footer-text)] pb-2 border-b border-[var(--footer-text)]/20 inline-block">Services</h4>
-            <ul className="space-y-4 font-light text-sm">
-              <li className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] cursor-pointer transition-colors">Web Development</li>
-              <li className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] cursor-pointer transition-colors">Cloud Computing</li>
-              <li className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] cursor-pointer transition-colors">IT Consulting</li>
-              <li className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] cursor-pointer transition-colors">System Integration</li>
-              <li className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] cursor-pointer transition-colors">Cybersecurity</li>
+          <div className="lg:col-span-2">
+            <h4 className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 inline-block font-medium">Services</h4>
+            <ul className="space-y-4 font-medium text-[13px]">
+              <li>
+                <Link to="/services" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">Web Development</Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">Cloud Computing</Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">IT Consulting</Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">System Integration</Link>
+              </li>
+              <li>
+                <Link to="/services" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">Cybersecurity</Link>
+              </li>
             </ul>
           </div>
 
           {/* Contact Info */}
-          <div>
-            <h4 className="text-sm tracking-[0.1em] font-sans uppercase mb-6 text-[var(--footer-text)] pb-2 border-b border-[var(--footer-text)]/20 inline-block">Contact Info</h4>
-            <ul className="space-y-5 font-light text-sm">
+          <div className="lg:col-span-3">
+            <h4 className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 inline-block font-medium">Contact Info</h4>
+            <ul className="space-y-5 font-medium text-[13px]">
               <li className="flex items-start">
-                <Globe className="w-4 h-4 text-[var(--footer-text)]/50 mt-0.5 mr-3 flex-shrink-0" />
-                <span className="text-[var(--footer-text)]/70 leading-relaxed">
+                <span className="text-[#1B1D1E]/40 leading-[1.6]">
                   30 N Gould St Ste R<br />
-                  Sheridan, WY 82801
+                  Sheridan, WY 82801, USA
                 </span>
               </li>
               <li className="flex items-center">
-                <Phone className="w-4 h-4 text-[var(--footer-text)]/50 mr-3 flex-shrink-0" />
-                <a href="tel:+12017331688" className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] transition-colors">
-                  +1 201 733 1688
+                <a href="mailto:info@seanoraglobal.com" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">
+                  info@seanoraglobal.com
                 </a>
               </li>
               <li className="flex items-center">
-                <Mail className="w-4 h-4 text-[var(--footer-text)]/50 mr-3 flex-shrink-0" />
-                <a href="mailto:info@alenotechsolutions.com" className="text-[var(--footer-text)]/70 hover:text-[var(--footer-link-hover)] transition-colors">
-                  info@alenotechsolutions.com
+                <a href="tel:+13256670125" className="text-[#1B1D1E]/40 hover:text-[#1B1D1E] transition-colors">
+                  +1 325-667-0125
                 </a>
               </li>
             </ul>
@@ -119,14 +123,10 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-[var(--color-border)] flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-[var(--footer-text)]/50 font-light text-xs text-center md:text-left">
-            &copy; {new Date().getFullYear()} Seanora Global. All rights reserved.
+        <div className="pt-8 border-t border-black/5 flex justify-center items-center w-full">
+          <p className="text-[#1B1D1E]/40 font-medium text-[13px] text-center">
+            &copy;{new Date().getFullYear()} Seanora Global. All Rights Reserved
           </p>
-          <div className="flex gap-6 text-xs text-[var(--footer-text)]/50 font-light">
-            <a href="#" className="hover:text-[var(--footer-text)] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[var(--footer-text)] transition-colors">Terms of Service</a>
-          </div>
         </div>
       </div>
     </footer>

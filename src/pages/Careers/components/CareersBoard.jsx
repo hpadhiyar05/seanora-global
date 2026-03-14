@@ -1,98 +1,255 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Clock, ArrowUpRight } from 'lucide-react';
+import { MapPin, Clock, ArrowUpRight, ChevronDown, Briefcase, Mail } from 'lucide-react';
+import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
+import { CATEGORIES, JOB_TYPES, LOCATIONS } from '../data/jobs';
+import Breadcrumb from '../../../components/ui/Breadcrumb';
+import { sanityClient } from '../../../lib/sanityClient';
 
-// Mock data anticipating an API response
-const MOCK_JOBS = [
-  {
-    id: 1,
-    title: "Product Designer",
-    description: "We're looking for a mid-level product designer to join our team.",
-    type: "Full-time",
-    location: "100% remote",
-    department: "Design",
-    applyLink: "#"
-  },
-  {
-    id: 2,
-    title: "Engineering Manager",
-    description: "We're looking for an experienced engineering manager to join our team.",
-    type: "Full-time",
-    location: "100% remote",
-    department: "Development",
-    applyLink: "#"
-  },
-  {
-    id: 3,
-    title: "Customer Success Manager",
-    description: "We're looking for a customer success manager to join our team.",
-    type: "Full-time",
-    location: "100% remote",
-    department: "Customer Service",
-    applyLink: "#"
-  }
-];
+/* ─── Filter Dropdown ──────────────────────────────────────────── */
+const FilterDropdown = ({ value, defaultValue, options, open, onToggle, onSelect, onClose }) => {
+  const isActive = value !== defaultValue;
+  return (
+    <>
+      {open && (
+        <div className="fixed inset-0 z-10" onClick={onClose} aria-hidden="true" />
+      )}
+      <div className="relative z-20">
+        <button
+          type="button"
+          onClick={onToggle}
+          className={`flex items-center gap-2 px-5 py-2 rounded-full text-[13px] font-medium transition-all duration-300 ${
+            isActive
+              ? 'bg-[#1B1D1E] text-white shadow-md shadow-black/10'
+              : 'bg-transparent text-[#6B6B6B] border border-black/10 hover:border-black/20 hover:text-[#1B1D1E]'
+          }`}
+        >
+          {value}
+          <ChevronDown
+            className={`w-3 h-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+            strokeWidth={2.5}
+          />
+        </button>
 
-const CATEGORIES = [
-  "View all", 
-  "Development", 
-  "Design", 
-  "Marketing", 
-  "Customer Service", 
-  "Operations", 
-  "Finance", 
-  "Management"
-];
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ opacity: 0, y: -6, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -6, scale: 0.97 }}
+              transition={{ duration: 0.15 }}
+              className="absolute top-full left-0 mt-2 bg-white border border-black/8 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.11)] py-1.5 min-w-[170px] overflow-hidden"
+            >
+              {options.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  onClick={() => { onSelect(option); onClose(); }}
+                  className={`w-full text-left px-4 py-2.5 text-[13px] transition-colors duration-150 hover:bg-[#F4F4F4] flex items-center justify-between gap-3 ${
+                    value === option ? 'text-[#1B1D1E] font-semibold' : 'text-[#6B6B6B]'
+                  }`}
+                >
+                  {option}
+                  {value === option && (
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1B1D1E] shrink-0" />
+                  )}
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </>
+  );
+};
 
+/* ─── Empty State ──────────────────────────────────────────────── */
+const EmptyState = ({ hasFilters, onClear }) => (
+  <motion.div
+    key="empty"
+    initial={{ opacity: 0, y: 24 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -12 }}
+    transition={{ duration: 0.5 }}
+    className="py-24 flex flex-col items-center text-center"
+  >
+    {/* Icon */}
+    <motion.div
+      initial={{ scale: 0.85, opacity: 0 }}
+      animate={{ scale: 1, opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      className="w-20 h-20 rounded-3xl bg-[#F4F4F4] border border-black/5 flex items-center justify-center mb-7 shadow-[0_4px_16px_rgba(0,0,0,0.05)]"
+    >
+      <Briefcase className="w-8 h-8 text-[#1B1D1E]/25" strokeWidth={1.5} />
+    </motion.div>
+
+    {/* Heading */}
+    <motion.h3
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.15 }}
+      className="text-2xl font-serif text-[#1B1D1E] mb-3 font-light"
+    >
+      {hasFilters ? 'No matching positions' : 'No open positions right now'}
+    </motion.h3>
+
+    {/* Description */}
+    <motion.p
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
+      className="text-[15px] text-[#6B6B6B] font-light max-w-[360px] leading-relaxed mb-8"
+    >
+      {hasFilters
+        ? "We don't have any roles matching your current filters. Try broadening your search or check back soon."
+        : "We're not actively hiring right now, but we're always open to exceptional talent. Reach out and introduce yourself."}
+    </motion.p>
+
+    {/* Actions */}
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay: 0.25 }}
+      className="flex flex-col sm:flex-row items-center gap-4"
+    >
+      {hasFilters && (
+        <button
+          type="button"
+          onClick={onClear}
+          className="px-6 py-2.5 rounded-full text-[13px] font-medium bg-[#1B1D1E] text-white hover:bg-[#1B1D1E]/85 transition-colors duration-300"
+        >
+          Clear all filters
+        </button>
+      )}
+      <a
+        href="mailto:info@seanoraglobal.com"
+        className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-[13px] font-medium border border-black/10 text-[#1B1D1E] hover:border-black/25 transition-colors duration-300"
+      >
+        <Mail className="w-3.5 h-3.5" strokeWidth={1.5} />
+        Send us your resume
+      </a>
+    </motion.div>
+
+    {/* Footnote */}
+    <motion.p
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5, delay: 0.35 }}
+      className="text-[12px] text-[#6B6B6B]/60 mt-8"
+    >
+      New roles are posted regularly — check back soon.
+    </motion.p>
+  </motion.div>
+);
+
+/* ═══════════════════════════════════════════════════════════════ */
 const CareersBoard = () => {
-  const [activeCategory, setActiveCategory] = useState("View all");
+  const [activeCategory, setActiveCategory] = useState('View all');
+  const [activeType, setActiveType]         = useState('All Types');
+  const [activeLocation, setActiveLocation] = useState('All Locations');
+  const [typeOpen, setTypeOpen]             = useState(false);
+  const [locationOpen, setLocationOpen]     = useState(false);
 
-  // Filter jobs based on selected category
-  const filteredJobs = activeCategory === "View all" 
-    ? MOCK_JOBS 
-    : MOCK_JOBS.filter(job => job.department === activeCategory);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const query = `*[_type == "jobs" && isActive == true] | order(_createdAt desc) {
+          _id,
+          title,
+          department,
+          type,
+          location,
+          experience,
+          salary,
+          description
+        }`;
+        const data = await sanityClient.fetch(query);
+        setJobs(data.map(job => ({ ...job, id: job._id })));
+      } catch (err) {
+        console.error("Failed to fetch jobs:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
+
+  const filteredJobs = jobs.filter((job) => {
+    const matchCategory = activeCategory === 'View all' || job.department === activeCategory;
+    const matchType     = activeType === 'All Types'     || job.type === activeType;
+    const matchLocation = activeLocation === 'All Locations' ||
+      job.location.toLowerCase().includes(activeLocation.toLowerCase());
+    return matchCategory && matchType && matchLocation;
+  });
+
+  const hasActiveFilters =
+    activeCategory !== 'View all' ||
+    activeType !== 'All Types' ||
+    activeLocation !== 'All Locations';
+
+  const clearFilters = () => {
+    setActiveCategory('View all');
+    setActiveType('All Types');
+    setActiveLocation('All Locations');
+  };
 
   return (
-    <section className="pt-32 pb-24 bg-[var(--color-bg)] min-h-screen relative overflow-hidden">
-      
+    <section className="pt-32 pb-16 md:pt-40 md:pb-24 bg-white min-h-screen relative overflow-hidden">
+
+      {/* Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute left-0 top-0 w-[800px] h-[800px] bg-[#Eef7fb] rounded-full blur-[100px] opacity-90 -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute right-0 bottom-0 w-[800px] h-[800px] bg-[#Fdfae8] rounded-full blur-[100px] opacity-90 translate-x-1/3 translate-y-1/4" />
+        <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-white via-white/80 to-transparent" />
+      </div>
+
       <div className="container mx-auto px-4 lg:px-12 max-w-5xl relative z-10">
-        
-        {/* Header Section */}
+
+        <Breadcrumb crumbs={[{ label: 'Careers' }]} />
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-16 text-center"
+          className="mb-16 md:mb-20 text-center"
         >
-          <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-6 block">
+          <span className="text-xs font-sans tracking-[0.2em] text-[#6B6B6B] font-medium uppercase mb-6 block">
             Join Our Team
           </span>
-          
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-[var(--color-text)] mb-8 font-light leading-tight">
-            Be part of our <span className="italic text-[var(--color-text-muted)]">mission</span>
-          </h1>
-          
-          <p className="text-lg md:text-xl text-[var(--color-text-muted)] max-w-2xl mx-auto font-light leading-relaxed">
-            We're looking for passionate people to join us on our mission. We value 
+          <AnimatedHeading as="h1" className="text-5xl md:text-6xl lg:text-7xl font-serif text-[#1B1D1E] mb-8 font-light leading-tight tracking-tight">
+            <AnimatedText text="Be part of our " />
+            <AnimatedText text="mission" className="italic text-[#1B1D1E]/80" />
+          </AnimatedHeading>
+          <p className="text-lg md:text-xl text-[#6B6B6B] max-w-2xl mx-auto font-light leading-relaxed">
+            We're looking for passionate people to join us on our mission. We value
             flat hierarchies, clear communication, and full ownership and responsibility.
           </p>
         </motion.div>
 
-        {/* Filter Tabs */}
-        <motion.div 
+        {/* ── Filters ────────────────────────────────────────────── */}
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
+          className="flex flex-wrap justify-center gap-3 mb-6"
         >
+          {/* Category pills */}
           {CATEGORIES.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-full text-sm font-medium transition-all duration-500 border border-[var(--color-border)] ${
+              type="button"
+              className={`px-6 py-2 rounded-full text-[13px] font-medium transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-[var(--color-text)] text-[var(--color-bg)] border-[var(--color-text)] shadow-md"
-                  : "bg-white text-[var(--color-text-muted)] hover:border-[var(--color-text-subtle)] hover:text-[var(--color-text)]"
+                  ? 'bg-[#1B1D1E] text-white shadow-md shadow-black/10'
+                  : 'bg-transparent text-[#6B6B6B] border border-black/10 hover:border-black/20 hover:text-[#1B1D1E]'
               }`}
             >
               {category}
@@ -100,13 +257,93 @@ const CareersBoard = () => {
           ))}
         </motion.div>
 
-        {/* Top Divider */}
-        <div className="w-full h-[1px] bg-[var(--color-border)] mb-4"></div>
+        {/* Job Type + Location dropdowns */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.18 }}
+          className="flex flex-wrap justify-center gap-3 mb-10"
+        >
+          <FilterDropdown
+            value={activeType}
+            defaultValue="All Types"
+            options={JOB_TYPES}
+            open={typeOpen}
+            onToggle={() => { setTypeOpen((p) => !p); setLocationOpen(false); }}
+            onSelect={setActiveType}
+            onClose={() => setTypeOpen(false)}
+          />
+          <FilterDropdown
+            value={activeLocation}
+            defaultValue="All Locations"
+            options={LOCATIONS}
+            open={locationOpen}
+            onToggle={() => { setLocationOpen((p) => !p); setTypeOpen(false); }}
+            onSelect={setActiveLocation}
+            onClose={() => setLocationOpen(false)}
+          />
 
-        {/* Job List */}
+          {/* Clear pill — only when filters are active */}
+          <AnimatePresence>
+            {hasActiveFilters && (
+              <motion.button
+                key="clear"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                type="button"
+                onClick={clearFilters}
+                className="px-5 py-2 rounded-full text-[13px] font-medium text-[#6B6B6B] border border-black/10 hover:border-black/20 hover:text-[#1B1D1E] transition-all duration-300"
+              >
+                Clear all
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Divider */}
+        <div className="w-full h-px bg-black/5 mb-4" />
+
+        {/* Results count */}
+        <AnimatePresence mode="wait">
+          {filteredJobs.length > 0 && (
+            <motion.p
+              key={filteredJobs.length}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-[12px] text-[#6B6B6B]/60 uppercase tracking-[0.15em] font-medium mb-2 px-1"
+            >
+              {filteredJobs.length} {filteredJobs.length === 1 ? 'position' : 'positions'} found
+            </motion.p>
+          )}
+        </AnimatePresence>
+
+        {/* ── Job List / Empty State ─────────────────────────────── */}
         <div className="flex flex-col">
           <AnimatePresence mode="popLayout">
-            {filteredJobs.length > 0 ? (
+            {loading ? (
+              <motion.div
+                key="loading"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="py-24 flex justify-center items-center"
+              >
+                <div className="w-8 h-8 rounded-full border-2 border-black/10 border-t-[#1B1D1E] animate-spin"></div>
+              </motion.div>
+            ) : error ? (
+              <motion.div
+                key="error"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="py-24 text-center text-red-500 font-medium"
+              >
+                Failed to load positions: {error}
+              </motion.div>
+            ) : filteredJobs.length > 0 ? (
               filteredJobs.map((job) => (
                 <motion.div
                   key={job.id}
@@ -115,48 +352,67 @@ const CareersBoard = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.5 }}
-                  className="group block border-b border-[var(--color-border)] last:border-b-0 py-10 relative hover:bg-white/50 transition-colors duration-500 px-4 -mx-4 rounded-2xl"
+                  className="group block border-b border-black/5 last:border-b-0 py-10 relative hover:bg-[#F9FAF8] transition-colors duration-500 px-6 -mx-6 rounded-[24px]"
                 >
                   <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
-                    <div>
-                      <h3 className="text-2xl font-serif text-[var(--color-text)] mb-4 group-hover:text-[var(--color-text-muted)] transition-colors duration-300">
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <span className="text-[11px] uppercase tracking-[0.12em] font-semibold text-white bg-[#1B1D1E] px-3 py-1 rounded-full">
+                          {job.department}
+                        </span>
+                        {job.salary && (
+                          <span className="text-[11px] uppercase tracking-[0.1em] font-semibold text-[#6B6B6B] bg-black/5 px-3 py-1 rounded-full">
+                            {job.salary}
+                          </span>
+                        )}
+                      </div>
+
+                      <h3 className="text-2xl font-serif text-[#1B1D1E] mb-3 group-hover:text-[#1B1D1E]/80 transition-colors duration-300">
                         {job.title}
                       </h3>
-                      <p className="text-[var(--color-text-muted)] mb-6 text-base font-light">
+
+                      <p className="text-[#6B6B6B] mb-5 text-[15px] font-light leading-relaxed max-w-xl">
                         {job.description}
                       </p>
-                      
+
                       <div className="flex flex-wrap items-center gap-4">
-                        <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[var(--color-text-muted)]">
-                          <MapPin className="w-4 h-4" strokeWidth={1.5} />
+                        <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.1em] font-semibold text-[#6B6B6B]">
+                          <MapPin className="w-3.5 h-3.5" strokeWidth={1.5} />
                           {job.location}
                         </div>
-                        <div className="w-1 h-1 rounded-full bg-[var(--color-border)]"></div>
-                        <div className="inline-flex items-center gap-2 text-xs uppercase tracking-wider font-semibold text-[var(--color-text-muted)]">
-                          <Clock className="w-4 h-4" strokeWidth={1.5} />
+                        <div className="w-1 h-1 rounded-full bg-black/15" />
+                        <div className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.1em] font-semibold text-[#6B6B6B]">
+                          <Clock className="w-3.5 h-3.5" strokeWidth={1.5} />
                           {job.type}
                         </div>
+                        {job.experience && (
+                          <>
+                            <div className="w-1 h-1 rounded-full bg-black/15" />
+                            <div className="text-[11px] uppercase tracking-[0.1em] font-semibold text-[#6B6B6B]">
+                              {job.experience} exp.
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
 
-                    <a 
-                      href={job.applyLink}
-                      className="inline-flex items-center justify-center w-12 h-12 rounded-full border border-[var(--color-border)] text-[var(--color-text)] group-hover:bg-[var(--color-text)] group-hover:text-white group-hover:border-[var(--color-text)] transition-all duration-500 mt-2 md:mt-0 shadow-sm"
-                      aria-label={`Apply for ${job.title}`}
+                    <Link
+                      to={`/careers/${job.id}`}
+                      className="group/btn relative flex items-center justify-between bg-[#1B1D1E] text-white p-1 rounded-full overflow-hidden shrink-0 w-[160px] mt-4 md:mt-0"
+                      aria-label={`View details for ${job.title}`}
                     >
-                      <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" strokeWidth={1.5} />
-                    </a>
+                      <span className="text-[13px] font-medium pl-4 pr-2 whitespace-nowrap transition-transform duration-[400ms] ease-out group-hover/btn:translate-x-[26px]">
+                        More Details
+                      </span>
+                      <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover/btn:-translate-x-[104px]">
+                        <ArrowUpRight className="w-4 h-4" />
+                      </div>
+                    </Link>
                   </div>
                 </motion.div>
               ))
             ) : (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="py-16 text-center text-[var(--color-text-muted)] font-light"
-              >
-                No open positions found in this department. Check back later!
-              </motion.div>
+              <EmptyState hasFilters={hasActiveFilters} onClear={clearFilters} />
             )}
           </AnimatePresence>
         </div>

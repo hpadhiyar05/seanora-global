@@ -70,65 +70,54 @@ const services = [
   }
 ];
 
+const gridVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1 } },
+};
+const cardVariant = {
+  hidden: { opacity: 0, y: 28 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+};
+
 const ServiceDetails = () => {
   return (
-    <section className="py-24 bg-[var(--color-bg)] text-left">
-      <div className="container mx-auto px-4 lg:px-12 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section className="py-16 md:py-24 bg-[#F9FAF8] text-left">
+      <div className="container mx-auto px-4 lg:px-12 max-w-6xl">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          variants={gridVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-60px' }}
+        >
           {services.map((service, index) => {
             const Icon = service.icon;
-            const isDark = index === 1;
-            
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.7, delay: index * 0.1 }}
-                className={`group flex flex-col p-10 rounded-2xl border transition-all duration-500 hover:-translate-y-1 relative overflow-hidden ${
-                  isDark 
-                  ? 'bg-[#050505] border-[#1a1a1a] shadow-2xl hover:border-[var(--color-primary)]/50' 
-                  : 'bg-[var(--color-surface)] border-[var(--color-border)] hover:border-[var(--color-text-subtle)] shadow-sm hover:shadow-xl'
-                }`}
+                variants={cardVariant}
+                className="group flex flex-col p-10 rounded-[24px] bg-white border border-black/5 hover:border-black/10 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
               >
                 
-                <div className={`w-14 h-14 mb-8 rounded-full flex items-center justify-center border transition-all duration-500 relative z-10 group-hover:scale-110 ${
-                  isDark
-                  ? 'bg-white/5 text-white border-white/10 group-hover:border-[var(--color-primary)] group-hover:text-[var(--color-primary)]'
-                  : 'bg-[var(--color-bg)] text-[var(--color-text)] border-[var(--color-border)] group-hover:border-[var(--color-text-subtle)]'
-                }`}>
-                  <Icon className="w-6 h-6" strokeWidth={1} />
+                <div className="w-14 h-14 mb-8 rounded-full flex items-center justify-center bg-[#F3F3F3] text-[#1B1D1E] transition-all duration-500 relative z-10 group-hover:scale-110 group-hover:bg-[#1B1D1E] group-hover:text-white">
+                  <Icon className="w-6 h-6" strokeWidth={1.5} />
                 </div>
                 
-                <h3 className={`text-2xl font-serif mb-6 transition-colors duration-300 relative z-10 ${
-                  isDark ? 'text-white' : 'text-[var(--color-text)]'
-                }`}>
+                <h3 className="text-2xl font-serif mb-5 text-[#1B1D1E] transition-colors duration-300 relative z-10 leading-snug">
                   {service.title}
                 </h3>
                 
-                <div className={`w-8 h-[1px] mb-6 scale-x-75 group-hover:scale-x-150 transition-transform duration-500 origin-left ${
-                  isDark ? 'bg-[var(--color-primary)]' : 'bg-[var(--color-text-subtle)]'
-                }`}></div>
-                
-                <p className={`leading-relaxed mb-8 relative z-10 font-light flex-grow ${
-                  isDark ? 'text-white/70' : 'text-[var(--color-text-muted)]'
-                }`}>
+                <p className="leading-relaxed mb-8 relative z-10 font-light text-[#6B6B6B] flex-grow">
                   {service.description}
                 </p>
 
                 <div className="mt-auto relative z-10">
-                  <ul className={`space-y-4 pt-6 border-t ${
-                    isDark ? 'border-white/10' : 'border-[var(--color-border)]'
-                  }`}>
+                  <ul className="space-y-4 pt-6 border-t border-black/5 relative">
+                    <div className="absolute top-0 left-0 w-8 h-[1px] bg-black/10 transition-all duration-500 group-hover:w-full"></div>
                     {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className={`flex items-start text-sm font-light ${
-                        isDark ? 'text-white/60' : 'text-[var(--color-text-muted)]'
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full mt-2 mr-4 flex-shrink-0 ${
-                          isDark ? 'bg-[var(--color-primary)] opacity-80' : 'bg-[var(--color-text-subtle)] opacity-50'
-                        }`}></span>
-                        <span className="leading-relaxed">{bullet}</span>
+                      <li key={idx} className="flex items-start text-[14.5px] font-light text-[#6B6B6B]">
+                        <span className="w-1.5 h-1.5 rounded-full mt-2 mr-4 flex-shrink-0 bg-[#1B1D1E]/20 group-hover:bg-[#1B1D1E]/40 transition-colors duration-500"></span>
+                        <span className="leading-relaxed group-hover:text-[#1B1D1E]/80 transition-colors duration-500">{bullet}</span>
                       </li>
                     ))}
                   </ul>
@@ -136,7 +125,7 @@ const ServiceDetails = () => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

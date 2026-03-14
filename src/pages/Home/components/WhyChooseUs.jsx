@@ -1,141 +1,203 @@
-import React, { useRef, useEffect } from 'react';
-import { Lightbulb, Award, Clock, PenTool } from 'lucide-react';
-import { motion } from 'framer-motion';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import {
+  Lightbulb, Award, Clock, PenTool,
+  ShieldCheck, Cloud, Globe2, Users,
+} from 'lucide-react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
 const features = [
-  // ... (features remain the same)
   {
     icon: Lightbulb,
-    title: 'Best Solutions',
-    description: 'Guaranteed lowest industry rates for all offered services.',
+    category: 'Strategy',
+    title: 'Best-in-Class Solutions',
+    description:
+      'We guarantee the lowest industry rates without compromising quality, delivering enterprise-grade solutions that are cost-effective and built to scale with your business over the long term.',
+    stat: '40% avg. cost reduction',
+    accent: '#DDF5FE',
   },
   {
     icon: Award,
-    title: 'Experience',
-    description: 'Get top tier talent with required skills and certifications.',
+    category: 'Expertise',
+    title: 'Deep Domain Experience',
+    description:
+      'Our certified specialists bring 10+ years of cross-industry experience, pairing technical depth with domain knowledge to confidently solve your most complex IT challenges.',
+    stat: '10+ years in the field',
+    accent: '#FFF1CD',
   },
   {
     icon: Clock,
-    title: 'Quick Support',
-    description: 'Personally assigned service executive with 24x7 support.',
+    category: 'Support',
+    title: '24 / 7 Rapid Response',
+    description:
+      'Every client is assigned a dedicated service executive available around the clock. We treat your uptime as our uptime — because downtime is never acceptable, regardless of the hour.',
+    stat: '< 2 hr average response',
+    accent: '#EAF4EF',
   },
   {
     icon: PenTool,
-    title: 'Unique Design',
-    description: "We'll help you test bold new ideas while sharing yours.",
+    category: 'Innovation',
+    title: 'Tailored Innovation',
+    description:
+      'We craft bespoke IT solutions aligned to your exact business context, helping you move fast on bold ideas while reducing implementation risk throughout every phase of delivery.',
+    stat: '500+ custom solutions built',
+    accent: '#DDF5FE',
   },
+  // {
+  //   icon: ShieldCheck,
+  //   category: 'Security',
+  //   title: 'Enterprise-Grade Security',
+  //   description:
+  //     'Security is woven into every layer of what we build — from infrastructure architecture to application code — so your data, systems, and reputation remain protected at all times.',
+  //   stat: 'Zero breach track record',
+  //   accent: '#FFF1CD',
+  // },
+  // {
+  //   icon: Cloud,
+  //   category: 'Cloud',
+  //   title: 'Cloud Mastery',
+  //   description:
+  //     'Our certified cloud specialists across AWS, Azure, and GCP help you architect, migrate, and continuously optimise cloud environments for maximum performance and cost efficiency at scale.',
+  //   stat: 'AWS · Azure · GCP certified',
+  //   accent: '#EAF4EF',
+  // },
+  // {
+  //   icon: Globe2,
+  //   category: 'Reach',
+  //   title: 'Global Delivery Network',
+  //   description:
+  //     'With a presence spanning 15+ countries, we deliver consistent, high-quality IT services across borders and time zones — with the agility of a local team and the muscle of a global firm.',
+  //   stat: '200+ clients · 15 countries',
+  //   accent: '#DDF5FE',
+  // },
+  // {
+  //   icon: Users,
+  //   category: 'Partnership',
+  //   title: 'Transparent Partnership',
+  //   description:
+  //     'Great outcomes begin with honest communication. You get full visibility into every milestone, decision, and delivery — no surprises, no hidden costs, no exceptions, ever.',
+  //   stat: '98% client retention rate',
+  //   accent: '#FFF1CD',
+  // },
 ];
 
 const WhyChooseUs = () => {
-  const sectionRef = useRef(null);
-  const trackRef = useRef(null);
+  const targetRef = useRef(null);
+  const trackRef  = useRef(null);
+  const [range, setRange] = useState([0, 0]);
 
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+  const computeRange = useCallback(() => {
+    if (!trackRef.current) return;
 
-    const handleWheel = (e) => {
-      // Only lock scroll on desktop sizes where the split layout exists
-      if (window.innerWidth >= 1024) {
-        const track = trackRef.current;
-        if (!track) return;
+    const vw = window.innerWidth;
+    const trackWidth = trackRef.current.scrollWidth;
 
-        const isAtTop = track.scrollTop === 0;
-        const isAtBottom = Math.abs(track.scrollHeight - track.clientHeight - track.scrollTop) < 1;
+    // Start at normal position (0) instead of off-screen right
+    const startX = 0;
+    
+    // Scroll left until the end of the track aligns with the right edge
+    const endX = vw >= trackWidth ? 0 : -(trackWidth - vw);
 
-        // If scrolling UP and already at TOP, let page scroll normally
-        if (e.deltaY < 0 && isAtTop) {
-          return;
-        }
-        
-        // If scrolling DOWN and already at BOTTOM, let page scroll normally
-        if (e.deltaY > 0 && isAtBottom) {
-          return;
-        }
-
-        // Otherwise, WE have control. Prevent the page from scrolling,
-        // and manually push the delta into our scroll track.
-        e.preventDefault();
-        track.scrollTop += e.deltaY;
-      }
-    };
-
-    // We must use a native listener to use { passive: false } which allows preventDefault()
-    section.addEventListener('wheel', handleWheel, { passive: false });
-
-    return () => {
-      section.removeEventListener('wheel', handleWheel);
-    };
+    setRange([startX, endX]);
   }, []);
 
-  return (
-    <section ref={sectionRef} className="py-24 relative bg-[var(--color-bg)] w-full">
-      <div className="max-w-6xl mx-auto px-6 relative w-full">
-        <div className="flex flex-col lg:grid lg:grid-cols-2 gap-8 lg:gap-24 items-start lg:h-[600px] relative">
-          
-          {/* Left: Static Title */}
-          <div className="w-full relative h-auto flex items-center lg:h-full z-20 pointer-events-none">
-            <div className="flex items-center w-full z-20 pointer-events-auto">
-              <motion.div 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8 }}
-                className="max-w-xl"
-              >
-                <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-4 block">
-                  Why Choose Us
-                </span>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--color-text)] leading-tight font-light">
-                  Expertise and <br className="hidden md:block" />
-                  <span className="font-semibold text-[var(--color-primary)]">
-                    dedication
-                  </span> <br className="hidden md:block" />
-                  to exceed expectations.
-                </h2>
-              </motion.div>
-            </div>
-          </div>
+  useEffect(() => {
+    const t = setTimeout(computeRange, 60);
+    window.addEventListener('resize', computeRange);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('resize', computeRange);
+    };
+  }, [computeRange]);
 
-          {/* Right: Snap Scrolling Features */}
-          <div 
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], range);
+
+  return (
+    <section ref={targetRef} className="relative h-[300vh] bg-white w-full">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+
+        {/* Heading */}
+        <div className="text-center mb-12 lg:mb-16 px-4 w-full">
+          <AnimatedHeading className="text-[36px] md:text-[44px] lg:text-[52px] font-medium text-[#1B1D1E] tracking-tight leading-[1.1]">
+            <AnimatedText text="Expertise and dedication" className="block" />
+            <AnimatedText
+              text="to exceed expectations"
+              className="font-serif italic font-light text-[#1B1D1E]/80 block"
+            />
+          </AnimatedHeading>
+        </div>
+
+        {/* Horizontal scroll track — py-4 gives cards room to translate up on hover */}
+        <div className="w-full overflow-hidden flex items-center py-4">
+          <motion.div
             ref={trackRef}
-            className="flex flex-col w-full h-[60vh] lg:h-full max-w-lg mx-auto lg:mx-0 lg:ml-auto overflow-y-auto snap-y snap-mandatory scroll-smooth hide-scrollbar relative pr-4 lg:py-24 z-40"
-            style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+            style={{ x }}
+            className="flex gap-6 md:gap-8 pl-6 pr-12 lg:pl-12 lg:pr-24 w-max items-stretch"
           >
-            {features.map((feature, index) => {
+            {features.map((feature) => {
               const Icon = feature.icon;
+              const accentDot = { '#EAF4EF': '#6AAE8B', '#DDF5FE': '#6BAED6', '#FFF1CD': '#D4A847' };
+              const dotColor = accentDot[feature.accent] ?? '#D4A847';
               return (
-                <div 
-                  key={index} 
-                  className="w-full flex-shrink-0 h-full snap-center flex flex-col justify-center transition-all duration-500"
-                  style={{ scrollSnapStop: 'always' }}
+                <div
+                  key={feature.title}
+                  className="w-[290px] md:w-[330px] lg:w-[370px] shrink-0 rounded-[28px] p-7 lg:p-8 flex flex-col justify-between bg-white border border-black/[0.06] shadow-[0_4px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.11)] transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden"
                 >
-                  <div className="w-12 h-12 flex items-center justify-center rounded-[1rem] bg-white shadow-sm border border-[var(--color-border)] mb-6">
-                    <Icon className="w-6 h-6 text-[var(--color-text)]" strokeWidth={1.5} />
+                  {/* Top accent bar */}
+                  <div
+                    className="absolute inset-x-0 top-0 h-[3px] rounded-t-[28px] opacity-70 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                      background: `linear-gradient(90deg, ${feature.accent}, transparent)`,
+                    }}
+                  />
+
+                  <div className="flex flex-col gap-5">
+                    {/* Category + Icon row */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#6B6B6B]">
+                        {feature.category}
+                      </span>
+                      <div
+                        className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110"
+                        style={{ backgroundColor: feature.accent }}
+                      >
+                        <Icon className="w-[18px] h-[18px] text-[#1B1D1E]" strokeWidth={1.6} />
+                      </div>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="text-[19px] lg:text-[21px] font-serif font-medium tracking-tight text-[#1B1D1E] leading-[1.25]">
+                      {feature.title}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-[13px] lg:text-[13.5px] leading-[1.75] text-[#6B6B6B] font-light">
+                      {feature.description}
+                    </p>
                   </div>
-                  
-                  <h3 className="text-2xl font-semibold text-[var(--color-text)]">
-                    {feature.title}
-                  </h3>
-                  
-                  <p className="text-base text-[var(--color-text-muted)] leading-relaxed mt-3 max-w-md">
-                    {feature.description}
-                  </p>
+
+                  {/* Stat row */}
+                  <div className="pt-5 mt-3 border-t border-black/[0.05] flex items-center gap-2">
+                    <div
+                      className="w-1.5 h-1.5 rounded-full shrink-0"
+                      style={{ backgroundColor: dotColor }}
+                    />
+                    <span className="text-[11.5px] font-medium text-[#1B1D1E]/45 tracking-wide">
+                      {feature.stat}
+                    </span>
+                  </div>
                 </div>
               );
             })}
-          </div>
-
+          </motion.div>
         </div>
+
       </div>
-      
-      {/* Hide scrollbar injected CSS */}
-      <style dangerouslySetInnerHTML={{__html: `
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-      `}} />
     </section>
   );
 };

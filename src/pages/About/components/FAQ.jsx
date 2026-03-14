@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Accordion from '../../../components/ui/Accordion';
+import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
 const faqItems = [
   {
@@ -54,40 +55,42 @@ const faqItems = [
 
 const FAQ = () => {
   return (
-    <section className="py-24 bg-[var(--color-bg)] relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-white relative overflow-hidden">
       
+      {/* Background Gradients */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute right-0 bottom-0 w-[800px] h-[800px] bg-[#Fdfae8] rounded-full blur-[100px] opacity-90 translate-x-1/3 translate-y-1/4"></div>
+      </div>
+
       <div className="container mx-auto px-4 lg:px-12 max-w-6xl relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20 max-w-3xl mx-auto"
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.65, ease: 'easeOut' }}
+          className="text-center mb-14 md:mb-16 max-w-3xl mx-auto"
         >
-          <span className="text-xs font-sans tracking-[0.2em] text-[var(--color-text-muted)] uppercase mb-4 block">
+          <span className="text-xs font-sans tracking-[0.2em] text-[#6B6B6B] font-medium uppercase mb-4 block">
             Read More
           </span>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[var(--color-text)] font-light leading-tight mb-8">
-            Frequently Asked <br className="hidden md:block" />
-            Questions <span className="relative inline-block font-semibold">
-              <span className="relative z-10 italic">(FAQ)</span>
-              <span className="absolute bottom-2 md:bottom-3 left-0 w-full h-[40%] bg-[var(--color-primary)]/80 -z-10 rounded-sm"></span>
-            </span>
-          </h2>
-          <p className="text-lg text-[var(--color-text-muted)] font-light leading-relaxed">
+          <AnimatedHeading className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#1B1D1E] font-light leading-tight mb-8 tracking-tight">
+            <AnimatedText text="Frequently Asked " />
+            <AnimatedText text="Questions" className="italic text-[#1B1D1E]/65" />
+          </AnimatedHeading>
+          <p className="text-lg text-[#6B6B6B] font-light leading-relaxed">
             Find answers to the most commonly asked questions about our services, methodologies, and expertise.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-50px" }}
-          transition={{ duration: 0.7 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.65, ease: 'easeOut', delay: 0.1 }}
         >
-          <Accordion 
-            items={faqItems} 
-            className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8 items-start relative z-10" 
+          <Accordion
+            items={faqItems}
+            className="w-full max-w-3xl mx-auto flex flex-col gap-3"
           />
         </motion.div>
       </div>
