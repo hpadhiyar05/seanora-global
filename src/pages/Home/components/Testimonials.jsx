@@ -4,10 +4,10 @@ import Autoplay from 'embla-carousel-autoplay';
 import { Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-import img1 from '../../../assets/images/testimonial-image (1).jpg';
-import img2 from '../../../assets/images/testimonial-image (2).jpg';
-import img3 from '../../../assets/images/testimonial-image (3).jpg';
-import img4 from '../../../assets/images/testimonial-image (4).jpg';
+import img1 from '../../../assets/images/testimonial-image -1.webp';
+import img2 from '../../../assets/images/testimonial-image -2.webp';
+import img3 from '../../../assets/images/testimonial-image -3.webp';
+import img4 from '../../../assets/images/testimonial-image -4.webp';
 
 const testimonials = [
   { id: 1, name: "Sarah Jenkins",    role: "CEO, TechFlow",          text: "This service completely transformed how we handle our regional data. The speed and accuracy are practically unmatched.",                                img: img1 },
