@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useEmblaCarousel from 'embla-carousel-react';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import Autoplay from 'embla-carousel-autoplay';
+import { Star } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
 import img1 from '../../../assets/images/testimonial-image (1).jpg';
 import img2 from '../../../assets/images/testimonial-image (2).jpg';
@@ -10,34 +10,87 @@ import img3 from '../../../assets/images/testimonial-image (3).jpg';
 import img4 from '../../../assets/images/testimonial-image (4).jpg';
 
 const testimonials = [
-  { id: 1, name: "Sarah Jenkins", role: "CEO, TechFlow", text: "This service completely transformed how we handle our regional data. The speed and accuracy are practically unmatched.", img: img1 },
-  { id: 2, name: "Marcus Chen", role: "Operations Director", text: "A truly powerful platform. We've seen a 40% increase in workflow efficiency within the first two months.", img: img2 },
-  { id: 3, name: "Elena Rodriguez", role: "Product Manager", text: "The onboarding was seamless, and the insights we're getting now are absolute game-changers for our strategy.", img: img3 },
-  { id: 4, name: "David Kim", role: "Founder, DataSync", text: "Incredible attention to detail and customer support. It feels like they are an extension of our own team.", img: img4 },
-  { id: 5, name: "Emily Watson", role: "VP of Engineering", text: "We migrated our entire system over a weekend without a single glitch. The architecture is incredibly robust.", img: img1 },
-  { id: 6, name: "James Anderson", role: "Head of Marketing", text: "The analytics dashboard gives us exactly what we need to see at a glance. Highly recommend their enterprise plan.", img: img2 },
-  { id: 7, name: "Sophia Martinez", role: "CTO, Innovate Inc.", text: "Security and compliance were our top priorities, and they exceeded our expectations on every single front.", img: img3 },
-  { id: 8, name: "Michael Taylor", role: "Lead Developer", text: "The API is a joy to work with. Clean documentation and predictable responses make integration a breeze.", img: img4 }
+  { id: 1, name: "Sarah Jenkins",    role: "CEO, TechFlow",          text: "This service completely transformed how we handle our regional data. The speed and accuracy are practically unmatched.",                                img: img1 },
+  { id: 2, name: "Marcus Chen",      role: "Operations Director",     text: "A truly powerful platform. We've seen a 40% increase in workflow efficiency within the first two months.",                                              img: img2 },
+  { id: 3, name: "Elena Rodriguez",  role: "Product Manager",         text: "The onboarding was seamless, and the insights we're getting now are absolute game-changers for our strategy.",                                          img: img3 },
+  { id: 4, name: "David Kim",        role: "Founder, DataSync",       text: "Incredible attention to detail and customer support. It feels like they are an extension of our own team.",                                             img: img4 },
+  { id: 5, name: "Emily Watson",     role: "VP of Engineering",       text: "We migrated our entire system over a weekend without a single glitch. The architecture is incredibly robust.",                                          img: img1 },
+  { id: 6, name: "James Anderson",   role: "Head of Marketing",       text: "The analytics dashboard gives us exactly what we need to see at a glance. Highly recommend their enterprise plan.",                                     img: img2 },
+  { id: 7, name: "Sophia Martinez",  role: "CTO, Innovate Inc.",      text: "Security and compliance were our top priorities, and they exceeded our expectations on every single front.",                                            img: img3 },
+  { id: 8, name: "Michael Taylor",   role: "Lead Developer",          text: "The API is a joy to work with. Clean documentation and predictable responses make integration a breeze.",                                              img: img4 },
 ];
 
+/* ── Stars ─────────────────────────────────────────────── */
+const Stars = ({ count = 5, filled = 4, size = 'sm' }) => {
+  const sz = size === 'lg' ? 'w-5 h-5' : 'w-4 h-4';
+  return (
+    <div className="flex items-center gap-1">
+      {Array.from({ length: count }).map((_, i) => (
+        <Star
+          key={i}
+          className={`${sz} ${i < filled ? 'fill-[#111827] text-[#111827]' : 'fill-[#D1D5DB] text-[#D1D5DB]'}`}
+          strokeWidth={0}
+        />
+      ))}
+    </div>
+  );
+};
+
+/* ── Card ──────────────────────────────────────────────── */
+const TestimonialCard = ({ t, isCenter }) => (
+  <div
+    className={`h-full flex flex-col justify-between p-8 lg:p-10 rounded-2xl border transition-all duration-300 ${
+      isCenter
+        ? 'bg-white border-[#E5E7EB] shadow-[0_2px_24px_rgba(0,0,0,0.07)]'
+        : 'bg-white border-[#F3F4F6]'
+    }`}
+  >
+    {/* Stars */}
+    <div className="mb-5">
+      <Stars filled={4} />
+    </div>
+
+    {/* Quote */}
+    <p className="text-[#111827] text-[16px] leading-[1.65] font-normal flex-1 mb-8">
+      &ldquo;{t.text}&rdquo;
+    </p>
+
+    {/* Divider */}
+    <div className="h-px bg-[#F3F4F6] mb-6" />
+
+    {/* Author */}
+    <div className="flex items-center gap-3">
+      <img
+        src={t.img}
+        alt={t.name}
+        className="w-10 h-10 rounded-full object-cover shrink-0"
+        loading="lazy"
+        decoding="async"
+      />
+      <div>
+        <p className="text-[14px] font-semibold text-[#111827] leading-tight">{t.name}</p>
+        <p className="text-[12.5px] text-[#6B7280] font-normal mt-0.5">{t.role}</p>
+      </div>
+    </div>
+  </div>
+);
+
+/* ══════════════════════════════════════════════════════════ */
 const Testimonials = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
-    loop: true, 
-    align: 'start',
-    skipSnaps: false,
-    dragFree: true
-  });
-  
-  const [prevBtnDisabled, setPrevBtnDisabled] = useState(false);
-  const [nextBtnDisabled, setNextBtnDisabled] = useState(false);
-  
-  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
-  
+  const autoplayRef = useRef(
+    Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })
+  );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'center', skipSnaps: false },
+    [autoplayRef.current]
+  );
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
-    setPrevBtnDisabled(!emblaApi.canScrollPrev());
-    setNextBtnDisabled(!emblaApi.canScrollNext());
+    setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
   useEffect(() => {
@@ -48,131 +101,65 @@ const Testimonials = () => {
   }, [emblaApi, onSelect]);
 
   return (
-    <section className="py-16 md:py-24 overflow-hidden text-left relative bg-[#F8F3EC]">
+    <section className="py-20 md:py-28 bg-[#F5F5F5] overflow-hidden">
 
-      {/* Warm sand gradient — distinct from the blue-cream sections above & below */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#F5EFE4] via-[#F9F4EE] to-[#FCF8F2] z-0" />
-
-      <div className="container relative z-10 mx-auto px-4 lg:px-12 max-w-[1400px]">
-
-        {/* Header Region */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-20 gap-8">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-            className="max-w-3xl"
-          >
-            {/* Eyebrow — matches Contact page label style */}
-            <span className="text-xs font-sans tracking-[0.22em] text-[#6B6B6B] font-medium uppercase mb-5 block">
-              Testimonials
-            </span>
-
-            <AnimatedHeading className="text-[40px] md:text-[48px] lg:text-[56px] font-serif font-light text-[#1B1D1E] mb-6 leading-[1.08] tracking-tight">
-              <AnimatedText text="Loved by " />
-              <AnimatedText text=" forward-thinking" className="italic text-[#1B1D1E]/65" />
-              <AnimatedText text=" teams" />
-            </AnimatedHeading>
-
-            <p className="text-[16px] md:text-[17px] text-[#6B6B6B] max-w-xl font-light leading-relaxed">
-              See how our platform is helping companies transform their technology
-              into actionable insights and scalable growth.
-            </p>
-          </motion.div>
-
-          {/* Navigation Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="flex gap-3"
-          >
-            <button
-              type="button"
-              onClick={scrollPrev}
-              disabled={prevBtnDisabled}
-              className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-black/8 text-[#1B1D1E] shadow-sm hover:bg-[#1B1D1E] hover:text-white hover:border-[#1B1D1E] transition-all duration-300 disabled:opacity-25 disabled:cursor-not-allowed group"
-              aria-label="Previous slide"
-            >
-              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-300" strokeWidth={2} />
-            </button>
-            <button
-              type="button"
-              onClick={scrollNext}
-              disabled={nextBtnDisabled}
-              className="w-11 h-11 flex items-center justify-center rounded-full bg-white border border-black/8 text-[#1B1D1E] shadow-sm hover:bg-[#1B1D1E] hover:text-white hover:border-[#1B1D1E] transition-all duration-300 disabled:opacity-25 disabled:cursor-not-allowed group"
-              aria-label="Next slide"
-            >
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" strokeWidth={2} />
-            </button>
-          </motion.div>
-        </div>
-
-        {/* Embla Carousel Viewport */}
-        <div className="overflow-hidden cursor-grab active:cursor-grabbing pb-4 -ml-6" ref={emblaRef}>
-          <div className="flex pl-6">
-            {testimonials.map((t) => (
-              <motion.div
-                key={t.id}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '0px' }}
-                transition={{ duration: 0.65 }}
-                className="flex-[0_0_100%] min-w-0 pr-6 md:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
-              >
-                {/* Card — same treatment as Contact page form card */}
-                <div className="h-full bg-white p-8 lg:p-10 rounded-[28px] border border-black/[0.04] shadow-[0_8px_40px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.10)] transition-all duration-500 flex flex-col group hover:-translate-y-2 relative overflow-hidden">
-
-                  {/* Decorative quote watermark */}
-                  <div className="absolute top-6 right-7 text-[72px] leading-none text-black/[0.03] font-serif select-none pointer-events-none group-hover:text-black/[0.055] transition-colors duration-500">
-                    "
-                  </div>
-
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-7 z-10">
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <Star key={star} className="w-[15px] h-[15px] fill-[#F5A623] text-[#F5A623]" />
-                    ))}
-                  </div>
-
-                  {/* Quote text */}
-                  <p className="text-[#1B1D1E]/75 text-[17px] mb-10 grow font-serif italic leading-[1.65] z-10 relative">
-                    "{t.text}"
-                  </p>
-
-                  {/* Divider */}
-                  <div className="w-full h-px bg-black/[0.05] mb-7" />
-
-                  {/* Author */}
-                  <div className="flex items-center gap-4 mt-auto z-10">
-                    <div className="w-12 h-12 rounded-full overflow-hidden border border-black/8 shadow-sm shrink-0">
-                      <img
-                        src={t.img}
-                        alt={t.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-[14px] tracking-tight text-[#1B1D1E]">
-                        {t.name}
-                      </h4>
-                      <p className="text-[12px] text-[#6B6B6B] mt-0.5 font-medium">
-                        {t.role}
-                      </p>
-                    </div>
-                  </div>
-
-                </div>
-              </motion.div>
-            ))}
+      {/* ── Header ─────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.65, ease: 'easeOut' }}
+        className="text-center px-6 mb-14"
+      >
+        {/* Rating row */}
+        <div className="flex items-center justify-center gap-3 mb-5">
+          <div className="w-10 h-10 rounded-xl bg-white border border-[#E5E7EB] flex items-center justify-center shadow-sm">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <rect x="3" y="3" width="8" height="8" rx="1.5" fill="#111827"/>
+              <rect x="13" y="3" width="8" height="8" rx="1.5" fill="#111827" opacity="0.3"/>
+              <rect x="3" y="13" width="8" height="8" rx="1.5" fill="#111827" opacity="0.3"/>
+              <rect x="13" y="13" width="8" height="8" rx="1.5" fill="#111827"/>
+            </svg>
+          </div>
+          <div className="flex items-center gap-2">
+            <Stars filled={4} size="lg" />
+            <span className="text-[14px] font-medium text-[#374151]">4.6 Rate by 16,000+ Reviews</span>
           </div>
         </div>
 
+        {/* Main heading */}
+        <h2 className="text-[2.5rem] md:text-[4rem] font-medium text-[#111827] tracking-tight leading-[1.08] mb-4">
+          What our clients say
+        </h2>
+
+        {/* Sub */}
+        <p className="text-[15px] text-[#6B7280] font-normal max-w-[380px] mx-auto leading-relaxed">
+          Trusted by teams and businesses worldwide, here's what people love about working with us.
+        </p>
+      </motion.div>
+
+      {/* ── Carousel ───────────────────────────────────── */}
+      <div
+        className="overflow-hidden cursor-grab active:cursor-grabbing"
+        ref={emblaRef}
+      >
+        <div className="flex gap-4 px-4">
+          {testimonials.map((t, i) => {
+            const isCenter = i === selectedIndex;
+            return (
+              <div
+                key={t.id}
+                className={`flex-[0_0_88%] min-w-0 sm:flex-[0_0_48%] lg:flex-[0_0_32%] transition-all duration-400 ${
+                  isCenter ? 'opacity-100' : 'opacity-50'
+                }`}
+              >
+                <TestimonialCard t={t} isCenter={isCenter} />
+              </div>
+            );
+          })}
+        </div>
       </div>
+
     </section>
   );
 };

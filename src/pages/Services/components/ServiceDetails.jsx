@@ -1,134 +1,249 @@
-import { motion } from 'framer-motion';
-import { MonitorSmartphone, GraduationCap, Server, Users, Briefcase, Cloud } from 'lucide-react';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MonitorSmartphone, GraduationCap, Server, Users, Briefcase, Cloud, Plus, Minus } from 'lucide-react';
 
 const services = [
-  {
-    icon: MonitorSmartphone,
-    title: 'Mobile & Website Design and Development',
-    description: 'Create engaging and user-friendly digital experiences with our mobile and website design and development services. Our team of skilled designers and developers works closely with you to build intuitive mobile apps and websites that resonate with your audience and drive business growth.',
-    bullets: [
-      'Custom mobile app development',
-      'Responsive website design',
-      'User experience (UX) optimization',
-      'E-commerce solutions'
-    ]
-  },
-  {
-    icon: GraduationCap,
-    title: 'IT Training',
-    description: 'Stay ahead of the curve with Seanora’s comprehensive IT training programs. We provide your team with the knowledge and skills needed to leverage the latest technologies and best practices. Our training sessions are designed to be practical, interactive, and tailored to your specific business needs.',
-    bullets: [
-      'Software and application training',
-      'Cybersecurity awareness',
-      'Cloud technology training',
-      'Custom IT workshops'
-    ]
-  },
-  {
-    icon: Server,
-    title: 'System Integration & IT Reseller',
-    description: 'Achieve seamless operations with our system integration services and high-quality IT products. We ensure that all your systems work together harmoniously, enhancing productivity and efficiency. As a trusted IT reseller, we offer a wide range of reliable IT products to meet your business requirements.',
-    bullets: [
-      'System integration services',
-      'Hardware and software procurement',
-      'Network setup and management',
-      'IT infrastructure solutions'
-    ]
-  },
-  {
-    icon: Users,
-    title: 'IT Services and IT Consulting',
-    description: 'Optimize your technology investments with our IT services and consulting. Our IT services provide you with the technical support needed to maintain smooth operations, while our IT consulting offers strategic guidance to help you make informed decisions and drive business growth.',
-    bullets: [
-      'Technical support and troubleshooting',
-      'IT strategy development',
-      'Technology assessment and planning',
-      'Business process optimization'
-    ]
-  },
-  {
-    icon: Briefcase,
-    title: 'Technical Professional Services',
-    description: 'Benefit from our expert consulting, implementation, and maintenance services. Our technical professionals are dedicated to delivering high-quality services that meet your specific needs and ensure the long-term success of your IT projects.',
-    bullets: [
-      'IT project management',
-      'System implementation and migration',
-      'Maintenance and support services',
-      'Custom IT solutions'
-    ]
-  },
-  {
-    icon: Cloud,
-    title: 'Cloud Computing & Security',
-    description: 'Secure and scalable, our cloud computing and security solutions are designed to protect your data and IT infrastructure. We help you leverage the power of the cloud while ensuring robust security measures are in place to safeguard your business.',
-    bullets: [
-      'Cloud migration and management',
-      'Data backup and disaster recovery',
-      'Network and data security',
-      'Compliance and risk management'
-    ]
-  }
+    {
+        icon: MonitorSmartphone,
+        index: '01',
+        category: 'Design & Dev',
+        title: 'Mobile & Website Design and Development',
+        description:
+            'Create engaging digital experiences with intuitive mobile apps and websites that resonate with your audience and drive measurable business growth.',
+        bullets: [
+            'Custom mobile app development',
+            'Responsive website design',
+            'User experience (UX) optimization',
+            'E-commerce solutions',
+        ],
+        accentStrong: '#1E5AA5',
+        accentLight: '#93C5FD',
+    },
+    {
+        icon: GraduationCap,
+        index: '02',
+        category: 'Training',
+        title: 'IT Training',
+        description:
+            'Equip your team with the knowledge and skills to leverage the latest technologies. Practical, interactive sessions tailored to your specific business needs.',
+        bullets: ['Software and application training', 'Cybersecurity awareness', 'Cloud technology training', 'Custom IT workshops'],
+        accentStrong: '#0284C7',
+        accentLight: '#38BDF8',
+    },
+    {
+        icon: Server,
+        index: '03',
+        category: 'Integration',
+        title: 'System Integration & IT Reseller',
+        description:
+            'Achieve seamless operations with expert system integration and high-quality IT products. All your systems working harmoniously to maximize productivity.',
+        bullets: [
+            'System integration services',
+            'Hardware and software procurement',
+            'Network setup and management',
+            'IT infrastructure solutions',
+        ],
+        accentStrong: '#1E5AA5',
+        accentLight: '#93C5FD',
+    },
+    {
+        icon: Users,
+        index: '04',
+        category: 'Consulting',
+        title: 'IT Services and IT Consulting',
+        description:
+            'Optimize technology investments with hands-on IT support and strategic consulting that drives informed decisions and sustainable business growth.',
+        bullets: [
+            'Technical support and troubleshooting',
+            'IT strategy development',
+            'Technology assessment and planning',
+            'Business process optimization',
+        ],
+        accentStrong: '#1E5AA5',
+        accentLight: '#93C5FD',
+    },
+    {
+        icon: Briefcase,
+        index: '05',
+        category: 'Professional',
+        title: 'Technical Professional Services',
+        description:
+            'Expert consulting, implementation, and maintenance delivered by certified technical professionals dedicated to the long-term success of your IT projects.',
+        bullets: [
+            'IT project management',
+            'System implementation and migration',
+            'Maintenance and support services',
+            'Custom IT solutions',
+        ],
+        accentStrong: '#0284C7',
+        accentLight: '#38BDF8',
+    },
+    {
+        icon: Cloud,
+        index: '06',
+        category: 'Cloud & Security',
+        title: 'Cloud Computing & Security',
+        description:
+            'Secure, scalable cloud solutions that protect your data and infrastructure — leveraging the full power of the cloud with robust security at every layer.',
+        bullets: [
+            'Cloud migration and management',
+            'Data backup and disaster recovery',
+            'Network and data security',
+            'Compliance and risk management',
+        ],
+        accentStrong: '#1E5AA5',
+        accentLight: '#93C5FD',
+    },
 ];
 
-const gridVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-const cardVariant = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
-};
-
 const ServiceDetails = () => {
-  return (
-    <section className="py-16 md:py-24 bg-[#F9FAF8] text-left">
-      <div className="container mx-auto px-4 lg:px-12 max-w-6xl">
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-60px' }}
-        >
-          {services.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={index}
-                variants={cardVariant}
-                className="group flex flex-col p-10 rounded-[24px] bg-white border border-black/5 hover:border-black/10 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-all duration-500 hover:-translate-y-2 relative overflow-hidden"
-              >
-                
-                <div className="w-14 h-14 mb-8 rounded-full flex items-center justify-center bg-[#F3F3F3] text-[#1B1D1E] transition-all duration-500 relative z-10 group-hover:scale-110 group-hover:bg-[#1B1D1E] group-hover:text-white">
-                  <Icon className="w-6 h-6" strokeWidth={1.5} />
-                </div>
-                
-                <h3 className="text-2xl font-serif mb-5 text-[#1B1D1E] transition-colors duration-300 relative z-10 leading-snug">
-                  {service.title}
-                </h3>
-                
-                <p className="leading-relaxed mb-8 relative z-10 font-light text-[#6B6B6B] flex-grow">
-                  {service.description}
-                </p>
+    const [openIndex, setOpenIndex] = useState(null);
 
-                <div className="mt-auto relative z-10">
-                  <ul className="space-y-4 pt-6 border-t border-black/5 relative">
-                    <div className="absolute top-0 left-0 w-8 h-[1px] bg-black/10 transition-all duration-500 group-hover:w-full"></div>
-                    {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-start text-[14.5px] font-light text-[#6B6B6B]">
-                        <span className="w-1.5 h-1.5 rounded-full mt-2 mr-4 flex-shrink-0 bg-[#1B1D1E]/20 group-hover:bg-[#1B1D1E]/40 transition-colors duration-500"></span>
-                        <span className="leading-relaxed group-hover:text-[#1B1D1E]/80 transition-colors duration-500">{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
+    return (
+        <section className="bg-[#0F1114] relative overflow-hidden">
+            {/* Subtle glow blobs */}
+            <div className="absolute inset-0 pointer-events-none z-0">
+                <div className="absolute left-0 top-1/3 w-[600px] h-[600px] bg-[#1E5AA5] rounded-full blur-[160px] opacity-[0.07] -translate-x-1/2" />
+                <div className="absolute right-0 bottom-1/4 w-[500px] h-[500px] bg-[#0284C7] rounded-full blur-[140px] opacity-[0.06] translate-x-1/3" />
+            </div>
+
+            <div className="container mx-auto px-4 lg:px-12 max-w-6xl relative z-10">
+                {/* ── Section header ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.75 }}
+                    className="py-16 md:py-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6 border-b border-white/[0.07]"
+                >
+                    <div>
+                        <div className="flex items-center gap-3 mb-5">
+                            <div className="w-7 h-px bg-[#93C5FD]/60" />
+                            <span className="text-[11px] font-sans tracking-[0.26em] text-[#93C5FD] font-semibold uppercase">
+                                What We Offer
+                            </span>
+                        </div>
+                        <h2 className="text-[2.5rem] md:text-[4rem] font-medium text-white leading-[1.08] tracking-tight">
+                            Six pillars of <span className="text-white/40">IT excellence</span>
+                        </h2>
+                    </div>
+                    <p className="text-[14.5px] text-white/40 font-light leading-relaxed max-w-xs md:text-right">
+                        Every service is built to integrate seamlessly across your entire technology ecosystem.
+                    </p>
+                </motion.div>
+
+                {/* ── Accordion rows ── */}
+                <div className="divide-y divide-white/[0.06] pb-16 md:pb-20">
+                    {services.map((service, i) => {
+                        const Icon = service.icon;
+                        const isOpen = openIndex === i;
+
+                        return (
+                            <motion.div
+                                key={service.index}
+                                initial={{ opacity: 0, y: 16 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: '-20px' }}
+                                transition={{ duration: 0.5, delay: i * 0.05 }}
+                            >
+                                {/* ── Clickable header row ── */}
+                                <button
+                                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                                    className="w-full group flex items-center gap-5 md:gap-8 py-6 md:py-7 text-left"
+                                >
+                                    {/* Index */}
+                                    <span className="text-[11px] font-mono tracking-[0.16em] text-white/20 shrink-0 w-7 hidden sm:block">
+                                        {service.index}
+                                    </span>
+
+                                    {/* Icon box */}
+                                    <div
+                                        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300"
+                                        style={{
+                                            backgroundColor: isOpen ? service.accentStrong : 'rgba(255,255,255,0.06)',
+                                        }}
+                                    >
+                                        <Icon size={17} strokeWidth={1.5} style={{ color: isOpen ? '#fff' : 'rgba(255,255,255,0.40)' }} />
+                                    </div>
+
+                                    {/* Title + category */}
+                                    <div className="flex-grow min-w-0 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4">
+                                        <h3
+                                            className="text-[1.25rem] font-medium leading-snug tracking-tight transition-colors duration-300"
+                                            style={{ color: isOpen ? '#ffffff' : 'rgba(255,255,255,0.65)' }}
+                                        >
+                                            {service.title}
+                                        </h3>
+                                        <span className="text-[10px] uppercase tracking-[0.18em] font-semibold text-white/20 shrink-0">
+                                            {service.category}
+                                        </span>
+                                    </div>
+
+                                    {/* Toggle */}
+                                    <div
+                                        className="w-7 h-7 rounded-full border flex items-center justify-center shrink-0 transition-all duration-300"
+                                        style={{
+                                            borderColor: isOpen ? service.accentStrong : 'rgba(255,255,255,0.12)',
+                                            backgroundColor: isOpen ? `${service.accentStrong}30` : 'transparent',
+                                        }}
+                                    >
+                                        {isOpen ? (
+                                            <Minus size={12} strokeWidth={2} style={{ color: service.accentLight }} />
+                                        ) : (
+                                            <Plus size={12} strokeWidth={2} className="text-white/30" />
+                                        )}
+                                    </div>
+                                </button>
+
+                                {/* ── Expanded panel ── */}
+                                <AnimatePresence initial={false}>
+                                    {isOpen && (
+                                        <motion.div
+                                            key="body"
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ opacity: 1, height: 'auto' }}
+                                            exit={{ opacity: 0, height: 0 }}
+                                            transition={{ duration: 0.38, ease: [0.4, 0, 0.2, 1] }}
+                                            style={{ overflow: 'hidden' }}
+                                        >
+                                            {/* Inner wrapper — NOT overflow-hidden, padding handles spacing */}
+                                            <div className="pb-8 sm:pl-[calc(1.75rem+2.5rem+1.25rem)] md:pl-[calc(1.75rem+2.5rem+2rem)]">
+                                                <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 md:gap-16">
+                                                    {/* Description */}
+                                                    <p className="text-[14.5px] md:text-[15px] text-white/50 leading-[1.9] font-light">
+                                                        {service.description}
+                                                    </p>
+
+                                                    {/* Bullets */}
+                                                    <ul className="space-y-3 md:min-w-[220px]">
+                                                        {service.bullets.map((bullet, idx) => (
+                                                            <motion.li
+                                                                key={idx}
+                                                                initial={{ opacity: 0, x: 10 }}
+                                                                animate={{ opacity: 1, x: 0 }}
+                                                                transition={{ duration: 0.3, delay: 0.05 + idx * 0.055 }}
+                                                                className="flex items-center gap-3 text-[13px] text-white/45 font-light"
+                                                            >
+                                                                <span
+                                                                    className="w-1 h-1 rounded-full shrink-0"
+                                                                    style={{ backgroundColor: service.accentLight }}
+                                                                />
+                                                                {bullet}
+                                                            </motion.li>
+                                                        ))}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </motion.div>
+                        );
+                    })}
                 </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-      </div>
-    </section>
-  );
+            </div>
+        </section>
+    );
 };
 
 export default ServiceDetails;

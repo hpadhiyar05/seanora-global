@@ -12,6 +12,7 @@ import {
   Send,
 } from 'lucide-react';
 import Breadcrumb from '../../components/ui/Breadcrumb';
+import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
 import SEO from '../../components/seo/SEO';
 import { sanityClient } from '../../lib/sanityClient';
 
@@ -27,7 +28,7 @@ const Field = ({ label, required, children }) => (
 );
 
 const inputCls =
-  'w-full border border-black/10 rounded-xl px-4 py-3 text-[15px] text-[#1B1D1E] placeholder-[#1B1D1E]/30 bg-white focus:outline-none focus:border-[#1B1D1E]/30 focus:ring-2 focus:ring-[#1B1D1E]/5 transition-all duration-200';
+  'w-full border border-black/10 rounded-xl px-4 py-3 text-[15px] text-[#1B1D1E] placeholder-[#1B1D1E]/30 bg-white focus:outline-none focus:border-[#1E5AA5]/30 focus:ring-2 focus:ring-[#1E5AA5]/10 transition-all duration-200';
 
 /* ─── Section block on the left ──────────────────────────────────── */
 const DetailSection = ({ title, children }) => (
@@ -43,7 +44,7 @@ const DetailSection = ({ title, children }) => (
 const BulletItem = ({ text, accent = false }) => (
   <li className="flex items-start gap-3 mb-3">
     <CheckCircle2
-      className={`w-4 h-4 mt-0.5 shrink-0 ${accent ? 'text-[#5BAACC]' : 'text-[#1B1D1E]/25'}`}
+      className={`w-4 h-4 mt-0.5 shrink-0 ${accent ? 'text-[#1E5AA5]' : 'text-[#1B1D1E]/25'}`}
       strokeWidth={2}
     />
     <span className={`text-[15px] leading-relaxed ${accent ? 'text-[#1B1D1E]' : 'text-[#4A4A4A]'}`}>
@@ -224,7 +225,6 @@ useEffect(() => {
       console.log('Raw response received:', response);
       
       const data = await response.json();
-      console.log('Parsed JSON response data:', data);
 
       if (data.success === true) {
         console.log('Submission successful. Rendering success view.');
@@ -258,8 +258,8 @@ useEffect(() => {
 
         {/* Subtle gradient blobs */}
         <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute left-0 top-0 w-[700px] h-[700px] bg-[#Eef7fb] rounded-full blur-[100px] opacity-70 -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute right-0 bottom-0 w-[600px] h-[600px] bg-[#Fdfae8] rounded-full blur-[100px] opacity-70 translate-x-1/3 translate-y-1/4" />
+          <div className="absolute left-0 top-0 w-[700px] h-[700px] bg-[#EFF6FF] rounded-full blur-[100px] opacity-50 -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute right-0 bottom-0 w-[600px] h-[600px] bg-[#E8EEF5] rounded-full blur-[100px] opacity-40 translate-x-1/3 translate-y-1/4" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 lg:px-12 max-w-6xl pt-32 pb-20 md:pt-40">
@@ -280,7 +280,7 @@ useEffect(() => {
             className="mb-12"
           >
             <div className="flex flex-wrap items-center gap-3 mb-4">
-              <span className="text-[11px] uppercase tracking-[0.12em] font-bold text-white bg-[#1B1D1E] px-3 py-1 rounded-full">
+              <span className="text-[11px] uppercase tracking-[0.12em] font-bold text-white bg-[#1E5AA5] px-3 py-1 rounded-full">
                 {job.department}
               </span>
               <span className="text-[11px] uppercase tracking-[0.1em] font-semibold text-[#6B6B6B] bg-black/5 px-3 py-1 rounded-full">
@@ -288,9 +288,9 @@ useEffect(() => {
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#1B1D1E] font-light leading-tight tracking-tight mb-6">
-              {job.title}
-            </h1>
+            <AnimatedHeading as="h1" className="text-[3rem] md:text-[5rem] font-medium text-[#111827] leading-tight tracking-tight mb-6">
+              <AnimatedText text={job.title} />
+            </AnimatedHeading>
 
             <div className="flex flex-wrap gap-3">
               <MetaBadge icon={MapPin} label={job.location} />
@@ -369,8 +369,8 @@ useEffect(() => {
                 {submitted ? (
                   /* ── Success state ── */
                   <div className="text-center py-8">
-                    <div className="w-14 h-14 rounded-full bg-[#Eef7fb] flex items-center justify-center mx-auto mb-5">
-                      <CheckCircle2 className="w-7 h-7 text-[#5BAACC]" strokeWidth={1.5} />
+                    <div className="w-14 h-14 rounded-full bg-[#DBEAFE] flex items-center justify-center mx-auto mb-5">
+                      <CheckCircle2 className="w-7 h-7 text-[#1E5AA5]" strokeWidth={1.5} />
                     </div>
                     <h3 className="text-xl font-serif text-[#1B1D1E] mb-3">Application Received</h3>
                     <p className="text-[14px] text-[#6B6B6B] font-light leading-relaxed mb-6">
@@ -480,10 +480,10 @@ useEffect(() => {
                           onDrop={handleDrop}
                           className={`relative flex flex-col items-center justify-center gap-2 border-2 border-dashed rounded-xl px-4 py-6 cursor-pointer transition-all duration-200 text-center ${
                             dragOver
-                              ? 'border-[#5BAACC] bg-[#Eef7fb]/60'
+                              ? 'border-[#1E5AA5] bg-[#EFF6FF]/60'
                               : form.resume
-                              ? 'border-[#1B1D1E]/20 bg-[#F4F6F5]'
-                              : 'border-black/10 hover:border-black/20 hover:bg-[#F9FAF8]'
+                              ? 'border-[#1E5AA5]/30 bg-[#EFF6FF]/40'
+                              : 'border-black/10 hover:border-[#1E5AA5]/30 hover:bg-[#F9FAF8]'
                           }`}
                         >
                           <input
@@ -496,7 +496,7 @@ useEffect(() => {
                             aria-label="Upload resume"
                           />
                           <Upload
-                            className={`w-5 h-5 ${form.resume ? 'text-[#5BAACC]' : 'text-[#6B6B6B]'}`}
+                            className={`w-5 h-5 ${form.resume ? 'text-[#1E5AA5]' : 'text-[#6B6B6B]'}`}
                             strokeWidth={1.5}
                           />
                           {form.resume ? (
@@ -525,12 +525,12 @@ useEffect(() => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group mt-2 relative flex items-center justify-between bg-[#1B1D1E] text-white p-1 rounded-full overflow-hidden w-full disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="group mt-2 relative flex items-center justify-between bg-gradient-to-r from-[#1E5AA5] to-[#29A8E0] text-white p-1 rounded-full overflow-hidden w-full disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(30,90,165,0.35)]"
                       >
-                        <span className="text-[14px] font-medium pl-5 pr-2 whitespace-nowrap transition-transform duration-[400ms] ease-out group-hover:translate-x-[36px] group-disabled:translate-x-0">
+                        <span className="text-[14px] font-semibold pl-5 pr-2 whitespace-nowrap transition-transform duration-[400ms] ease-out group-hover:translate-x-[36px] group-disabled:translate-x-0">
                           {isSubmitting ? 'Sending Application…' : 'Submit Application'}
                         </span>
-                        <div className="w-9 h-9 rounded-full bg-white text-black flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover:-translate-x-[340px] group-disabled:translate-x-0">
+                        <div className="w-9 h-9 rounded-full bg-white text-[#1E5AA5] flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover:-translate-x-[500px] group-disabled:translate-x-0">
                           <Send className="w-4 h-4" />
                         </div>
                       </button>

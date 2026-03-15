@@ -1,10 +1,11 @@
 import { Suspense, lazy } from 'react';
 import SEO from '../../components/seo/SEO';
 import ServicesHero from './components/ServicesHero';
+import ServicesBanner from './components/ServicesBanner'
 
 // Lazy load off-screen components
 const ServiceDetails = lazy(() => import('./components/ServiceDetails'));
-const WhyChooseAlenotech = lazy(() => import('./components/WhyChooseAlenotech'));
+const WhyChooseSeanora = lazy(() => import('./components/WhyChooseSeanora'));
 
 const SectionLoader = () => (
   <div className="h-64 flex items-center justify-center">
@@ -43,9 +44,10 @@ const Services = () => {
       />
       <div className="flex flex-col">
         <ServicesHero />
+        <ServicesBanner /> 
         <Suspense fallback={<SectionLoader />}>
           <ServiceDetails />
-          <WhyChooseAlenotech />
+          <WhyChooseSeanora />
         </Suspense>
       </div>
     </>

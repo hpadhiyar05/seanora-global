@@ -1,238 +1,257 @@
+
+
 import { useState, useEffect } from 'react';
-import { Moon, Menu, X } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import logo from '../../assets/logos/logo_1.png';
+import { ArrowRight } from 'lucide-react';
+import logo from '../../assets/logos/logo_1.webp';
 
 const Header = () => {
-  const location = useLocation();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const location = useLocation();
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [hoveredLink, setHoveredLink] = useState(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+    const isHome = location.pathname === '/';
+    const isDarkHero = location.pathname === '/' && !isScrolled;
+
+    useEffect(() => {
+        const onScroll = () => setIsScrolled(window.scrollY > 10);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    useEffect(() => {
+        document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMobileMenuOpen]);
+
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+    }, [location.pathname]);
+
+    const navLinks = [
+        { name: 'Home', path: '/' },
+        { name: 'About', path: '/about' },
+        { name: 'Services', path: '/services' },
+        { name: 'Careers', path: '/careers' },
+        { name: 'Contact', path: '/contact' },
+    ];
+
+    const menuVariants = {
+        closed: { opacity: 0, y: '-100%', transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+        open: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+    };
+    const linkContainerVariants = {
+        closed: { opacity: 0 },
+        open: { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.18 } },
+    };
+    const linkVariants = {
+        closed: { opacity: 0, y: 16 },
+        open: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Prevent scrolling when mobile menu is open
-  useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; };
-  }, [isMobileMenuOpen]);
-
-  // Close menu when route changes
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
-
-  const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Services', path: '/services' },
-    { name: 'Careers', path: '/careers' },
-    { name: 'Contact', path: '/contact' }
-  ];
-
-  // Mobile Menu Animation Variants
-  const menuVariants = {
-    closed: {
-      opacity: 0,
-      y: "-100%",
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1] // Custom refined ease curve
-      }
-    },
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
-  };
-
-  const linkContainerVariants = {
-    closed: { opacity: 0 },
-    open: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.08,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const linkVariants = {
-    closed: { opacity: 0, y: 20 },
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
-
-  return (
-    <>
-      {/* Fixed Header */}
-      <header className="fixed top-0 w-full z-50 py-2 lg:py-3 pointer-events-none flex justify-center px-4">
-        <div 
-          className={`pointer-events-auto flex items-center justify-between rounded-full px-4 lg:px-6 py-1.5 w-full max-w-[1000px] transition-all duration-300 ease-out relative z-50 ${
-            isScrolled || isMobileMenuOpen
-              ? 'bg-white/95 backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-black/5' 
-              : 'bg-transparent border border-transparent'
-          }`}
-        >
-          
-          {/* Logo */}
-          <Link
-            to="/"
-            className="flex items-center gap-2 group shrink-0"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-label="Seanora Global home"
-          >
-            <img
-              src={logo}
-              alt="Seanora Global logo"
-              className="h-7 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-              loading="eager"
-              decoding="async"
-            />
-          </Link>
-          
-          {/* Main Navigation (Desktop) */}
-          <nav className="hidden lg:flex items-center bg-[#F3F3F3] rounded-full p-1 gap-1" aria-label="Primary navigation">
-            {navLinks.map((link) => {
-              const isActive = location.pathname === link.path;
-              return (
-                <Link 
-                  key={link.name}
-                  to={link.path} 
-                  className={`px-3 py-1.5 rounded-full text-[13px] font-medium transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-white text-[#1B1D1E] shadow-sm' 
-                      : 'text-[#6B6B6B] bg-transparent hover:text-[#1B1D1E]'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* Right Actions & Hamburger */}
-          <div className="flex items-center shrink-0 gap-2">
-            <button
-              className="hidden lg:flex items-center justify-center w-9 h-9 rounded-full transition-colors bg-[#F3F3F3] hover:bg-black/5"
-              aria-label="Toggle color mode"
-              type="button"
+    return (
+        <>
+            {/* ══════════════════════════════════════════════════
+          HEADER BAR
+      ══════════════════════════════════════════════════ */}
+            <header
+                className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
+                    isScrolled
+                        ? 'bg-white/96 backdrop-blur-md border-b border-black/[0.08] shadow-[0_1px_16px_rgba(0,0,0,0.07)]'
+                        : isDarkHero
+                            ? 'bg-transparent border-b border-transparent'
+                            : 'bg-white border-b border-black/[0.06]'
+                }`}
             >
-              <Moon className="w-4 h-4 text-[#1B1D1E]" />
-            </button>
+                <div className="max-w-[1180px] mx-auto px-6 lg:px-10 h-[74px] flex items-center justify-between gap-8">
+                    {/* Logo */}
+                    <Link
+                        to="/"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        aria-label="Seanora Global home"
+                        className="flex items-center gap-2 shrink-0 group"
+                    >
+                        <img
+                            src={logo}
+                            alt="Seanora Global"
+                            className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.04]"
+                            loading="eager"
+                            decoding="async"
+                        />
+                    </Link>
 
-            {/* Mobile Hamburger Button */}
-            <button 
-              className="lg:hidden flex flex-col items-center justify-center w-10 h-10 rounded-full transition-colors bg-[#F3F3F3] hover:bg-black/5 relative"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-              type="button"
-            >
-              <div className="w-4 h-4 relative flex items-center justify-center">
-                <span className={`absolute h-[1.5px] w-full bg-[#1B1D1E] rounded-full transition-all duration-300 ease-out ${isMobileMenuOpen ? 'rotate-45' : '-translate-y-1.5'}`} />
-                <span className={`absolute h-[1.5px] w-full bg-[#1B1D1E] rounded-full transition-all duration-300 ease-out ${isMobileMenuOpen ? 'opacity-0' : 'opacity-100'}`} />
-                <span className={`absolute h-[1.5px] w-full bg-[#1B1D1E] rounded-full transition-all duration-300 ease-out ${isMobileMenuOpen ? '-rotate-45' : 'translate-y-1.5'}`} />
-              </div>
-            </button>
-          </div>
+                    {/* ── Desktop Nav ── */}
+                    <nav className="hidden lg:flex items-center" aria-label="Primary navigation" onMouseLeave={() => setHoveredLink(null)}>
+                        {navLinks.map((link) => {
+                            const isActive = location.pathname === link.path;
+                            const isHovered = hoveredLink === link.name;
 
-        </div>
-      </header>
+                            return (
+                                <Link
+                                    key={link.name}
+                                    to={link.path}
+                                    onMouseEnter={() => setHoveredLink(link.name)}
+                                    className="relative px-4 py-2 text-[15px] font-medium select-none transition-colors duration-150"
+                                    style={{
+                                        color: isActive
+                                            ? (isDarkHero ? 'rgba(255,255,255,1)' : '#111827')
+                                            : isHovered
+                                                ? (isDarkHero ? 'rgba(255,255,255,1)' : '#111827')
+                                                : (isDarkHero ? 'rgba(255,255,255,0.70)' : '#6B7280'),
+                                    }}
+                                >
+                                    {/* Hover background */}
+                                    <AnimatePresence>
+                                        {isHovered && (
+                                            <motion.span
+                                                layoutId="hov-bg"
+                                                initial={{ opacity: 0, scale: 0.92 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                exit={{ opacity: 0, scale: 0.92 }}
+                                                transition={{ duration: 0.14, ease: 'easeOut' }}
+                                                className={`absolute inset-0 rounded-lg z-0 ${isDarkHero ? 'bg-white/10' : 'bg-[#F3F4F6]'}`}
+                                            />
+                                        )}
+                                    </AnimatePresence>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
-            className="fixed inset-0 z-40 bg-[#F9FAF8] flex flex-col pt-32 px-6 lg:hidden"
-          >
-            {/* Background Decorative Blur */}
-            <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#Eef7fb] rounded-full blur-[100px] opacity-70 -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+                                    {/* Active underline */}
+                                    {isActive && (
+                                        <motion.span
+                                            layoutId="active-line"
+                                            className="absolute bottom-[3px] left-3 right-3 h-[2px] rounded-full bg-[#1E5AA5] z-0"
+                                            transition={{ type: 'spring', stiffness: 420, damping: 32 }}
+                                        />
+                                    )}
 
-            <div className="container mx-auto h-full flex flex-col relative z-10">
-              <motion.nav 
-                variants={linkContainerVariants}
-                className="flex flex-col gap-6"
-                aria-label="Mobile navigation"
-              >
-                {navLinks.map((link) => {
-                  const isActive = location.pathname === link.path;
-                  return (
-                    <motion.div key={link.name} variants={linkVariants}>
-                      <Link 
-                        to={link.path}
-                        className="group flex flex-col"
-                      >
-                        <div className="flex items-center justify-between pb-4 border-b border-black/5">
-                          <span className={`text-[32px] md:text-[40px] tracking-tight transition-colors duration-300 ${
-                            isActive ? 'text-[#1B1D1E] font-medium' : 'text-[#1B1D1E]/60 font-light group-hover:text-[#1B1D1E]'
-                          }`}>
-                            {link.name}
-                          </span>
-                          {/* Animated Arrow */}
-                          <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
-                            isActive ? 'bg-[#1B1D1E] text-white' : 'bg-transparent text-[#1B1D1E]/30 group-hover:bg-[#1B1D1E]/5 group-hover:text-[#1B1D1E]'
-                          }`}>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={isActive ? '' : '-rotate-45 transition-transform duration-300 group-hover:rotate-0'}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                          </div>
-                        </div>
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-              </motion.nav>
+                                    <span className="relative z-10">{link.name}</span>
+                                </Link>
+                            );
+                        })}
+                    </nav>
 
-              {/* Mobile Menu Footer */}
-              <motion.div 
-                variants={linkVariants}
-                className="mt-auto pb-12 pt-8 flex items-center justify-between border-t border-black/10"
-              >
-                <div className="flex flex-col gap-1">
-                  <span className="text-[12px] uppercase tracking-wider text-[#1B1D1E]/40 font-medium">Get in touch</span>
-                  <a href="mailto:info@seanoraglobal.com" className="text-[15px] text-[#1B1D1E] font-medium hover:text-[#4F46E5] transition-colors">
-                    info@seanoraglobal.com
-                  </a>
+                    {/* ── Right: CTA + hamburger ── */}
+                    <div className="flex items-center gap-3 shrink-0">
+                        {/* CTA button — desktop, outlined pill */}
+                        <Link
+                            to="/contact"
+                            className={`hidden lg:inline-flex items-center gap-2 px-5 py-[9px] rounded-full border text-[13.5px] font-semibold transition-all duration-200 group ${
+                                isDarkHero
+                                    ? 'border-white/40 text-white bg-transparent hover:bg-white/10'
+                                    : 'border-[#1E5AA5] text-[#1E5AA5] bg-transparent hover:bg-[#1E5AA5] hover:text-white'
+                            }`}
+                        >
+                            Get in touch
+                            <ArrowRight
+                                className="w-[14px] h-[14px] transition-transform duration-200 group-hover:translate-x-0.5"
+                                strokeWidth={2.5}
+                            />
+                        </Link>
+
+                        {/* Hamburger — mobile */}
+                        <button
+                            type="button"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label="Toggle menu"
+                            className="lg:hidden flex items-center justify-center w-9 h-9 rounded-lg bg-[#F3F4F6] hover:bg-[#E9EAEC] transition-colors duration-200"
+                        >
+                            <div className="w-[15px] h-[11px] relative flex flex-col justify-between">
+                                <span
+                                    className={`block h-[1.5px] w-full bg-[#111827] rounded-full origin-center transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-[4.75px]' : ''}`}
+                                />
+                                <span
+                                    className={`block h-[1.5px] w-full bg-[#111827] rounded-full transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0 scale-x-0' : ''}`}
+                                />
+                                <span
+                                    className={`block h-[1.5px] w-full bg-[#111827] rounded-full origin-center transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-[4.75px]' : ''}`}
+                                />
+                            </div>
+                        </button>
+                    </div>
                 </div>
-                
-                <button
-                  className="flex items-center justify-center w-12 h-12 rounded-full border border-black/10 transition-colors bg-white hover:bg-[#F3F3F3]"
-                  aria-label="Toggle color mode"
-                  type="button"
-                >
-                  <Moon className="w-5 h-5 text-[#1B1D1E]" />
-                </button>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
-  );
+            </header>
+
+            {/* ══════════════════════════════════════════════════
+          MOBILE MENU
+      ══════════════════════════════════════════════════ */}
+            <AnimatePresence>
+                {isMobileMenuOpen && (
+                    <motion.div
+                        initial="closed"
+                        animate="open"
+                        exit="closed"
+                        variants={menuVariants}
+                        className="fixed inset-0 z-40 bg-white flex flex-col pt-[74px] lg:hidden"
+                    >
+                        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#EFF6FF]/50 rounded-full blur-[130px] -translate-y-1/3 translate-x-1/4 pointer-events-none" />
+
+                        <div className="relative z-10 flex flex-col h-full max-w-[440px] mx-auto w-full px-6 pt-6 pb-10">
+                            <motion.nav variants={linkContainerVariants} className="flex flex-col" aria-label="Mobile navigation">
+                                {navLinks.map((link, i) => {
+                                    const isActive = location.pathname === link.path;
+                                    return (
+                                        <motion.div key={link.name} variants={linkVariants}>
+                                            <Link
+                                                to={link.path}
+                                                className="group flex items-center justify-between py-4 border-b border-[#F3F4F6]"
+                                            >
+                                                <div className="flex items-center gap-4">
+                                                    <span className="text-[11px] font-semibold text-[#D1D5DB] tabular-nums w-5 shrink-0">
+                                                        0{i + 1}
+                                                    </span>
+                                                    <span
+                                                        className={`text-[26px] font-serif font-light tracking-tight transition-colors duration-200 ${
+                                                            isActive ? 'text-[#111827]' : 'text-[#9CA3AF] group-hover:text-[#111827]'
+                                                        }`}
+                                                    >
+                                                        {link.name}
+                                                    </span>
+                                                </div>
+                                                <div
+                                                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-200 ${
+                                                        isActive
+                                                            ? 'bg-[#1E5AA5] text-white'
+                                                            : 'bg-[#F3F4F6] text-[#9CA3AF] group-hover:bg-[#111827] group-hover:text-white'
+                                                    }`}
+                                                >
+                                                    <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                                                </div>
+                                            </Link>
+                                        </motion.div>
+                                    );
+                                })}
+                            </motion.nav>
+
+                            {/* Footer */}
+                            <motion.div variants={linkVariants} className="mt-auto pt-8 flex items-end justify-between">
+                                <div>
+                                    <p className="text-[11px] uppercase tracking-[0.18em] font-semibold text-[#9CA3AF] mb-1.5">
+                                        Get in touch
+                                    </p>
+                                    <a
+                                        href="mailto:info@seanoraglobal.com"
+                                        className="text-[14px] font-medium text-[#111827] hover:text-[#1E5AA5] transition-colors duration-200"
+                                    >
+                                        info@seanoraglobal.com
+                                    </a>
+                                </div>
+                                <Link
+                                    to="/contact"
+                                    className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#1E5AA5] text-white text-[13px] font-semibold hover:bg-[#174F94] transition-colors duration-200 shrink-0"
+                                >
+                                    Contact
+                                    <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.5} />
+                                </Link>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
+    );
 };
 
 export default Header;

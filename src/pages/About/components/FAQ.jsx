@@ -57,10 +57,7 @@ const FAQ = () => {
   return (
     <section className="py-16 md:py-24 bg-white relative overflow-hidden">
       
-      {/* Background Gradients */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute right-0 bottom-0 w-[800px] h-[800px] bg-[#Fdfae8] rounded-full blur-[100px] opacity-90 translate-x-1/3 translate-y-1/4"></div>
-      </div>
+
 
       <div className="container mx-auto px-4 lg:px-12 max-w-6xl relative z-10">
         <motion.div
@@ -73,9 +70,9 @@ const FAQ = () => {
           <span className="text-xs font-sans tracking-[0.2em] text-[#6B6B6B] font-medium uppercase mb-4 block">
             Read More
           </span>
-          <AnimatedHeading className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#1B1D1E] font-light leading-tight mb-8 tracking-tight">
+          <AnimatedHeading className="text-[2.5rem] md:text-[4rem] font-medium text-[#111827] leading-tight mb-8 tracking-tight">
             <AnimatedText text="Frequently Asked " />
-            <AnimatedText text="Questions" className="italic text-[#1B1D1E]/65" />
+            <AnimatedText text="Questions" className="text-[#1B1D1E]/65" />
           </AnimatedHeading>
           <p className="text-lg text-[#6B6B6B] font-light leading-relaxed">
             Find answers to the most commonly asked questions about our services, methodologies, and expertise.

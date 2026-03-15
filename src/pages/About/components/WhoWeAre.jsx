@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 import { Route, Target, Rocket } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 import Breadcrumb from '../../../components/ui/Breadcrumb';
+import aboutusHero from '../../../assets/images/aboutus-hero.webp';
 
 const stats = [
   { end: 10,  suffix: '+', label: 'Years of Experience' },
@@ -20,33 +21,23 @@ const CountUp = ({ end, suffix = '', duration = 1800 }) => {
 
   useEffect(() => {
     if (!inView) return;
-
     const startTime = performance.now();
-
     const tick = (now) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      // ease-out cubic
       const eased = 1 - (1 - progress) ** 3;
       setCount(Math.floor(eased * end));
-
       if (progress < 1) {
         rafRef.current = requestAnimationFrame(tick);
       } else {
         setCount(end);
       }
     };
-
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
   }, [inView, end, duration]);
 
-  return (
-    <span ref={ref}>
-      {count}
-      {suffix}
-    </span>
-  );
+  return <span ref={ref}>{count}{suffix}</span>;
 };
 
 const cards = [
@@ -90,72 +81,164 @@ const WhoWeAre = () => {
   return (
     <section className="bg-white relative overflow-hidden">
 
-      {/* Gradient blobs */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute left-0 top-0 w-[900px] h-[900px] bg-[#Eef7fb] rounded-full blur-[120px] opacity-80 -translate-x-1/3 -translate-y-1/2" />
-        <div className="absolute right-0 top-1/2 w-[650px] h-[650px] bg-[#Fdfae8] rounded-full blur-[100px] opacity-70 translate-x-1/3 -translate-y-1/3" />
-        <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-white via-white/80 to-transparent" />
-      </div>
 
-      {/* ── Hero heading ── */}
-      <div className="pt-32 md:pt-40 pb-14 md:pb-20 relative z-10">
+
+      {/* ════════════════════════════════════════
+          HERO — two-column split
+          Left: breadcrumb + heading + body text
+          Right: image in styled frame
+      ════════════════════════════════════════ */}
+      <div className="pt-32 md:pt-40 pb-0 relative z-10">
         <div className="container mx-auto px-4 lg:px-12 max-w-6xl">
-          <Breadcrumb crumbs={[{ label: 'About Us' }]} />
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.85 }}
-          >
-            <motion.span
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-xs font-sans tracking-[0.22em] text-[#6B6B6B] font-medium uppercase mb-6 block"
-            >
-              Who We Are
-            </motion.span>
 
-            <AnimatedHeading
-              as="h1"
-              className="text-5xl md:text-6xl lg:text-7xl font-serif text-[#1B1D1E] font-light leading-[1.08] tracking-tight mb-8"
-            >
-              <AnimatedText text="Transforming Technology," />
-              <br className="hidden md:block" />
-              <span className="inline-flex flex-wrap gap-x-4">
-                <AnimatedText text="Innovating" />
-                <AnimatedText text="the Future" className="italic text-[#1B1D1E]/65" />
-              </span>
-            </AnimatedHeading>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
 
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="text-[17px] md:text-lg text-[#6B6B6B] font-light leading-relaxed max-w-2xl"
+            {/* ── Left: text ── */}
+            <div>
+              <Breadcrumb crumbs={[{ label: 'About Us' }]} />
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.85 }}
+                className="mt-6"
+              >
+                <motion.span
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="text-xs font-sans tracking-[0.22em] text-[#6B6B6B] font-medium uppercase mb-6 block"
+                >
+                  Who We Are
+                </motion.span>
+
+                <AnimatedHeading
+                  as="h1"
+                  className="text-[3rem] md:text-[5rem] font-medium text-[#111827] leading-[1.08] tracking-tight mb-8"
+                >
+                  <AnimatedText text="Transforming" />
+                  <br />
+                  <AnimatedText text="Technology," />
+                  <br />
+                  <span className="inline-flex flex-wrap gap-x-3">
+                    <AnimatedText text="Innovating" />
+                    <AnimatedText text="the Future" className="text-[#1B1D1E]/60" />
+                  </span>
+                </AnimatedHeading>
+
+                <motion.p
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.7, delay: 0.25 }}
+                  className="text-[16px] md:text-[17px] text-[#6B6B6B] font-light leading-relaxed max-w-lg"
+                >
+                  Welcome to Seanora Global, your trusted partner in innovative IT solutions.
+                  We specialise in delivering cutting-edge technology services that empower
+                  businesses to thrive in today's digital landscape.
+                </motion.p>
+              </motion.div>
+            </div>
+
+            {/* ── Right: image ── */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.9, delay: 0.2, ease: 'easeOut' }}
+              className="relative lg:mt-10"
             >
-              Welcome to Seanora Global, your trusted partner in innovative IT solutions.
-              We specialise in delivering cutting-edge technology services that empower
-              businesses to thrive in today's digital landscape.
-            </motion.p>
-          </motion.div>
+              {/* Offset accent border — slightly stronger so the depth reads */}
+              <div className="absolute -bottom-3 -right-3 w-full h-full rounded-[28px] border-2 border-[#93C5FD]/60 z-0" />
+
+              {/* Small decorative dot grid — top-left corner */}
+              <div
+                className="absolute -top-4 -left-4 w-24 h-24 z-0 opacity-40"
+                style={{
+                  backgroundImage: 'radial-gradient(circle, #93C5FD 1px, transparent 1px)',
+                  backgroundSize: '10px 10px',
+                }}
+              />
+
+              {/* Image container */}
+              <div className="relative z-10 rounded-[24px] overflow-hidden shadow-[0_24px_64px_rgba(0,0,0,0.13)]">
+                <img
+                  src={aboutusHero}
+                  alt="Seanora Global team collaborating"
+                  loading="eager"
+                  className="w-full h-[340px] md:h-[420px] lg:h-[460px] object-cover object-center"
+                />
+
+                {/*
+                  Gradient overlay:
+                  - Bottom: dark→transparent so a caption badge sits readable
+                  - Left edge: very subtle white tint to blend with page background
+                    and soften the warm tones meeting the blue blobs
+                */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: `linear-gradient(
+                      135deg,
+                      rgba(255,255,255,0.08) 0%,
+                      transparent           40%,
+                      transparent           55%,
+                      rgba(0,0,0,0.28)      100%
+                    )`,
+                  }}
+                />
+
+                {/* Floating badge — bottom left */}
+                <motion.div
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                  className="absolute bottom-5 left-5 bg-white/90 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(0,0,0,0.12)]"
+                >
+                  <p className="text-[11px] uppercase tracking-[0.16em] font-semibold text-[#6B6B6B] leading-none mb-1">
+                    Trusted Since
+                  </p>
+                  <p className="text-[1.25rem] font-medium text-[#111827] leading-none">
+                    2014
+                  </p>
+                </motion.div>
+
+                {/* Floating badge — top right */}
+                <motion.div
+                  initial={{ opacity: 0, y: -12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.85 }}
+                  className="absolute top-5 right-5 bg-[#1E5AA5]/90 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-[0_8px_24px_rgba(30,90,165,0.3)]"
+                >
+                  <p className="text-[11px] uppercase tracking-[0.16em] font-semibold text-white/70 leading-none mb-1">
+                    Global Reach
+                  </p>
+                  <p className="text-[1.25rem] font-medium text-white leading-none">
+                    15+ Countries
+                  </p>
+                </motion.div>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </div>
 
-      {/* ── Stats strip ── */}
-      <div className="border-y border-black/[0.06] relative z-10">
+      {/* ════════════════════════════════════════
+          STATS STRIP
+      ════════════════════════════════════════ */}
+      <div className="mt-16 md:mt-20 relative z-10 bg-[#1A1C1E]">
         <div className="container mx-auto px-4 lg:px-12 max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-black/[0.06]"
+            className="grid grid-cols-2 lg:grid-cols-4 divide-x divide-white/[0.07]"
           >
             {stats.map((stat) => (
-              <div key={stat.label} className="py-8 px-6 text-center">
-                <div className="text-4xl font-light md:text-4xl font-sans text-[#1B1D1E] mb-1 tracking-tight tabular-nums">
+              <div key={stat.label} className="py-9 px-6 text-center">
+                <div className="text-4xl font-bold font-sans text-white mb-1.5 tracking-tight tabular-nums">
                   <CountUp end={stat.end} suffix={stat.suffix} />
                 </div>
-                <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-[#6B6B6B]">
+                <div className="text-[11px] uppercase tracking-[0.16em] font-semibold text-white/45">
                   {stat.label}
                 </div>
               </div>
@@ -164,7 +247,9 @@ const WhoWeAre = () => {
         </div>
       </div>
 
-      {/* ── Cards ── */}
+      {/* ════════════════════════════════════════
+          CARDS
+      ════════════════════════════════════════ */}
       <div className="py-16 md:py-24 relative z-10">
         <div className="container mx-auto px-4 lg:px-12 max-w-6xl">
           <motion.div
@@ -181,12 +266,12 @@ const WhoWeAre = () => {
                 className="group relative p-9 lg:p-10 bg-white border border-black/[0.06] rounded-[24px] flex flex-col h-full text-left overflow-hidden transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.07)] hover:border-transparent cursor-default"
               >
                 {/* Background number watermark */}
-                <span className="absolute top-6 right-7 text-[72px] font-serif font-light text-black/[0.04] group-hover:text-black/[0.07] transition-colors duration-500 leading-none select-none pointer-events-none">
+                <span className="absolute top-6 right-7 text-[72px] font-light text-black/[0.04] group-hover:text-black/[0.07] transition-colors duration-500 leading-none select-none pointer-events-none">
                   {number}
                 </span>
 
                 {/* Icon */}
-                <div className="w-12 h-12 rounded-2xl bg-[#F3F3F3] text-[#1B1D1E] flex items-center justify-center mb-7 shrink-0 transition-all duration-500 group-hover:bg-[#1B1D1E] group-hover:text-white group-hover:scale-110">
+                <div className="w-12 h-12 rounded-2xl bg-[#EFF6FF] text-[#1E5AA5] flex items-center justify-center mb-7 shrink-0 transition-all duration-500 group-hover:bg-[#1E5AA5] group-hover:text-white group-hover:scale-110">
                   <Icon className="w-5 h-5" strokeWidth={1.5} />
                 </div>
 
@@ -195,8 +280,8 @@ const WhoWeAre = () => {
                   {label}
                 </span>
 
-                {/* Snappy title */}
-                <h3 className="text-[21px] leading-snug font-serif text-[#1B1D1E] font-light mb-5 whitespace-pre-line">
+                {/* Title */}
+                <h3 className="text-[1.75rem] leading-snug font-medium text-[#111827] mb-5 whitespace-pre-line">
                   {title}
                 </h3>
 

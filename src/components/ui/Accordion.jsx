@@ -6,7 +6,7 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
     <div
       className={`rounded-xl border overflow-hidden transition-colors duration-300 ${
         isOpen
-          ? 'border-black/15 bg-white'
+          ? 'border-[#1E5AA5]/20 bg-white'
           : 'border-black/10 bg-white hover:border-black/20'
       }`}
     >
@@ -21,7 +21,7 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
 
         {/* + / × icon — matches the screenshot exactly */}
         <span
-          className="shrink-0 mt-0.5 text-[18px] leading-none text-[#1B1D1E]/50 select-none"
+          className="shrink-0 mt-0.5 text-[18px] leading-none text-[#1E5AA5] select-none"
           aria-hidden="true"
         >
           {isOpen ? '×' : '+'}

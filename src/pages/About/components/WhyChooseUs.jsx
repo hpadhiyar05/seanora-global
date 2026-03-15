@@ -36,24 +36,45 @@ const gridVariants = {
 };
 
 const gridItem = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+  hidden: (i = 0) => {
+    const offsets = [
+      { x: -35, y: -35 }, // top-left
+      { x: 35, y: -35 },  // top-right
+      { x: -35, y: 35 },  // bottom-left
+      { x: 35, y: 35 },   // bottom-right
+    ];
+
+    const { x, y } = offsets[i] || { x: 0, y: 0 };
+
+    return {
+      opacity: 0,
+      x,
+      y,
+      scale: 0.96,
+    };
+  },
+  show: {
+    opacity: 1,
+    x: 0,
+    y: 0,
+    scale: 1,
+    transition: {
+      duration: 0.65,
+      ease: 'easeOut',
+    },
+  },
 };
 
 const WhyChooseUs = () => {
   return (
-    <section className="py-16 md:py-24 bg-[#F9FAF8] relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-[#F5F5F5] relative overflow-hidden">
 
-      {/* Gradient blobs */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute right-0 top-0 w-[700px] h-[700px] bg-[#Eef7fb] rounded-full blur-[100px] opacity-70 translate-x-1/2 -translate-y-1/3" />
-        <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-[#Fdfae8] rounded-full blur-[100px] opacity-60 -translate-x-1/3 translate-y-1/3" />
-      </div>
+
 
       <div className="container mx-auto px-4 lg:px-12 max-w-6xl relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-[2fr_3fr] gap-12 xl:gap-20 items-start">
 
-          {/* ── Left: sticky heading block ── */}
+          {/* Left: sticky heading block */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -65,10 +86,10 @@ const WhyChooseUs = () => {
               Why Choose Us
             </span>
 
-            <AnimatedHeading className="text-4xl md:text-5xl font-serif text-[#1B1D1E] font-light leading-tight tracking-tight mb-6">
+            <AnimatedHeading className="text-[2.5rem] md:text-[4rem] font-medium text-[#111827] leading-tight tracking-tight mb-6">
               <AnimatedText text="Partnering" className="block" />
               <AnimatedText text="for " />
-              <AnimatedText text="Success" className="italic text-[#1B1D1E]/65" />
+              <AnimatedText text="Success" className="text-[#1B1D1E]/65" />
             </AnimatedHeading>
 
             <p className="text-[16px] text-[#6B6B6B] font-light leading-relaxed mb-8 max-w-sm">
@@ -83,13 +104,13 @@ const WhyChooseUs = () => {
               <span className="transition-all duration-300 group-hover:underline underline-offset-4">
                 Explore Our Services
               </span>
-              <div className="w-8 h-8 rounded-full border border-black/10 flex items-center justify-center transition-all duration-300 group-hover:bg-[#1B1D1E] group-hover:text-white group-hover:border-[#1B1D1E]">
+              <div className="w-8 h-8 rounded-full border border-black/10 flex items-center justify-center transition-all duration-300 group-hover:bg-[#1E5AA5] group-hover:text-white group-hover:border-[#1E5AA5]">
                 <ArrowUpRight className="w-3.5 h-3.5" />
               </div>
             </Link>
           </motion.div>
 
-          {/* ── Right: 2 × 2 card grid ── */}
+          {/* Right: card grid */}
           <motion.div
             className="grid grid-cols-1 sm:grid-cols-2 gap-5"
             variants={gridVariants}
@@ -97,29 +118,46 @@ const WhyChooseUs = () => {
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
           >
-            {reasons.map(({ Icon, title, description }) => (
+            {reasons.map(({ Icon, title, description }, index) => (
               <motion.div
                 key={title}
+                custom={index}
                 variants={gridItem}
-                className="group p-7 rounded-[20px] bg-white border border-black/[0.06] hover:border-black/10 hover:shadow-[0_12px_32px_rgba(0,0,0,0.06)] transition-all duration-400 hover:-translate-y-1.5 cursor-default flex flex-col"
+                className="
+                group p-7 rounded-[20px] bg-white border border-black/[0.06]
+                hover:bg-[#132A4D] hover:border-[#132A4D]
+                transition-all duration-500 ease-out
+                hover:-translate-y-1.5 hover:scale-[1.03]
+                cursor-default flex flex-col
+                "
               >
+
                 {/* Icon */}
-                <div className="w-11 h-11 rounded-xl bg-[#F3F3F3] text-[#1B1D1E] flex items-center justify-center mb-6 shrink-0 transition-all duration-500 group-hover:bg-[#1B1D1E] group-hover:text-white group-hover:scale-105">
+                <div
+                  className="
+                  w-11 h-11 rounded-xl bg-[#EFF6FF] text-[#1E5AA5]
+                  flex items-center justify-center mb-6 shrink-0
+                  transition-all duration-500
+                  group-hover:bg-white/10 group-hover:text-white
+                  group-hover:scale-110
+                  "
+                >
                   <Icon className="w-5 h-5" strokeWidth={1.5} />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-[18px] font-serif text-[#1B1D1E] mb-3 leading-snug">
+                <h3 className="text-[1.75rem] font-medium text-[#111827] mb-3 leading-snug transition-colors duration-400 group-hover:text-white">
                   {title}
                 </h3>
 
                 {/* Animated rule */}
-                <div className="w-6 h-px bg-black/10 mb-4 scale-x-50 origin-left group-hover:scale-x-100 transition-transform duration-500" />
+                <div className="w-6 h-px bg-black/10 mb-4 scale-x-50 origin-left transition-all duration-500 group-hover:bg-white/40 group-hover:scale-x-100" />
 
                 {/* Description */}
-                <p className="text-[14px] text-[#6B6B6B] leading-relaxed font-light flex-grow">
+                <p className="text-[14px] text-[#6B6B6B] leading-relaxed font-light flex-grow transition-colors duration-400 group-hover:text-white/80">
                   {description}
                 </p>
+
               </motion.div>
             ))}
           </motion.div>

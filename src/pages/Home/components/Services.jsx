@@ -1,124 +1,261 @@
+import { useState, useEffect } from 'react';
 import { MonitorSmartphone, Server, Briefcase, GraduationCap, Headset, ShieldCheck } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
+/* ── Six service images ─────────────────────────────────────
+   Place in assets/images/ as home-service-1.webp … home-service-6.webp
+──────────────────────────────────────────────────────────── */
+import img1 from '../../../assets/images/home-service-1.webp';
+import img2 from '../../../assets/images/home-service-2.webp';
+import img3 from '../../../assets/images/home-service-3.webp';
+import img4 from '../../../assets/images/home-service-4.webp';
+import img5 from '../../../assets/images/home-service-5.webp';
+import img6 from '../../../assets/images/home-service-6.webp';
+
 const servicesList = [
-  {
-    icon: MonitorSmartphone,
-    title: 'Mobile & Website Design\nand Development',
-    description: 'Creating user-friendly mobile apps\nand websites.',
-  },
-  {
-    icon: Server,
-    title: 'System Integration & IT\nReseller',
-    description: 'Seamless system integration and\nquality IT products.',
-  },
-  {
-    icon: Briefcase,
-    title: 'Technical Professional\nServices',
-    description: 'Expert consulting, implementation,\nand maintenance.',
-  },
-  {
-    icon: GraduationCap,
-    title: 'IT Training',
-    description: 'Delivering comprehensive IT training\nprograms to keep your team updated\nwith the latest technologies and best\npractices.',
-  },
-  {
-    icon: Headset,
-    title: 'IT Services and IT\nConsulting',
-    description: 'IT services provide technical support,\nwhile IT consulting offers strategic\nguidance for optimizing technology.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Cloud Computing &\nSecurity',
-    description: 'Offering scalable cloud solutions and\nrobust security measures to protect\nyour data and IT infrastructure.',
-  },
+    {
+        icon: MonitorSmartphone,
+        title: 'Mobile & Website Design and Development',
+        description: 'Creating user-friendly mobile apps and websites.',
+        tags: ['UI/UX Design', 'Mobile Apps', 'Web Development', 'E-Commerce'],
+        image: img1,
+    },
+    {
+        icon: Server,
+        title: 'System Integration & IT Reseller',
+        description: 'Seamless system integration and quality IT products.',
+        tags: ['System Integration', 'IT Procurement', 'Hardware Supply', 'Vendor Management'],
+        image: img2,
+    },
+    {
+        icon: Briefcase,
+        title: 'Technical Professional Services',
+        description: 'Expert consulting, implementation, and maintenance.',
+        tags: ['IT Consulting', 'Implementation', 'Maintenance', 'Support'],
+        image: img3,
+    },
+    {
+        icon: GraduationCap,
+        title: 'IT Training',
+        description: 'Delivering comprehensive IT training programs to keep your team updated with the latest technologies.',
+        tags: ['Corporate Training', 'Certification Prep', 'Workshops', 'E-Learning'],
+        image: img4,
+    },
+    {
+        icon: Headset,
+        title: 'IT Services and IT Consulting',
+        description: 'IT services provide technical support, while IT consulting offers strategic guidance for optimizing technology.',
+        tags: ['Help Desk', 'Strategic Planning', 'Infrastructure', 'IT Roadmap'],
+        image: img5,
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Cloud Computing & Security',
+        description: 'Offering scalable cloud solutions and robust security measures to protect your data and IT infrastructure.',
+        tags: ['Cloud Migration', 'Cybersecurity', 'Data Protection', 'Compliance'],
+        image: img6,
+    },
 ];
 
-/* Stagger variants — consistent system-wide pattern */
-const gridVariants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
-};
-const cardVariant = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } },
+/* ── Single accordion row ───────────────────────────────── */
+const ServiceRow = ({ service, index, isActive, onHover, onLeave, isMobile }) => {
+    const Icon = service.icon;
+
+    return (
+        <motion.div
+            onMouseEnter={isMobile ? undefined : onHover}
+            onMouseLeave={isMobile ? undefined : onLeave}
+            className="group relative border-b border-black/[0.08] last:border-b-0 cursor-default"
+        >
+            <div className="flex items-start justify-between gap-8 py-10 md:py-12">
+                {/* ── Left: text content ── */}
+                <div className="flex-1 min-w-0">
+                    {/* Index + title row */}
+                    <div className="flex items-start gap-5 mb-0">
+
+                        <div className="flex-1">
+                            {/* Title */}
+                            <div className="flex items-center gap-3 mb-1">
+                                <Icon
+                                    className={`w-5 h-5 shrink-0 transition-colors duration-300 ${isActive ? 'text-[#1E5AA5]' : 'text-[#9CA3AF]'}`}
+                                    strokeWidth={1.75}
+                                />
+                                <h3
+                                    className={`text-[1.75rem] font-medium tracking-tight transition-colors duration-300 leading-snug ${isActive ? 'text-[#111827]' : 'text-[#374151]'}`}
+                                >
+                                    {service.title}
+                                </h3>
+                            </div>
+
+                            {/* Description — always visible */}
+                            <p className="text-[14.5px] text-[#6B7280] font-light leading-relaxed pl-8 mb-0">{service.description}</p>
+
+                            {/* Expanded content */}
+                            <AnimatePresence initial={false}>
+                                {isActive && (
+                                    <motion.div
+                                        key="expanded"
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                                        className="overflow-hidden"
+                                    >
+                                        {/* Tag pills */}
+                                        <div className="flex flex-wrap gap-2 pl-8 pt-4">
+                                            {service.tags.map((tag) => (
+                                                <span
+                                                    key={tag}
+                                                    className="px-3 py-1.5 rounded-full bg-[#F3F4F6] text-[12px] font-medium text-[#374151] border border-[#E5E7EB]"
+                                                >
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        {/* Learn more */}
+                                        <div className="pl-8 pt-4">
+                                            <Link
+                                                to="/services"
+                                                className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1E5AA5] hover:text-[#174F94] transition-colors duration-200"
+                                            >
+                                                Learn More
+                                                <svg
+                                                    width="14"
+                                                    height="14"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="2.5"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                >
+                                                    <path d="M5 12h14" />
+                                                    <path d="m12 5 7 7-7 7" />
+                                                </svg>
+                                            </Link>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                </div>
+
+                {/* ── Right: image thumbnail (hidden on mobile) ── */}
+                {!isMobile && (
+                <div
+                    className="shrink-0 overflow-hidden rounded-xl"
+                    style={{
+                        transition: 'width 0.4s cubic-bezier(0.22,1,0.36,1), height 0.4s cubic-bezier(0.22,1,0.36,1)',
+                        width: isActive ? '260px' : '96px',
+                        height: isActive ? '180px' : '68px',
+                    }}
+                >
+                    <img
+                        src={service.image}
+                        alt={service.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-all duration-500"
+                        style={{
+                            filter: isActive ? 'grayscale(0%)' : 'grayscale(100%)',
+                            transform: isActive ? 'scale(1)' : 'scale(1.04)',
+                            transition: 'filter 0.5s ease, transform 0.5s ease',
+                        }}
+                    />
+                </div>
+                )}
+            </div>
+        </motion.div>
+    );
 };
 
+/* ── Main section ───────────────────────────────────────── */
 const Services = () => {
-  return (
-    <section className="py-16 md:py-24 bg-white relative overflow-hidden">
-      <div className="max-w-6xl mx-auto px-4 lg:px-12 relative z-10">
+    const [isMobile, setIsMobile] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(0);
 
-        {/* Section heading */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.65, ease: 'easeOut' }}
-          className="text-center mb-14 md:mb-16"
-        >
-          <span className="text-xs font-sans tracking-[0.22em] text-[#6B6B6B] uppercase mb-4 block font-medium">
-            Our Services
-          </span>
-          <AnimatedHeading className="text-[40px] md:text-[48px] text-[#1B1D1E] tracking-tight leading-[1.1]">
-            <AnimatedText text="We Offer a Wide" className="block font-medium" />
-            <span className="block font-medium">
-              <AnimatedText text="Variety of" />{' '}
-              <AnimatedText text="IT Services" className="font-serif italic font-light text-black/70" />
-            </span>
-          </AnimatedHeading>
-        </motion.div>
+    useEffect(() => {
+        const mq = window.matchMedia('(max-width: 767px)');
+        const handler = (e) => {
+            setIsMobile(e.matches);
+            if (e.matches) setActiveIndex(null);
+            else setActiveIndex(0);
+        };
+        handler(mq);
+        mq.addEventListener('change', handler);
+        return () => mq.removeEventListener('change', handler);
+    }, []);
 
-        {/* Cards grid */}
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          variants={gridVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-60px' }}
-        >
-          {servicesList.map((service, index) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={index}
-                variants={cardVariant}
-                className="group p-10 bg-white border border-black/[0.06] rounded-[20px] flex flex-col h-full text-left relative transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_16px_32px_rgba(0,0,0,0.07)] hover:border-transparent"
-              >
-                {/* Icon */}
-                <div className="text-[#1B1D1E] mb-10 transition-transform duration-300 group-hover:scale-105 origin-left">
-                  <Icon className="w-7 h-7" strokeWidth={1.5} />
-                </div>
+    return (
+        <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+            <div className="w-[80%] mx-auto relative z-10">
+                {/* ── Section header — two column like reference ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-80px' }}
+                    transition={{ duration: 0.65, ease: 'easeOut' }}
+                    className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-16"
+                >
+                    {/* Left: heading */}
+                    <div>
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9CA3AF] mb-4 block">
+                            Our Services
+                        </span>
+                        <AnimatedHeading className="text-[2.5rem] md:text-[4rem] text-[#111827] tracking-tight leading-[1.08]">
+                            <AnimatedText text="We Offer a Wide" className="block font-medium" />
+                            <span className="block font-medium">
+                                <AnimatedText text="Variety of " />
+                                <AnimatedText text="IT Services" className="text-black/50" />
+                            </span>
+                        </AnimatedHeading>
+                    </div>
 
-                {/* Label */}
-                <h3 className="text-[13px] text-black/40 mb-3 font-medium whitespace-pre-line tracking-wide">
-                  {service.title}
-                </h3>
+                    {/* Right: sub-copy + CTA */}
+                    <div className="lg:max-w-[320px] lg:pb-1">
+                        <p className="text-[14.5px] text-[#6B7280] font-light leading-relaxed mb-5">
+                            Explore solutions to help your business scale smarter, operate efficiently, and stay ahead of change.
+                        </p>
+                        <Link
+                            to="/services"
+                            className="group relative flex items-center justify-between bg-gradient-to-r from-[#1E5AA5] to-[#29A8E0] text-white p-1 h-[44px] rounded-full overflow-hidden shrink-0 w-[190px] shadow-[0_4px_14px_rgba(30,90,165,0.35)]"
+                        >
+                            <span className="text-[14px] font-medium pl-4 pr-2 whitespace-nowrap transition-transform duration-[400ms] ease-out group-hover:translate-x-[36px]">
+                                Explore Services
+                            </span>
+                            <div className="w-9 h-9 rounded-full bg-white text-[#1E5AA5] flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover:-translate-x-[144px]">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                            </div>
+                        </Link>
+                    </div>
+                </motion.div>
 
-                {/* Description */}
-                <p className="text-[20px] leading-[1.4] text-[#1B1D1E] font-medium transition-colors duration-300 group-hover:text-[#4F46E5] tracking-tight whitespace-pre-line flex-grow">
-                  {service.description}
-                </p>
-
-                {/* Footer link */}
-                <div className="mt-auto pt-10">
-                  <Link
-                    to="/services"
-                    className="text-[13px] font-medium text-black/30 group-hover:text-black/60 transition-colors duration-300"
-                  >
-                    Learn more &rarr;
-                  </Link>
-                </div>
-              </motion.div>
-            );
-          })}
-        </motion.div>
-
-      </div>
-    </section>
-  );
+                {/* ── Accordion list ── */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: '-60px' }}
+                    transition={{ duration: 0.6, ease: 'easeOut' }}
+                    className="border-t border-black/[0.08]"
+                >
+                    {servicesList.map((service, index) => (
+                        <ServiceRow
+                            key={index}
+                            service={service}
+                            index={index}
+                            isActive={activeIndex === index}
+                            onHover={() => setActiveIndex(index)}
+                            onLeave={() => {}}
+                            isMobile={isMobile}
+                        />
+                    ))}
+                </motion.div>
+            </div>
+        </section>
+    );
 };
 
 export default Services;

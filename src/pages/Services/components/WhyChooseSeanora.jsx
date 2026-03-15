@@ -12,7 +12,6 @@ const reasons = [
         statLabel: 'Years experience',
         description:
             'Our certified professionals bring deep cross-industry knowledge — pairing technical depth with strategic insight to solve your most complex IT challenges.',
-        // Each card gets a unique left border + tinted bg on hover
         borderColor: '#1E5AA5',
         hoverBg: '#EFF6FF',
     },
@@ -54,7 +53,7 @@ const reasons = [
 const WhyChooseSeanora = () => {
     return (
         <section className="bg-white relative overflow-hidden py-20 md:py-28">
-            {/* Very subtle blobs — white bg so they're barely perceptible */}
+            {/* Very subtle blobs */}
             <div className="absolute inset-0 pointer-events-none z-0">
                 <div className="absolute left-0 bottom-0 w-[600px] h-[600px] bg-[#DBEAFE] rounded-full blur-[130px] opacity-30 -translate-x-1/3 translate-y-1/3" />
                 <div className="absolute right-0 top-0 w-[500px] h-[500px] bg-[#E0F2FE] rounded-full blur-[110px] opacity-25 translate-x-1/3 -translate-y-1/3" />
@@ -89,7 +88,7 @@ const WhyChooseSeanora = () => {
                     </p>
                 </motion.div>
 
-                {/* ── Cards — horizontal layout, left accent border ── */}
+                {/* ── Cards ── */}
                 <motion.div
                     className="grid grid-cols-1 md:grid-cols-2 gap-5"
                     variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
@@ -107,11 +106,8 @@ const WhyChooseSeanora = () => {
                                     show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: 'easeOut' } },
                                 }}
                                 className="group relative flex gap-6 p-7 lg:p-8 rounded-[20px] border border-black/[0.06] bg-white cursor-default transition-all duration-400 overflow-hidden"
-                                style={{
-                                    '--hover-bg': reason.hoverBg,
-                                }}
                             >
-                                {/* Left accent bar — thickens on hover */}
+                                {/* Left accent bar */}
                                 <div
                                     className="absolute left-0 inset-y-0 w-[3px] group-hover:w-[4px] rounded-l-[20px] transition-all duration-300"
                                     style={{ backgroundColor: reason.borderColor }}
@@ -132,9 +128,7 @@ const WhyChooseSeanora = () => {
                                 <div className="relative z-10 shrink-0 pt-0.5">
                                     <div
                                         className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-400 group-hover:scale-105"
-                                        style={{
-                                            backgroundColor: `${reason.borderColor}15`,
-                                        }}
+                                        style={{ backgroundColor: `${reason.borderColor}15` }}
                                     >
                                         <Icon size={20} strokeWidth={1.5} style={{ color: reason.borderColor }} />
                                     </div>

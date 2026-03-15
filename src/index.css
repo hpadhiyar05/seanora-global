@@ -1,10 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:italic&family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+/* ===== Self-hosted Poppins ===== */
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('./assets/fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 
-
 @theme {
-  --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: "Instrument Serif", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }
 
 @layer base {
@@ -92,6 +127,14 @@
     /* Layout */
     --container-width: 1280px;
     --section-spacing: 6rem;
+
+    /* ===== HEADING SCALE ===== */
+    /* Use text-display-1 for full-page hero headings (font-serif font-light) */
+    /* Use text-display-2 for major section headings (font-sans font-medium)  */
+    --text-display-1-size: clamp(3rem, 6vw, 5rem);     /* H1 — 48px→80px */
+    --text-display-2-size: clamp(2.5rem, 5vw, 4rem);   /* H2 — 40px→64px */
+    --text-display-1-lh: 1.06;
+    --text-display-2-lh: 1.1;
   }
 
   /* Reset & Base Rules */
@@ -118,10 +161,17 @@
 
   /* Base Typography */
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1.2;
     color: var(--color-text);
   }
+
+  h1 { font-size: 5rem; }
+  h2 { font-size: 4rem; }
+  h3 { font-size: 3rem; }
+  h4 { font-size: 2.5rem; }
+  h5 { font-size: 1.75rem; }
+  h6 { font-size: 1.5rem; }
 
   p {
     color: var(--color-text-muted);
@@ -171,5 +221,26 @@
 
   .animate-marquee {
     animation: marquee 20s linear infinite;
+  }
+
+  /* ===== SHARED HEADING UTILITIES ===== */
+  /* Page hero headings — font-serif font-light, fluid size */
+  .text-display-1 {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-size: var(--text-display-1-size);
+    line-height: var(--text-display-1-lh);
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  /* Section headings — font-sans font-medium, fluid size */
+  .text-display-2 {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--text-display-2-size);
+    line-height: var(--text-display-2-lh);
+    letter-spacing: -0.015em;
+    color: var(--color-text);
   }
 }

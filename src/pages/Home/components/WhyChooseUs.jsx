@@ -1,205 +1,240 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
-import {
-  Lightbulb, Award, Clock, PenTool,
-  ShieldCheck, Cloud, Globe2, Users,
-} from 'lucide-react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
+import { useRef, useEffect, useState, useCallback } from "react";
+import { Lightbulb, Award, Clock, PenTool, CheckCircle2 } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { AnimatedHeading, AnimatedText } from "../../../components/ui/AnimatedHeading";
 
-const features = [
-  {
-    icon: Lightbulb,
-    category: 'Strategy',
-    title: 'Best-in-Class Solutions',
-    description:
-      'We guarantee the lowest industry rates without compromising quality, delivering enterprise-grade solutions that are cost-effective and built to scale with your business over the long term.',
-    stat: '40% avg. cost reduction',
-    accent: '#DDF5FE',
-  },
-  {
-    icon: Award,
-    category: 'Expertise',
-    title: 'Deep Domain Experience',
-    description:
-      'Our certified specialists bring 10+ years of cross-industry experience, pairing technical depth with domain knowledge to confidently solve your most complex IT challenges.',
-    stat: '10+ years in the field',
-    accent: '#FFF1CD',
-  },
-  {
-    icon: Clock,
-    category: 'Support',
-    title: '24 / 7 Rapid Response',
-    description:
-      'Every client is assigned a dedicated service executive available around the clock. We treat your uptime as our uptime — because downtime is never acceptable, regardless of the hour.',
-    stat: '< 2 hr average response',
-    accent: '#EAF4EF',
-  },
-  {
-    icon: PenTool,
-    category: 'Innovation',
-    title: 'Tailored Innovation',
-    description:
-      'We craft bespoke IT solutions aligned to your exact business context, helping you move fast on bold ideas while reducing implementation risk throughout every phase of delivery.',
-    stat: '500+ custom solutions built',
-    accent: '#DDF5FE',
-  },
-  // {
-  //   icon: ShieldCheck,
-  //   category: 'Security',
-  //   title: 'Enterprise-Grade Security',
-  //   description:
-  //     'Security is woven into every layer of what we build — from infrastructure architecture to application code — so your data, systems, and reputation remain protected at all times.',
-  //   stat: 'Zero breach track record',
-  //   accent: '#FFF1CD',
-  // },
-  // {
-  //   icon: Cloud,
-  //   category: 'Cloud',
-  //   title: 'Cloud Mastery',
-  //   description:
-  //     'Our certified cloud specialists across AWS, Azure, and GCP help you architect, migrate, and continuously optimise cloud environments for maximum performance and cost efficiency at scale.',
-  //   stat: 'AWS · Azure · GCP certified',
-  //   accent: '#EAF4EF',
-  // },
-  // {
-  //   icon: Globe2,
-  //   category: 'Reach',
-  //   title: 'Global Delivery Network',
-  //   description:
-  //     'With a presence spanning 15+ countries, we deliver consistent, high-quality IT services across borders and time zones — with the agility of a local team and the muscle of a global firm.',
-  //   stat: '200+ clients · 15 countries',
-  //   accent: '#DDF5FE',
-  // },
-  // {
-  //   icon: Users,
-  //   category: 'Partnership',
-  //   title: 'Transparent Partnership',
-  //   description:
-  //     'Great outcomes begin with honest communication. You get full visibility into every milestone, decision, and delivery — no surprises, no hidden costs, no exceptions, ever.',
-  //   stat: '98% client retention rate',
-  //   accent: '#FFF1CD',
-  // },
+import img1 from "../../../assets/images/home-service-1.webp";
+import img2 from "../../../assets/images/home-service-2.webp";
+import img3 from "../../../assets/images/home-service-3.webp";
+import img4 from "../../../assets/images/home-service-4.webp";
+import img5 from "../../../assets/images/home-service-5.webp";
+import img6 from "../../../assets/images/home-service-6.webp";
+
+const CARD_W   = 340;   // px — width of each card column
+const CARD_GAP = 40;    // px — gap between columns
+const N        = 6;     // number of items
+
+const items = [
+    {
+        index: "01",
+        icon: Lightbulb,
+        title: "Best-in-Class Solutions",
+        description:
+            "We guarantee the lowest industry rates without compromising quality, delivering enterprise-grade solutions that are cost-effective and built to scale.",
+        bullets: ["40% avg. cost reduction", "Enterprise-grade quality", "Scalable architecture", "Cost-effective delivery"],
+        image: img1,
+    },
+    {
+        index: "02",
+        icon: Award,
+        title: "Deep Domain Experience",
+        description:
+            "Our certified specialists bring 10+ years of cross-industry experience, pairing technical depth with domain knowledge to solve your most complex IT challenges.",
+        bullets: ["10+ years in the field", "Certified specialists", "Cross-industry depth", "Complex IT solutions"],
+        image: img2,
+    },
+    {
+        index: "03",
+        icon: Clock,
+        title: "24 / 7 Rapid Response",
+        description:
+            "Every client is assigned a dedicated service executive available around the clock. We treat your uptime as our uptime — because downtime is never acceptable.",
+        bullets: ["< 2 hr average response", "Dedicated executive", "Round-the-clock support", "Zero downtime goal"],
+        image: img3,
+    },
+    {
+        index: "04",
+        icon: PenTool,
+        title: "Tailored Innovation",
+        description:
+            "We craft bespoke IT solutions aligned to your exact business context, helping you move fast on bold ideas while reducing implementation risk at every phase.",
+        bullets: ["500+ custom solutions", "Bespoke architecture", "Risk-reduced delivery", "Bold idea execution"],
+        image: img4,
+    },
+    {
+        index: "05",
+        icon: Award,
+        title: "Certified & Trusted",
+        description:
+            "Our certified specialists bring 10+ years of cross-industry experience, pairing technical depth with domain knowledge to confidently solve your challenges.",
+        bullets: ["Industry certifications", "Trusted by 200+ clients", "15+ countries served", "Proven track record"],
+        image: img5,
+    },
+    {
+        index: "06",
+        icon: Clock,
+        title: "Continuous Support",
+        description:
+            "Every client is assigned a dedicated service executive available around the clock. We treat your uptime as our uptime — downtime is never acceptable.",
+        bullets: ["24/7 availability", "Proactive monitoring", "SLA guarantees", "Rapid escalation path"],
+        image: img6,
+    },
 ];
 
 const WhyChooseUs = () => {
-  const targetRef = useRef(null);
-  const trackRef  = useRef(null);
-  const [range, setRange] = useState([0, 0]);
+    const targetRef = useRef(null);
+    const [vw, setVw]                   = useState(typeof window !== "undefined" ? window.innerWidth : 1440);
+    const [vh, setVh]                   = useState(typeof window !== "undefined" ? window.innerHeight : 900);
 
-  const computeRange = useCallback(() => {
-    if (!trackRef.current) return;
+    // Total track width: N cards + gaps + left padding + right padding
+    const LEFT_PAD  = 64;
+    const RIGHT_PAD = 160;
+    const trackWidth = LEFT_PAD + N * CARD_W + (N - 1) * CARD_GAP + RIGHT_PAD;
 
-    const vw = window.innerWidth;
-    const trackWidth = trackRef.current.scrollWidth;
+    // How far the track needs to travel = trackWidth - viewport width
+    const scrollDistance = Math.max(0, trackWidth - vw);
 
-    // Start at normal position (0) instead of off-screen right
-    const startX = 0;
-    
-    // Scroll left until the end of the track aligns with the right edge
-    const endX = vw >= trackWidth ? 0 : -(trackWidth - vw);
+    // Section height = sticky viewport + scroll travel
+    // Multiply by 1.0 so scroll ends exactly when last card is visible
+    const sectionHeight = vh + scrollDistance;
 
-    setRange([startX, endX]);
-  }, []);
+    useEffect(() => {
+        const onResize = () => {
+            setVw(window.innerWidth);
+            setVh(window.innerHeight);
+        };
+        window.addEventListener("resize", onResize);
+        return () => window.removeEventListener("resize", onResize);
+    }, []);
 
-  useEffect(() => {
-    const t = setTimeout(computeRange, 60);
-    window.addEventListener('resize', computeRange);
-    return () => {
-      clearTimeout(t);
-      window.removeEventListener('resize', computeRange);
-    };
-  }, [computeRange]);
+    const { scrollYProgress } = useScroll({
+        target: targetRef,
+        offset: ["start start", "end end"],
+    });
 
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ['start start', 'end end'],
-  });
+    // Translate cards horizontally based on scroll
+    const rawX = useTransform(scrollYProgress, [0, 1], [0, -scrollDistance]);
 
-  const x = useTransform(scrollYProgress, [0, 1], range);
+    // Smooth spring — slower, more cinematic feel matching the video
+    const x = useSpring(rawX, { stiffness: 60, damping: 20, mass: 0.6 });
 
-  return (
-    <section ref={targetRef} className="relative h-[300vh] bg-white w-full">
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+    // Progress bar width
+    const barWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
-        {/* Heading */}
-        <div className="text-center mb-12 lg:mb-16 px-4 w-full">
-          <AnimatedHeading className="text-[36px] md:text-[44px] lg:text-[52px] font-medium text-[#1B1D1E] tracking-tight leading-[1.1]">
-            <AnimatedText text="Expertise and dedication" className="block" />
-            <AnimatedText
-              text="to exceed expectations"
-              className="font-serif italic font-light text-[#1B1D1E]/80 block"
-            />
-          </AnimatedHeading>
-        </div>
+    return (
+        <section
+            ref={targetRef}
+            className="relative bg-[#F8FAFC] w-full"
+            style={{ height: `${sectionHeight}px` }}
+        >
+            <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
 
-        {/* Horizontal scroll track — py-4 gives cards room to translate up on hover */}
-        <div className="w-full overflow-hidden flex items-center py-4">
-          <motion.div
-            ref={trackRef}
-            style={{ x }}
-            className="flex gap-6 md:gap-8 pl-6 pr-12 lg:pl-12 lg:pr-24 w-max items-stretch"
-          >
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              const accentDot = { '#EAF4EF': '#6AAE8B', '#DDF5FE': '#6BAED6', '#FFF1CD': '#D4A847' };
-              const dotColor = accentDot[feature.accent] ?? '#D4A847';
-              return (
-                <div
-                  key={feature.title}
-                  className="w-[290px] md:w-[330px] lg:w-[370px] shrink-0 rounded-[28px] p-7 lg:p-8 flex flex-col justify-between bg-white border border-black/[0.06] shadow-[0_4px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_16px_48px_rgba(0,0,0,0.11)] transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden"
-                >
-                  {/* Top accent bar */}
-                  <div
-                    className="absolute inset-x-0 top-0 h-[3px] rounded-t-[28px] opacity-70 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                      background: `linear-gradient(90deg, ${feature.accent}, transparent)`,
-                    }}
-                  />
-
-                  <div className="flex flex-col gap-5">
-                    {/* Category + Icon row */}
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10.5px] font-semibold tracking-[0.2em] uppercase text-[#6B6B6B]">
-                        {feature.category}
-                      </span>
-                      <div
-                        className="w-11 h-11 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110"
-                        style={{ backgroundColor: feature.accent }}
-                      >
-                        <Icon className="w-[18px] h-[18px] text-[#1B1D1E]" strokeWidth={1.6} />
-                      </div>
+                {/* ── Heading ─────────────────────────────────────── */}
+                <div className="shrink-0 w-[80%] mx-auto pt-14 pb-8 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+                    <div>
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9CA3AF] mb-3 block">
+                            Why Choose Us
+                        </span>
+                        <AnimatedHeading className="text-[2.5rem] md:text-[4rem] font-medium text-[#111827] tracking-tight leading-[1.1]">
+                            <AnimatedText text="Expertise and dedication" className="block" />
+                            <AnimatedText
+                                text="to exceed expectations"
+                                className="block text-[#9CA3AF] font-light italic font-serif"
+                            />
+                        </AnimatedHeading>
                     </div>
-
-                    {/* Title */}
-                    <h3 className="text-[19px] lg:text-[21px] font-serif font-medium tracking-tight text-[#1B1D1E] leading-[1.25]">
-                      {feature.title}
-                    </h3>
-
-                    {/* Description */}
-                    <p className="text-[13px] lg:text-[13.5px] leading-[1.75] text-[#6B6B6B] font-light">
-                      {feature.description}
+                    <p className="text-[14px] text-[#6B7280] font-light leading-relaxed max-w-[300px] lg:pb-1">
+                        Discovery to delivery, we follow a proven framework that ensures clarity, precision, and growth.
                     </p>
-                  </div>
-
-                  {/* Stat row */}
-                  <div className="pt-5 mt-3 border-t border-black/[0.05] flex items-center gap-2">
-                    <div
-                      className="w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ backgroundColor: dotColor }}
-                    />
-                    <span className="text-[11.5px] font-medium text-[#1B1D1E]/45 tracking-wide">
-                      {feature.stat}
-                    </span>
-                  </div>
                 </div>
-              );
-            })}
-          </motion.div>
-        </div>
 
-      </div>
-    </section>
-  );
+                {/* ── Scrolling track ─────────────────────────────── */}
+                <div className="flex-1 flex flex-col justify-center overflow-hidden">
+                    <motion.div
+                        style={{ x, width: `${trackWidth}px` }}
+                        className="flex flex-col"
+                    >
+
+                        {/* ROW 1 — Images */}
+                        <div
+                            className="flex items-end mb-0"
+                            style={{ gap: `${CARD_GAP}px`, paddingLeft: `${LEFT_PAD}px`, paddingRight: `${RIGHT_PAD}px` }}
+                        >
+                            {items.map((item, i) => (
+                                <div
+                                    key={`img-${i}`}
+                                    className="shrink-0 overflow-hidden rounded-2xl"
+                                    style={{
+                                        width:  `${CARD_W}px`,
+                                        height: i % 2 === 0 ? '195px' : '145px',
+                                    }}
+                                >
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        loading="lazy"
+                                        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 scale-[1.02] hover:scale-100"
+                                    />
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Progress bar */}
+                        <div
+                            className="relative h-[2px] bg-black/[0.07] my-4"
+                            style={{ marginLeft: `${LEFT_PAD}px`, marginRight: `${RIGHT_PAD}px` }}
+                        >
+                            {/* Dot markers */}
+                            {items.map((_, i) => (
+                                <div
+                                    key={i}
+                                    className="absolute top-1/2 w-[7px] h-[7px] rounded-full bg-[#D1D5DB] border-[1.5px] border-white z-10"
+                                    style={{
+                                        left:      `${(i / (N - 1)) * 100}%`,
+                                        transform: 'translate(-50%, -50%)',
+                                    }}
+                                />
+                            ))}
+                            <motion.div
+                                className="absolute left-0 top-0 h-full bg-[#1E5AA5] rounded-full"
+                                style={{ width: barWidth }}
+                            />
+                        </div>
+
+                        {/* ROW 2 — Text */}
+                        <div
+                            className="flex items-start"
+                            style={{ gap: `${CARD_GAP}px`, paddingLeft: `${LEFT_PAD}px`, paddingRight: `${RIGHT_PAD}px` }}
+                        >
+                            {items.map((item, i) => {
+                                const Icon = item.icon;
+                                return (
+                                    <div
+                                        key={`text-${i}`}
+                                        className="shrink-0"
+                                        style={{ width: `${CARD_W}px` }}
+                                    >
+                                        <span className="text-[11px] font-semibold text-[#9CA3AF] tabular-nums block mb-2">
+                                            {item.index}
+                                        </span>
+
+                                        <h3 className="text-[19px] font-semibold text-[#111827] tracking-tight leading-snug mb-2">
+                                            {item.title}
+                                        </h3>
+
+                                        <p className="text-[13.5px] text-[#6B7280] font-light leading-[1.7] mb-4">
+                                            {item.description}
+                                        </p>
+
+                                        <ul className="flex flex-col gap-2">
+                                            {item.bullets.map((b) => (
+                                                <li key={b} className="flex items-center gap-2 text-[12.5px] font-medium text-[#374151]">
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-[#1E5AA5] shrink-0" strokeWidth={2} />
+                                                    {b}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                );
+                            })}
+                        </div>
+
+                    </motion.div>
+                </div>
+
+            </div>
+        </section>
+    );
 };
 
 export default WhyChooseUs;

@@ -54,7 +54,11 @@ const Home = () => {
       
       <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="w-6 h-6 rounded-full border-2 border-black/10 border-t-[#1B1D1E] animate-spin"></div></div>}>
         <WhyChooseUs />
+      </Suspense>
+      <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="w-6 h-6 rounded-full border-2 border-black/10 border-t-[#1B1D1E] animate-spin"></div></div>}>
         <Testimonials />
+      </Suspense>
+      <Suspense fallback={<div className="h-32 flex items-center justify-center"><div className="w-6 h-6 rounded-full border-2 border-black/10 border-t-[#1B1D1E] animate-spin"></div></div>}>
         <ContactCTA />
       </Suspense>
     </>

@@ -10,6 +10,8 @@ const Careers = lazy(() => import('../pages/Careers/Careers'));
 const Contact = lazy(() => import('../pages/Contact/Contact'));
 const NotFound = lazy(() => import('../pages/NotFound/NotFound'));
 const JobDetail = lazy(() => import('../pages/Careers/JobDetail'));
+const PrivacyPolicy = lazy(() => import('../pages/Legal/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('../pages/Legal/TermsOfService'));
 
 // Branded loading fallback used for route-level lazy chunks
 const PageLoader = () => (
@@ -54,6 +56,8 @@ const AppRouter = () => {
             <Route path="careers" element={<Careers />} />
             <Route path="careers/:id" element={<JobDetail />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<TermsOfService />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
