@@ -165,6 +165,8 @@ const WhoWeAre = () => {
                   alt="Seanora Global team collaborating"
                   loading="eager"
                   className="w-full h-[340px] md:h-[420px] lg:h-[460px] object-cover object-center"
+                  width={1280}
+                  height={720}
                 />
 
                 {/*

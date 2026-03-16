@@ -1,33 +1,61 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-import compression from 'vite-plugin-compression';
+import { compression } from 'vite-plugin-compression2';
 
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    tailwindcss(),
-    compression({ algorithm: 'gzip', threshold: 1024 }),
-    compression({ algorithm: 'brotliCompress', threshold: 1024 }),
-  ],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'vendor': ['react', 'react-dom', 'react-router-dom'],
-          'framer': ['framer-motion'],
-          'sanity': ['@sanity/client'],
+    plugins: [
+        react(),
+        tailwindcss(),
+        compression({ algorithm: 'gzip', filename: '[path][base].gz' }),
+        compression({ algorithm: 'brotliCompress', filename: '[path][base].br' }),
+    ],
+
+    build: {
+        rollupOptions: {
+            output: {
+                manualChunks(id) {
+                    if (
+                        id.includes('node_modules/react/') ||
+                        id.includes('node_modules/react-dom/') ||
+                        id.includes('node_modules/scheduler/')
+                    )
+                        return 'vendor';
+
+                    if (
+                        id.includes('node_modules/react-router-dom/') ||
+                        id.includes('node_modules/@remix-run/') ||
+                        id.includes('node_modules/history/')
+                    )
+                        return 'router';
+
+                    if (id.includes('node_modules/framer-motion/')) return 'framer';
+
+                    if (
+                        id.includes('node_modules/@sanity/') ||
+                        id.includes('node_modules/sanity/') ||
+                        id.includes('node_modules/@portabletext/') ||
+                        id.includes('node_modules/@dqbd/') ||
+                        id.includes('node_modules/groq/')
+                    )
+                        return 'sanity';
+
+                    if (id.includes('node_modules/lucide-react/')) return 'lucide';
+                },
+            },
         },
-      },
+
+        cssCodeSplit: true,
+        minify: 'terser',
+        terserOptions: {
+            compress: {
+                drop_console: true,
+                drop_debugger: true,
+                passes: 2,
+            },
+            format: {
+                comments: false,
+            },
+        },
     },
-    cssCodeSplit: true,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-      },
-    },
-  },
-})
+});

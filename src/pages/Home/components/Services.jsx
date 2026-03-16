@@ -79,7 +79,7 @@ const ServiceRow = ({ service, index, isActive, onHover, onLeave, isMobile }) =>
                             {/* Title */}
                             <div className="flex items-center gap-3 mb-1">
                                 <Icon
-                                    className={`w-5 h-5 shrink-0 transition-colors duration-300 ${isActive ? 'text-[#1E5AA5]' : 'text-[#9CA3AF]'}`}
+                                    className={`w-5 h-5 shrink-0 transition-colors duration-300 ${isActive ? 'text-[#1E5AA5]' : 'text-[#6B7280]'}`}
                                     strokeWidth={1.75}
                                 />
                                 <h3
@@ -121,7 +121,7 @@ const ServiceRow = ({ service, index, isActive, onHover, onLeave, isMobile }) =>
                                                 to="/services"
                                                 className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#1E5AA5] hover:text-[#174F94] transition-colors duration-200"
                                             >
-                                                Learn More
+                                                Learn more about our IT services
                                                 <svg
                                                     width="14"
                                                     height="14"
@@ -164,6 +164,8 @@ const ServiceRow = ({ service, index, isActive, onHover, onLeave, isMobile }) =>
                             transform: isActive ? 'scale(1)' : 'scale(1.04)',
                             transition: 'filter 0.5s ease, transform 0.5s ease',
                         }}
+                        width={600}
+                        height={400}
                     />
                 </div>
                 )}
@@ -202,7 +204,7 @@ const Services = () => {
                 >
                     {/* Left: heading */}
                     <div>
-                        <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#9CA3AF] mb-4 block">
+                        <span className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#6B7280] mb-4 block">
                             Our Services
                         </span>
                         <AnimatedHeading className="text-[2.5rem] md:text-[4rem] text-[#111827] tracking-tight leading-[1.08]">

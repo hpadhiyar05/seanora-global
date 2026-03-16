@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, Home, Search } from 'lucide-react';
+import { ArrowUpRight, Home } from 'lucide-react';
 import SEO from '../../components/seo/SEO';
+import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
 
 const NotFound = () => {
   useEffect(() => {
@@ -26,7 +27,7 @@ const NotFound = () => {
           <div className="absolute right-1/4 bottom-1/4 w-[400px] h-[400px] bg-[#E0F2FE] rounded-full blur-[100px] opacity-25" />
         </div>
 
-        <div className="container relative z-10 flex flex-col items-center justify-center text-center max-w-[680px] px-4 w-full">
+        <div className="container relative z-10 flex flex-col items-center justify-center text-center max-w-3xl px-4 w-full">
 
           {/* Large 404 number */}
           <motion.div
@@ -42,24 +43,22 @@ const NotFound = () => {
           </motion.div>
 
           {/* Heading */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-[2rem] md:text-[2.5rem] text-[#111827] font-medium tracking-tight leading-[1.12] mb-4"
+          <AnimatedHeading
+            as="h1"
+            className="text-[3rem] md:text-[5rem] font-medium text-[#111827] leading-tight tracking-tight mb-6"
           >
-            Page not found
-          </motion.h1>
+            <AnimatedText text="The page you are" className="block" />
+            <AnimatedText text="looking for is unavailable" className="block text-[#1B1D1E]/45" />
+          </AnimatedHeading>
 
           {/* Description */}
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-[15px] text-[#6B7280] font-light leading-relaxed mb-10 max-w-md"
+            className="text-[15px] text-[#6B7280] font-normal leading-relaxed mb-10 max-w-lg"
           >
-            The page you're looking for doesn't exist or has been moved.
-            Let's get you back on track.
+            The page you're looking for has taken a detour. Let's get you back to exploring.
           </motion.p>
 
           {/* Action buttons */}

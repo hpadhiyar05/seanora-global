@@ -1,7 +1,8 @@
-import { ArrowUpRight, Mail, Phone, MapPin } from 'lucide-react';
+import { ArrowUpRight, Mail, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
+import ctaBg from '../../../assets/images/CTA.webp';
 
 const ContactCTA = () => {
   return (
@@ -11,23 +12,32 @@ const ContactCTA = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
-        className="max-w-6xl mx-auto rounded-[32px] overflow-hidden relative"
+        className="max-w-7xl mx-auto rounded-[32px] overflow-hidden relative min-h-[480px] md:min-h-[520px]"
       >
-        {/* Deep navy → blue gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1F3B] via-[#132D54] to-[#1E5AA5]" />
+        {/* Background image */}
+        <img
+          src={ctaBg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          width={800}
+          height={500}
+        />
 
-        {/* Decorative accent circles */}
-        <div className="absolute -top-20 -right-20 w-[300px] h-[300px] border border-white/[0.06] rounded-full pointer-events-none" />
-        <div className="absolute -top-10 -right-10 w-[200px] h-[200px] border border-white/[0.04] rounded-full pointer-events-none" />
-        <div className="absolute -bottom-16 -left-16 w-[250px] h-[250px] bg-[#29A8E0]/10 rounded-full blur-[80px] pointer-events-none" />
+        {/* Dark gradient overlay — heavier on left for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/20" />
 
-        {/* Grain texture */}
-        <div className="absolute inset-0 opacity-[0.03] bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJub2lzZSI+PGZlVHVyYnVsZW5jZSB0eXBlPSJmcmFjdGFsTm9pc2UiIGJhc2VGcmVxdWVuY3k9IjAuNjUiIG51bU9jdGF2ZXM9IjMiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz48L2ZpbHRlcj48cmVjdCB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMSIvPjwvc3ZnPg==')]" />
-
-        <div className="relative z-10 py-14 md:py-20 px-8 md:px-14 lg:px-20">
+        <div className="relative z-10 py-14 md:py-20 px-8 md:px-14 lg:px-20 flex flex-col justify-between h-full">
 
           {/* Top row — label + contact info */}
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 md:mb-14">
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.1 }}
+            className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10 md:mb-14"
+          >
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-[#29A8E0] animate-pulse" />
               <span className="text-[11px] font-semibold tracking-[0.24em] text-white/50 uppercase">
@@ -35,7 +45,7 @@ const ContactCTA = () => {
               </span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-5 text-[13px] text-white/40 font-medium">
+            <div className="flex flex-wrap items-center gap-5 text-[13px] text-white/50 font-semibold">
               <a href="mailto:info@seanoraglobal.com" className="flex items-center gap-2 hover:text-white/70 transition-colors">
                 <Mail className="w-3.5 h-3.5" strokeWidth={1.5} />
                 info@seanoraglobal.com
@@ -46,12 +56,12 @@ const ContactCTA = () => {
                 +1 325-667-0125
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Main heading */}
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
+          {/* Main content — text left, button right on lg */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
             <div className="max-w-2xl">
-              <AnimatedHeading className="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] font-medium text-white tracking-tight leading-[1.06] mb-6">
+              <AnimatedHeading className="text-[2.5rem] md:text-[3.5rem] lg:text-[4rem] font-semibold text-white tracking-tight leading-[1.04] mb-6">
                 <AnimatedText text="Have a project" className="block" />
                 <span className="block">
                   <AnimatedText text="in " />
@@ -61,14 +71,26 @@ const ContactCTA = () => {
                 <AnimatedText text="it together." className="block text-white/50" />
               </AnimatedHeading>
 
-              <p className="text-[15px] text-white/40 leading-relaxed max-w-lg font-light">
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
+                className="text-[15px] text-white/50 leading-relaxed max-w-lg font-normal"
+              >
                 Whether you need cloud infrastructure, custom software, or IT consulting —
                 our team is ready to turn your vision into reality.
-              </p>
+              </motion.p>
             </div>
 
-            {/* CTA buttons */}
-            <div className="flex flex-col gap-3 shrink-0 lg:pb-2">
+            {/* CTA button */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.6, ease: 'easeOut', delay: 0.45 }}
+              className="shrink-0"
+            >
               <Link
                 to="/contact"
                 className="group relative flex items-center justify-between bg-white text-[#0B1F3B] p-1 rounded-full overflow-hidden w-[190px] shadow-[0_4px_24px_rgba(0,0,0,0.2)]"
@@ -80,12 +102,7 @@ const ContactCTA = () => {
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
               </Link>
-
-              <div className="flex items-center gap-2 pl-2 text-[12px] text-white/30 font-medium">
-                <MapPin className="w-3 h-3" strokeWidth={1.5} />
-                <span>Sheridan, WY · USA</span>
-              </div>
-            </div>
+            </motion.div>
           </div>
 
         </div>

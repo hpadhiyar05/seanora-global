@@ -235,6 +235,8 @@ const CareersBoard = () => {
                             src={heroImg}
                             alt="Careers at Seanora Global"
                             className="w-full max-w-[380px] lg:max-w-[420px] object-contain"
+                            width={800}
+                            height={600}
                         />
                     </motion.div>
                 </motion.div>
@@ -369,7 +371,7 @@ const CareersBoard = () => {
                                 >
                                     <div className="group bg-white border border-black/8 hover:border-[#1E5AA5]/20 rounded-2xl p-6 md:p-8 transition-all duration-300 hover:shadow-[0_12px_40px_rgba(30,90,165,0.08)] relative overflow-hidden">
                                         {/* Bottom hover accent */}
-                                        <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-[#EFF6FF] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-b-2xl" />
+                                        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#1E3A5F]/[0.06] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-b-2xl" />
                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8">
                                             <div className="flex-1">
                                                 <div className="flex flex-wrap items-center gap-3 mb-3">

@@ -6,7 +6,7 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
     <div
       className={`rounded-xl border overflow-hidden transition-colors duration-300 ${
         isOpen
-          ? 'border-[#1E5AA5]/20 bg-white'
+          ? 'border-[#413DF2] bg-white'
           : 'border-black/10 bg-white hover:border-black/20'
       }`}
     >
@@ -15,13 +15,17 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
         onClick={onClick}
         className="w-full flex items-start justify-between gap-4 px-5 py-4 text-left focus-visible:outline-none"
       >
-        <span className="text-[15px] font-medium text-[#1B1D1E] leading-snug">
+        <span className={`text-base font-medium leading-snug transition-colors duration-300 ${
+          isOpen ? 'text-[#413DF2]' : 'text-[#1B1D1E]'
+        }`}>
           {question}
         </span>
 
         {/* + / × icon — matches the screenshot exactly */}
         <span
-          className="shrink-0 mt-0.5 text-[18px] leading-none text-[#1E5AA5] select-none"
+          className={`shrink-0 mt-0.5 text-[18px] leading-none select-none transition-colors duration-300 ${
+            isOpen ? 'text-[#413DF2]' : 'text-[#1E5AA5]'
+          }`}
           aria-hidden="true"
         >
           {isOpen ? '×' : '+'}
@@ -36,7 +40,7 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: 'easeInOut' }}
           >
-            <p className="px-5 pb-4 text-[13px] text-[#6B6B6B] leading-relaxed font-normal pr-10">
+            <p className="px-5 pb-4 text-sm text-[#6B6B6B] leading-relaxed font-normal pr-10">
               {answer}
             </p>
           </motion.div>

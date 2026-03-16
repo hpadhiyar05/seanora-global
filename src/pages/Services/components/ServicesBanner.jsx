@@ -10,8 +10,10 @@ const ServicesBanner = () => {
         src={servicesBanner}
         alt=""
         loading="lazy"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-center lg:object-[center_40%]"
         style={{ opacity: 0.92 }}
+        width={1280}
+        height={600}
       />
 
       {/*

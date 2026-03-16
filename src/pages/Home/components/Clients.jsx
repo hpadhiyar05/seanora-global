@@ -56,6 +56,8 @@ const Clients = () => {
                             className="h-8 object-contain opacity-50 hover:opacity-90 transition-opacity duration-300 flex-shrink-0"
                             loading="lazy"
                             decoding="async"
+                            width={120}
+                            height={40}
                         />
                     ))}
                 </div>
