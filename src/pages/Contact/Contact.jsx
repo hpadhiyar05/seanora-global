@@ -1,13 +1,8 @@
 import { Suspense, lazy } from 'react';
 import SEO from '../../components/seo/SEO';
+import PageLoader from '../../components/ui/PageLoader';
 
 const ContactSection = lazy(() => import('./components/ContactSection'));
-
-const SectionLoader = () => (
-  <div className="h-64 flex items-center justify-center">
-    <div className="w-6 h-6 rounded-full border-2 border-black/10 border-t-[#1B1D1E] animate-spin"></div>
-  </div>
-);
 
 const Contact = () => {
   const contactSchema = [
@@ -29,7 +24,7 @@ const Contact = () => {
         jsonLd={contactSchema}
       />
       <div className="pb-0">
-        <Suspense fallback={<SectionLoader />}>
+        <Suspense fallback={<PageLoader />}>
           <ContactSection />
         </Suspense>
       </div>

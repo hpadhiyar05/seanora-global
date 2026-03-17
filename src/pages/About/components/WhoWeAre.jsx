@@ -7,7 +7,7 @@ import aboutusHero from '../../../assets/images/aboutus-hero.webp';
 
 const stats = [
   { end: 10,  suffix: '+', label: 'Years of Experience' },
-  { end: 200, suffix: '+', label: 'Clients Served' },
+  { end: 1000, suffix: '+', label: 'Clients Served' },
   { end: 500, suffix: '+', label: 'Projects Delivered' },
   { end: 15,  suffix: '+', label: 'Countries Reached' },
 ];

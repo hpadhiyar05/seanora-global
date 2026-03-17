@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SEO from '../../components/seo/SEO';
 import Breadcrumb from '../../components/ui/Breadcrumb';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
 
@@ -13,6 +14,16 @@ const sectionFade = {
 };
 
 const PrivacyPolicy = () => {
+    const privacySchema = [
+        {
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            name: 'Privacy Policy | Seanora Global',
+            description: 'Seanora Global privacy policy — how we collect, use, and protect your personal information.',
+            publisher: { '@type': 'Organization', name: 'Seanora Global' },
+        },
+    ];
+
     const sections = [
         {
             title: '1. Information We Collect',
@@ -37,7 +48,15 @@ const PrivacyPolicy = () => {
     ];
 
     return (
-        <section className="pt-32 md:pt-40 pb-20 md:pb-28 bg-white">
+        <>
+            <SEO
+                title="Privacy Policy"
+                description="Learn how Seanora Global collects, uses, and protects your personal information. Our privacy policy covers data security, cookies, and your rights."
+                path="/privacy"
+                keywords={['privacy policy', 'data protection', 'personal information', 'cookies', 'Seanora Global']}
+                jsonLd={privacySchema}
+            />
+            <section className="pt-32 md:pt-40 pb-20 md:pb-28 bg-white">
             <div className="container mx-auto px-4 lg:px-12 max-w-3xl">
                 <Breadcrumb crumbs={[{ label: 'Privacy Policy' }]} />
 
@@ -116,6 +135,7 @@ const PrivacyPolicy = () => {
                 </motion.div>
             </div>
         </section>
+        </>
     );
 };
 

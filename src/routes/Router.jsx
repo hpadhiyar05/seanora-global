@@ -1,6 +1,7 @@
-import { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Suspense, lazy, useLayoutEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
+import PageLoader from '../components/ui/PageLoader';
 
 const Home = lazy(() => import('../pages/Home/Home'));
 const About = lazy(() => import('../pages/About/About'));
@@ -12,31 +13,22 @@ const JobDetail = lazy(() => import('../pages/Careers/JobDetail'));
 const PrivacyPolicy = lazy(() => import('../pages/Legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('../pages/Legal/TermsOfService'));
 
-const PageLoader = () => (
-    <div className="min-h-screen w-full flex items-center justify-center bg-[#F9FAF8]">
-        <div className="flex flex-col items-center gap-6">
-            <div className="relative w-16 h-16">
-                <div className="absolute inset-0 rounded-full border-2 border-black/10" />
-                <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-[#1B1D1E] border-r-[#4F46E5] animate-spin" />
-                <div className="absolute inset-[10px] rounded-full bg-white/80 border border-black/5" />
-            </div>
+const ScrollToTop = () => {
+    const { pathname } = useLocation();
 
-            <div className="text-center">
-                <p className="text-[12px] tracking-[0.24em] uppercase text-[#1B1D1E]/45 font-semibold">Loading Experience</p>
-                <p className="mt-2 text-[15px] text-[#1B1D1E]/70 font-medium">Preparing your next page</p>
-            </div>
+    useLayoutEffect(() => {
+        if ('scrollRestoration' in window.history) {
+            window.history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+    }, [pathname]);
 
-            <div className="flex items-center gap-2" aria-hidden="true">
-                <span className="w-2 h-2 rounded-full bg-[#1B1D1E]/60 animate-bounce [animation-delay:-0.2s]" />
-                <span className="w-2 h-2 rounded-full bg-[#1B1D1E]/40 animate-bounce [animation-delay:-0.1s]" />
-                <span className="w-2 h-2 rounded-full bg-[#1B1D1E]/60 animate-bounce" />
-            </div>
-        </div>
-    </div>
-);
+    return null;
+};
 
 const AppRouter = () => (
     <BrowserRouter>
+        <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
             <Routes>
                 <Route path="/" element={<Layout />}>

@@ -180,7 +180,11 @@ const CareersBoard = () => {
     const filteredJobs = jobs.filter((job) => {
         const matchCategory = activeCategory === 'View all' || job.department === activeCategory;
         const matchType = activeType === 'All Types' || job.type === activeType;
-        const matchLocation = activeLocation === 'All Locations' || job.location.toLowerCase().includes(activeLocation.toLowerCase());
+        const jobLocation = (job?.location ?? '').toString();
+        const selectedLocation = (activeLocation ?? '').toString();
+        const matchLocation =
+            selectedLocation === 'All Locations' ||
+            jobLocation.toLowerCase().includes(selectedLocation.toLowerCase());
         return matchCategory && matchType && matchLocation;
     });
 

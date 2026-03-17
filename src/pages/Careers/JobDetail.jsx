@@ -15,6 +15,7 @@ import Breadcrumb from '../../components/ui/Breadcrumb';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
 import SEO from '../../components/seo/SEO';
 import { sanityClient } from '../../lib/sanityClient';
+import { API_ENDPOINTS } from '../../config/api';
 
 /* ─── Field wrapper ──────────────────────────────────────────────── */
 const Field = ({ label, required, children }) => (
@@ -25,6 +26,10 @@ const Field = ({ label, required, children }) => (
     </label>
     {children}
   </div>
+);
+
+const FieldError = ({ children }) => (
+  <p className="text-[12.5px] text-red-600 font-medium leading-snug mt-1">{children}</p>
 );
 
 const inputCls =
@@ -144,7 +149,10 @@ useEffect(() => {
     linkedin: '',
     coverLetter: '',
     resume: null,
+    company: '', // honeypot (bots tend to fill hidden fields)
   });
+  const [touched, setTouched] = useState({});
+  const [fieldErrors, setFieldErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -171,14 +179,74 @@ useEffect(() => {
   }
 
   /* ── form handlers ── */
+  const validateEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
+  const normalizeDigits = (value) => String(value ?? '').replace(/[^\d]/g, '');
+  const validatePhone = (value) => {
+    const digits = normalizeDigits(value);
+    return digits.length >= 7 && digits.length <= 15;
+  };
+  const validateResume = (file) => {
+    if (!file) return 'Resume / CV is required.';
+    const maxBytes = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxBytes) return 'Resume must be 10 MB or less.';
+    const allowed = new Set([
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ]);
+    if (file.type && !allowed.has(file.type)) return 'Resume must be a PDF, DOC, or DOCX file.';
+    const name = (file.name || '').toLowerCase();
+    if (!/\.(pdf|doc|docx)$/.test(name)) return 'Resume must be a PDF, DOC, or DOCX file.';
+    return '';
+  };
+
+  const validateForm = (nextForm = form) => {
+    const nextErrors = {};
+    const fullName = String(nextForm.fullName ?? '').trim();
+    const email = String(nextForm.email ?? '').trim();
+    const phone = String(nextForm.phone ?? '').trim();
+
+    if (!fullName) nextErrors.fullName = 'Full name is required.';
+    else if (fullName.length < 2) nextErrors.fullName = 'Full name must be at least 2 characters.';
+
+    if (!email) nextErrors.email = 'Email is required.';
+    else if (!validateEmail(email)) nextErrors.email = 'Enter a valid email address (e.g., name@domain.com).';
+
+    if (!phone) nextErrors.phone = 'Mobile number is required.';
+    else if (!validatePhone(phone)) nextErrors.phone = 'Enter a valid mobile number (7–15 digits).';
+
+    const resumeError = validateResume(nextForm.resume);
+    if (resumeError) nextErrors.resume = resumeError;
+
+    return nextErrors;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    setFieldErrors((prev) => {
+      if (!prev[name]) return prev;
+      const next = { ...prev };
+      delete next[name];
+      return next;
+    });
   };
 
   const handleFile = (file) => {
     if (!file) return;
     setForm((prev) => ({ ...prev, resume: file }));
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      delete next.resume;
+      return next;
+    });
+  };
+
+  const handleBlur = (e) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    const nextErrors = validateForm(form);
+    setFieldErrors((prev) => ({ ...prev, ...nextErrors }));
   };
 
   const handleDrop = (e) => {
@@ -189,6 +257,26 @@ useEffect(() => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Honeypot: if filled, likely a bot — silently succeed.
+    if (String(form.company || '').trim()) {
+      setSubmitted(true);
+      return;
+    }
+    const submitTouched = {
+      fullName: true,
+      email: true,
+      phone: true,
+      resume: true,
+    };
+    setTouched((prev) => ({ ...prev, ...submitTouched }));
+    const nextErrors = validateForm(form);
+    setFieldErrors(nextErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setIsSubmitting(false);
+      setErrorMsg('Please fix the highlighted fields and try again.');
+      return;
+    }
+
     setIsSubmitting(true);
     setErrorMsg('');
 
@@ -207,40 +295,25 @@ useEffect(() => {
       formData.append('resume', form.resume); // The actual File object
     }
 
-    console.log('--- Job Application Submission Started ---');
-    console.log('FormData being sent (Note: Files cannot be stringified):');
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
-
     try {
-      console.log('Executing fetch request to http://localhost:8000/send-mail.php...');
-      const response = await fetch('http://localhost:8000/send-mail.php', {
+      const response = await fetch(API_ENDPOINTS.sendMail, {
         method: 'POST',
-        // Note: Do NOT set 'Content-Type' manually when sending FormData.
-        // The browser automatically sets it to 'multipart/form-data' along with the boundary.
         body: formData,
       });
 
-      console.log('Raw response received:', response);
       
       const data = await response.json();
 
       if (data.success === true) {
-        console.log('Submission successful. Rendering success view.');
         setSubmitted(true);
       } else {
-        console.warn('Submission failed with success=false. Error from API:', data.message);
         setErrorMsg(data.message || 'Something went wrong. Please try again.');
         setSubmitted(false);
       }
     } catch (error) {
-      console.error('--- Job Application Submission Error Caught ---');
-      console.error('Error details:', error);
       setErrorMsg('Failed to connect to the server. Please check your connection and try again.');
       setSubmitted(false);
     } finally {
-      console.log('--- Job Application Submission Completed ---');
       setIsSubmitting(false);
     }
   };
@@ -317,6 +390,7 @@ useEffect(() => {
               </DetailSection>
 
               {/* Responsibilities */}
+              {job.responsibilities?.length > 0 && (
               <DetailSection title="Key Responsibilities">
                 <ul className="list-none p-0 m-0">
                   {job.responsibilities.map((item, i) => (
@@ -324,8 +398,10 @@ useEffect(() => {
                   ))}
                 </ul>
               </DetailSection>
+              )}
 
               {/* Requirements */}
+              {job.requirements?.length > 0 && (
               <DetailSection title="Requirements">
                 <ul className="list-none p-0 m-0">
                   {job.requirements.map((item, i) => (
@@ -333,6 +409,7 @@ useEffect(() => {
                   ))}
                 </ul>
               </DetailSection>
+              )}
 
               {/* Nice to have */}
               {job.niceToHave?.length > 0 && (
@@ -407,6 +484,17 @@ useEffect(() => {
                     )}
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
+                      {/* Honeypot field (hidden from humans) */}
+                      <input
+                        type="text"
+                        name="company"
+                        value={form.company}
+                        onChange={handleChange}
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                        className="hidden"
+                      />
 
                       <Field label="Full Name" required>
                         <input
@@ -414,11 +502,14 @@ useEffect(() => {
                           name="fullName"
                           value={form.fullName}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           required
                           autoComplete="name"
                           placeholder="Jane Smith"
-                          className={inputCls}
+                          aria-invalid={Boolean(touched.fullName && fieldErrors.fullName)}
+                          className={`${inputCls} ${touched.fullName && fieldErrors.fullName ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
                         />
+                        {touched.fullName && fieldErrors.fullName && <FieldError>{fieldErrors.fullName}</FieldError>}
                       </Field>
 
                       <Field label="Email Address" required>
@@ -427,23 +518,30 @@ useEffect(() => {
                           name="email"
                           value={form.email}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           required
                           autoComplete="email"
                           placeholder="jane@example.com"
-                          className={inputCls}
+                          aria-invalid={Boolean(touched.email && fieldErrors.email)}
+                          className={`${inputCls} ${touched.email && fieldErrors.email ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
                         />
+                        {touched.email && fieldErrors.email && <FieldError>{fieldErrors.email}</FieldError>}
                       </Field>
 
-                      <Field label="Phone Number">
+                      <Field label="Mobile Number" required>
                         <input
                           type="tel"
                           name="phone"
                           value={form.phone}
                           onChange={handleChange}
+                          onBlur={handleBlur}
+                          required
                           autoComplete="tel"
                           placeholder="+1 (555) 000-0000"
-                          className={inputCls}
+                          aria-invalid={Boolean(touched.phone && fieldErrors.phone)}
+                          className={`${inputCls} ${touched.phone && fieldErrors.phone ? 'border-red-300 focus:border-red-400 focus:ring-red-100' : ''}`}
                         />
+                        {touched.phone && fieldErrors.phone && <FieldError>{fieldErrors.phone}</FieldError>}
                       </Field>
 
                       <Field label="LinkedIn / Portfolio URL">
@@ -483,6 +581,8 @@ useEffect(() => {
                               ? 'border-[#1E5AA5] bg-[#EFF6FF]/60'
                               : form.resume
                               ? 'border-[#1E5AA5]/30 bg-[#EFF6FF]/40'
+                              : touched.resume && fieldErrors.resume
+                              ? 'border-red-300 bg-red-50/40'
                               : 'border-black/10 hover:border-[#1E5AA5]/30 hover:bg-[#F9FAF8]'
                           }`}
                         >
@@ -519,18 +619,19 @@ useEffect(() => {
                             </>
                           )}
                         </div>
+                        {touched.resume && fieldErrors.resume && <FieldError>{fieldErrors.resume}</FieldError>}
                       </Field>
 
                       {/* Submit */}
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group mt-2 relative flex items-center justify-between bg-gradient-to-r from-[#1E5AA5] to-[#29A8E0] text-white p-1 rounded-full overflow-hidden w-full disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(30,90,165,0.35)]"
+                        className="group mt-2 relative flex items-center justify-between bg-gradient-to-r from-[#1E5AA5] to-[#29A8E0] text-white p-1 rounded-full overflow-hidden w-[220px] h-[46px] disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(30,90,165,0.35)]"
                       >
                         <span className="text-[14px] font-semibold pl-5 pr-2 whitespace-nowrap transition-transform duration-[400ms] ease-out group-hover:translate-x-[36px] group-disabled:translate-x-0">
                           {isSubmitting ? 'Sending Application…' : 'Submit Application'}
                         </span>
-                        <div className="w-9 h-9 rounded-full bg-white text-[#1E5AA5] flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover:-translate-x-[500px] group-disabled:translate-x-0">
+                        <div className="w-9 h-9 rounded-full bg-white text-[#1E5AA5] flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover:-translate-x-[144px] group-disabled:translate-x-0">
                           <Send className="w-4 h-4" />
                         </div>
                       </button>

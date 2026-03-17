@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import SEO from '../../components/seo/SEO';
 import Breadcrumb from '../../components/ui/Breadcrumb';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
 
@@ -13,6 +14,16 @@ const sectionFade = {
 };
 
 const TermsOfService = () => {
+    const termsSchema = [
+        {
+            '@context': 'https://schema.org',
+            '@type': 'WebPage',
+            name: 'Terms of Service | Seanora Global',
+            description: 'Seanora Global terms of service — terms and conditions for using our website and services.',
+            publisher: { '@type': 'Organization', name: 'Seanora Global' },
+        },
+    ];
+
     const sections = [
         {
             title: '1. Acceptance of Terms',
@@ -41,7 +52,15 @@ const TermsOfService = () => {
     ];
 
     return (
-        <section className="pt-32 md:pt-40 pb-20 md:pb-28 bg-white">
+        <>
+            <SEO
+                title="Terms of Service"
+                description="Read the terms of service for Seanora Global. Usage terms, intellectual property, liability, and how we may update these terms."
+                path="/terms"
+                keywords={['terms of service', 'terms and conditions', 'website terms', 'Seanora Global', 'legal']}
+                jsonLd={termsSchema}
+            />
+            <section className="pt-32 md:pt-40 pb-20 md:pb-28 bg-white">
             <div className="container mx-auto px-4 lg:px-12 max-w-3xl">
                 <Breadcrumb crumbs={[{ label: 'Terms of Service' }]} />
 
@@ -120,6 +139,7 @@ const TermsOfService = () => {
                 </motion.div>
             </div>
         </section>
+        </>
     );
 };
 

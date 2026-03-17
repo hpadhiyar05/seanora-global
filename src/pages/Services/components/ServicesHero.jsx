@@ -14,7 +14,7 @@ const highlights = [
 
 const stats = [
     { value: '6', label: 'Core services' },
-    { value: '200+', label: 'Clients served' },
+    { value: '1,000+', label: 'Clients served' },
     { value: '15+', label: 'Countries' },
     { value: '10+', label: 'Years experience' },
 ];

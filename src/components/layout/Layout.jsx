@@ -49,7 +49,7 @@ const Layout = () => {
       </a>
       <Header />
       <main id="main-content" className="main-content flex-grow" role="main">
-        <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
+        <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={pathname}
             initial={{ opacity: 0 }}
