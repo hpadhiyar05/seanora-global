@@ -13,6 +13,15 @@ const JobDetail = lazy(() => import('../pages/Careers/JobDetail'));
 const PrivacyPolicy = lazy(() => import('../pages/Legal/PrivacyPolicy'));
 const TermsOfService = lazy(() => import('../pages/Legal/TermsOfService'));
 
+// ── Service detail pages ──────────────────────────────────
+const ITBootcamps = lazy(() => import('../pages/Services/ITBootcamps'));
+const SmartITSolutions = lazy(() => import('../pages/Services/SmartITSolutions'));
+const AnalyticsAndReporting = lazy(() => import('../pages/Services/AnalyticsAndReporting'));
+const CloudInfrastructure = lazy(() => import('../pages/Services/CloudInfrastructure'));
+const BusinessProcessOutsourcing = lazy(() => import('../pages/Services/BusinessProcessOutsourcing'));
+const BigData = lazy(() => import('../pages/Services/BigData'));
+const DataWarehousing = lazy(() => import('../pages/Services/DataWarehousing'));
+
 const ScrollToTop = () => {
     const { pathname } = useLocation();
 
@@ -35,6 +44,16 @@ const AppRouter = () => (
                     <Route index element={<Home />} />
                     <Route path="about" element={<About />} />
                     <Route path="services" element={<Services />} />
+
+                    {/* ── Service detail routes ── */}
+                    <Route path="services/it-bootcamps" element={<ITBootcamps />} />
+                    <Route path="services/smart-it-solutions" element={<SmartITSolutions />} />
+                    <Route path="services/analytics-and-reporting" element={<AnalyticsAndReporting />} />
+                    <Route path="services/cloud-infrastructure" element={<CloudInfrastructure />} />
+                    <Route path="services/bpo" element={<BusinessProcessOutsourcing />} />
+                    <Route path="services/big-data" element={<BigData />} />
+                    <Route path="services/data-warehousing" element={<DataWarehousing />} />
+
                     <Route path="careers" element={<Careers />} />
                     <Route path="careers/:id" element={<JobDetail />} />
                     <Route path="contact" element={<Contact />} />

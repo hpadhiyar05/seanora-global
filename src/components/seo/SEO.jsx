@@ -5,7 +5,7 @@ const SITE_NAME = 'Seanora Global';
 const DEFAULT_TITLE = 'A Legacy of Trust, A Future of Excellence';
 const DEFAULT_DESCRIPTION =
     'Seanora Global — A Legacy of Trust, A Future of Excellence. We help businesses scale with IT consulting, cloud solutions, system integration, and custom software development.';
-const DEFAULT_OG_IMAGE_PATH = '/og-image.jpg';
+const DEFAULT_OG_IMAGE_PATH = '/og-image.svg';
 
 const getSiteUrl = () => {
     const envSiteUrl = import.meta.env.VITE_SITE_URL;
@@ -15,7 +15,7 @@ const getSiteUrl = () => {
         return window.location.origin.replace(/\/+$/, '');
     }
 
-    return 'https://seanoraglobal.com';
+    return 'https://www.seanoraglobal.com';
 };
 
 const toAbsoluteUrl = (siteUrl, inputPath = '/') => {

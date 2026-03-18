@@ -187,7 +187,6 @@ const Hero = () => {
             id="hero-main"
             className="relative w-full overflow-hidden"
             style={{
-                /* Fix: guarantee content never hides under navbar (74px) on any screen */
                 minHeight: '100svh',
                 display: 'flex',
                 alignItems: 'flex-end',
@@ -241,7 +240,7 @@ const Hero = () => {
             />
 
             {/* ── Carousel arrows (left / right) ───────────────── */}
-            <div className="absolute inset-y-0 left-0 z-20 flex items-center pl-4 lg:pl-6 pointer-events-none">
+            <div className="absolute left-0 bottom-6 z-50 flex items-center pl-4 lg:pl-6 pointer-events-none lg:top-1/2 lg:bottom-auto lg:-translate-y-1/2">
                 <div className="pointer-events-auto">
                     <button
                         type="button"
@@ -253,7 +252,7 @@ const Hero = () => {
                     </button>
                 </div>
             </div>
-            <div className="absolute inset-y-0 right-0 z-20 flex items-center pr-4 lg:pr-6 pointer-events-none">
+            <div className="absolute right-0 bottom-6 z-50 flex items-center pr-4 lg:pr-6 pointer-events-none lg:top-1/2 lg:bottom-auto lg:-translate-y-1/2">
                 <div className="pointer-events-auto">
                     <button
                         type="button"
@@ -293,9 +292,6 @@ const Hero = () => {
                             <span className="hero-title-main block">
                                 <AnimatedText text={titleFirst} className="inline text-white" />
                                 {titleSecond ? <AnimatedText text={titleSecond} className="inline text-white/50" /> : null}
-                            </span>
-                            <span className="hero-title-sub block text-[15px] font-normal tracking-wide mt-2">
-                                IT Solutions &amp; Global Consulting
                             </span>
                         </AnimatedHeading>
                     </div>

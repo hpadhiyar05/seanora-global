@@ -1,7 +1,7 @@
 import { Linkedin, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import logo from '../../assets/logos/logo_1.webp';
+import logo from '../../assets/logos/Seanora Global.png';
 
 const Footer = () => {
     const socialLinks = [
@@ -68,11 +68,11 @@ const Footer = () => {
                             <img
                                 src={logo}
                                 alt="Seanora Global logo"
-                                className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                                className="h-36 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"
                                 decoding="async"
-                                width={192}
-                                height={48}
+                                width={512}
+                                height={128}
                             />
                         </Link>
                         <p className="text-[#1B1D1E]/60 font-medium leading-relaxed mb-2 text-[13px] max-w-[280px] italic">
@@ -100,7 +100,7 @@ const Footer = () => {
 
                     {/* Quick Links */}
                     <div className="lg:col-span-2">
-                        <p className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 inline-block font-medium">Quick Links</p>
+                        <p className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 block font-medium leading-normal pt-px">Quick Links</p>
                         <ul className="space-y-4 font-medium text-[13px]">
                             <li>
                                 <Link to="/" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
@@ -127,31 +127,53 @@ const Footer = () => {
 
                     {/* IT Services */}
                     <div className="lg:col-span-2">
-                        <p className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 inline-block font-medium">Services</p>
+                        <p className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 block font-medium leading-normal pt-px">Services</p>
                         <ul className="space-y-4 font-medium text-[13px]">
                             <li>
-                                <Link to="/services" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
-                                    Web Development
+                                <Link to="/services/it-bootcamps" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
+                                    IT Bootcamps
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/services" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
-                                    Cloud Computing
+                                <Link
+                                    to="/services/smart-it-solutions"
+                                    className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors"
+                                >
+                                    Smart IT Solutions &amp; Professional Consulting
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/services" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
-                                    IT Consulting
+                                <Link
+                                    to="/services/analytics-and-reporting"
+                                    className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors"
+                                >
+                                    Analytics and Reporting
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/services" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
-                                    System Integration
+                                <Link
+                                    to="/services/cloud-infrastructure"
+                                    className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors"
+                                >
+                                    Cloud Infrastructure &amp; Security
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/services" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
-                                    Cybersecurity
+                                <Link to="/services/bpo" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
+                                    Business Process Outsourcing
+                                </Link>
+                            </li>
+                            <li>
+                                <Link to="/services/big-data" className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors">
+                                    Big Data
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/services/data-warehousing"
+                                    className="text-[#1B1D1E]/60 hover:text-[#1E5AA5] transition-colors"
+                                >
+                                    Data Warehousing
                                 </Link>
                             </li>
                         </ul>
@@ -159,7 +181,7 @@ const Footer = () => {
 
                     {/* Contact Info */}
                     <div className="lg:col-span-3">
-                        <p className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 inline-block font-medium">Contact Info</p>
+                        <p className="text-[13px] font-sans mb-6 text-[#1B1D1E]/60 block font-medium leading-normal pt-px">Contact Info</p>
                         <ul className="space-y-5 font-medium text-[13px]">
                             <li className="flex items-start">
                                 <span className="text-[#1B1D1E]/60 leading-[1.6]">

@@ -35,7 +35,7 @@ const PrivacyPolicy = () => {
         },
         {
             title: '3. Data Security',
-            body: 'We implement reasonable technical and organisational measures to protect your personal information from unauthorised access, alteration, disclosure, or destruction.',
+            body: 'We implement reasonable technical and organizational measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction.',
         },
         {
             title: '4. Cookies',
@@ -93,7 +93,7 @@ const PrivacyPolicy = () => {
                     transition={{ duration: 0.5, delay: 0.15 }}
                     className="text-[13px] text-[#9CA3AF] mb-10 font-normal"
                 >
-                    Last updated: March 2025
+                    Last updated: March 2026
                 </motion.p>
 
                 <div className="space-y-10 text-[15px] text-[#6B7280] leading-relaxed font-normal">

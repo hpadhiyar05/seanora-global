@@ -16,51 +16,58 @@ import img6 from '../../../assets/images/home-service-6.webp';
 
 const servicesList = [
     {
-        icon: MonitorSmartphone,
-        title: 'Mobile & Website Design and Development',
-        description: 'Creating user-friendly mobile apps and websites.',
-        tags: ['UI/UX Design', 'Mobile Apps', 'Web Development', 'E-Commerce'],
+        icon: GraduationCap,
+        title: 'IT Bootcamps',
+        description: 'Accelerate your career with intensive IT training.',
+        tags: ['Full-stack', 'AI/ML', 'Cybersecurity', 'Placement'],
         image: img1,
     },
     {
-        icon: Server,
-        title: 'System Integration & IT Reseller',
-        description: 'Seamless system integration and quality IT products.',
-        tags: ['System Integration', 'IT Procurement', 'Hardware Supply', 'Vendor Management'],
+        icon: Briefcase,
+        title: 'Smart IT Solutions & Professional Consulting',
+        description: 'Strategic consulting for business optimization.',
+        tags: ['IT Strategy', 'Automation', 'Infrastructure', 'Consulting'],
         image: img2,
     },
     {
-        icon: Briefcase,
-        title: 'Technical Professional Services',
-        description: 'Expert consulting, implementation, and maintenance.',
-        tags: ['IT Consulting', 'Implementation', 'Maintenance', 'Support'],
+        icon: MonitorSmartphone,
+        title: 'Analytics and Reporting',
+        description: 'Dynamic data visualization and business insights.',
+        tags: ['Dashboards', 'BI Tools', 'Data Visuals', 'Reporting'],
         image: img3,
     },
     {
-        icon: GraduationCap,
-        title: 'IT Training',
-        description: 'Delivering comprehensive IT training programs to keep your team updated with the latest technologies.',
-        tags: ['Corporate Training', 'Certification Prep', 'Workshops', 'E-Learning'],
+        icon: ShieldCheck,
+        title: 'Cloud Infrastructure & Security',
+        description: 'Secure and scalable cloud management.',
+        tags: ['Cloud Migration', 'Security', 'Disaster Recovery', 'Scalability'],
         image: img4,
     },
     {
         icon: Headset,
-        title: 'IT Services and IT Consulting',
-        description: 'IT services provide technical support, while IT consulting offers strategic guidance for optimizing technology.',
-        tags: ['Help Desk', 'Strategic Planning', 'Infrastructure', 'IT Roadmap'],
+        title: 'Business Process Outsourcing',
+        description: 'Efficient outsourcing of core business processes.',
+        tags: ['IT Support', 'Data Entry', 'Customer Service', 'Operations'],
         image: img5,
     },
     {
-        icon: ShieldCheck,
-        title: 'Cloud Computing & Security',
-        description: 'Offering scalable cloud solutions and robust security measures to protect your data and IT infrastructure.',
-        tags: ['Cloud Migration', 'Cybersecurity', 'Data Protection', 'Compliance'],
+        icon: Server,
+        title: 'Big Data',
+        description: 'Advanced processing of massive datasets.',
+        tags: ['Data Lakes', 'Stream Processing', 'Big Data Architecture', 'Hadoop'],
         image: img6,
+    },
+    {
+        icon: Server,
+        title: 'Data Warehousing',
+        description: 'Unified storage for precise business analysis.',
+        tags: ['ETL', 'Integration', 'Query Optimization', 'Data Integrity'],
+        image: img6, // Reusing img6 as a placeholder for the 7th item
     },
 ];
 
 /* ── Single accordion row ───────────────────────────────── */
-const ServiceRow = ({ service, index, isActive, onHover, onLeave, isMobile }) => {
+const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
     const Icon = service.icon;
 
     return (

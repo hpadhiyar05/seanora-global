@@ -1,23 +1,29 @@
 import { motion } from 'framer-motion';
 import awsLogo from '../../../assets/clients/aws.png';
-import adminLogo from '../../../assets/clients/admin.webp';
-import chromeLogo from '../../../assets/clients/chrome.webp';
-import jacquardLogo from '../../../assets/clients/jacquard.webp';
-import mandiantLogo from '../../../assets/clients/mandiant.webp';
-import perspectiveLogo from '../../../assets/clients/perspective.webp';
-import sprayscapeLogo from '../../../assets/clients/sprayscape.webp';
-import widevineLogo from '../../../assets/clients/widevine.webp';
+import tcsLogo from '../../../assets/clients/tcs.webp';
+import metaLogo from '../../../assets/clients/meta.webp';
+import amazonLogo from '../../../assets/clients/amazon.webp';
+import microsoftLogo from '../../../assets/clients/microsoft.png';
+import hpLogo from '../../../assets/clients/hp.webp';
+import deloitteLogo from '../../../assets/clients/deloitte.webp';
+import bankOfAmericaLogo from '../../../assets/clients/bank-of-america.webp';
+import capgeminiLogo from '../../../assets/clients/Capgemini.svg';
+import OracleLogo from '../../../assets/clients/Oracle.webp';
+import ibmLogo from '../../../assets/clients/ibm.webp';
 
 const Clients = () => {
     const baseLogos = [
         { src: awsLogo, alt: 'AWS' },
-        { src: adminLogo, alt: 'Admin' },
-        { src: chromeLogo, alt: 'Chrome' },
-        { src: jacquardLogo, alt: 'Jacquard' },
-        { src: mandiantLogo, alt: 'Mandiant' },
-        { src: perspectiveLogo, alt: 'Perspective' },
-        { src: sprayscapeLogo, alt: 'Sprayscape' },
-        { src: widevineLogo, alt: 'Widevine' },
+        { src: tcsLogo, alt: 'TCS' },
+        { src: metaLogo, alt: 'Meta' },
+        { src: amazonLogo, alt: 'Amazon' },
+        { src: microsoftLogo, alt: 'Microsoft' },
+        { src: hpLogo, alt: 'HP' },
+        { src: deloitteLogo, alt: 'Deloitte' },
+        { src: bankOfAmericaLogo, alt: 'Bank of America' },
+        { src: capgeminiLogo, alt: 'Capgemini' },
+        { src: OracleLogo, alt: 'Oracle' },
+        { src: ibmLogo, alt: 'IBM' },
     ];
     const logos = [...baseLogos, ...baseLogos];
 
@@ -31,7 +37,7 @@ const Clients = () => {
                 transition={{ duration: 0.55, ease: 'easeOut' }}
                 className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-[#C4C9D4] mb-8"
             >
-                Loved by 1,000+ brands around the world
+                Trusted by Brands Worldwide
             </motion.p>
 
             {/* Marquee */}
@@ -56,8 +62,8 @@ const Clients = () => {
                             className="h-8 object-contain opacity-50 hover:opacity-90 transition-opacity duration-300 flex-shrink-0"
                             loading="lazy"
                             decoding="async"
-                            width={120}
-                            height={40}
+                            width={140}
+                            height={50}
                         />
                     ))}
                 </div>

@@ -45,8 +45,9 @@ export default {
         'pill': '999px',
       },
       fontFamily: {
-        sans: ['"Inter Tight"', 'sans-serif'],
-        serif: ['"Instrument Serif"', 'serif'],
+        // Match the app's actual loaded fonts (see src/index.css)
+        sans: ['"Poppins"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['"Poppins"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         'h1': ['128px', '1.2'],

@@ -5,7 +5,7 @@ import WhoWeAre from './components/WhoWeAre';
 // Lazy load off-screen components
 const WhyChooseUs = lazy(() => import('./components/WhyChooseUs'));
 const OurCommitment = lazy(() => import('./components/OurCommitment'));
-const FAQ = lazy(() => import('./components/FAQ'));
+// const FAQ = lazy(() => import('./components/FAQ'));
 
 const About = () => {
   const aboutSchema = [
@@ -32,7 +32,7 @@ const About = () => {
         <Suspense fallback={<div className="h-64 flex items-center justify-center"><div className="w-6 h-6 rounded-full border-2 border-black/10 border-t-[#1B1D1E] animate-spin"></div></div>}>
           <WhyChooseUs />
           <OurCommitment />
-          <FAQ />
+          {/* <FAQ /> */}
         </Suspense>
       </div>
     </>

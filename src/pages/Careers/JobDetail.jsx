@@ -138,7 +138,7 @@ useEffect(() => {
     cancelled = true;
   };
 
-}, [id, sanityClient]);
+}, [id]);
 
   const fileInputRef = useRef(null);
 
@@ -177,6 +177,12 @@ useEffect(() => {
       </div>
     );
   }
+
+  const aboutText = String(job.about ?? '').trim();
+  const responsibilitiesList = (job.responsibilities ?? []).map((v) => String(v ?? '').trim()).filter(Boolean);
+  const requirementsList = (job.requirements ?? []).map((v) => String(v ?? '').trim()).filter(Boolean);
+  const niceToHaveList = (job.niceToHave ?? []).map((v) => String(v ?? '').trim()).filter(Boolean);
+  const benefitsList = (job.benefits ?? []).map((v) => String(v ?? '').trim()).filter(Boolean);
 
   /* ── form handlers ── */
   const validateEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).trim());
@@ -310,7 +316,7 @@ useEffect(() => {
         setErrorMsg(data.message || 'Something went wrong. Please try again.');
         setSubmitted(false);
       }
-    } catch (error) {
+    } catch (_error) {
       setErrorMsg('Failed to connect to the server. Please check your connection and try again.');
       setSubmitted(false);
     } finally {
@@ -383,39 +389,41 @@ useEffect(() => {
               transition={{ duration: 0.7, delay: 0.1 }}
             >
               {/* About */}
-              <DetailSection title="About the Role">
-                <p className="text-[16px] text-[#4A4A4A] leading-relaxed font-light">
-                  {job.about}
-                </p>
-              </DetailSection>
+              {aboutText && (
+                <DetailSection title="About the Role">
+                  <p className="text-[16px] text-[#4A4A4A] leading-relaxed font-light">
+                    {aboutText}
+                  </p>
+                </DetailSection>
+              )}
 
               {/* Responsibilities */}
-              {job.responsibilities?.length > 0 && (
-              <DetailSection title="Key Responsibilities">
-                <ul className="list-none p-0 m-0">
-                  {job.responsibilities.map((item, i) => (
-                    <BulletItem key={i} text={item} accent />
-                  ))}
-                </ul>
-              </DetailSection>
+              {responsibilitiesList.length > 0 && (
+                <DetailSection title="Key Responsibilities">
+                  <ul className="list-none p-0 m-0">
+                    {responsibilitiesList.map((item, i) => (
+                      <BulletItem key={i} text={item} accent />
+                    ))}
+                  </ul>
+                </DetailSection>
               )}
 
               {/* Requirements */}
-              {job.requirements?.length > 0 && (
-              <DetailSection title="Requirements">
-                <ul className="list-none p-0 m-0">
-                  {job.requirements.map((item, i) => (
-                    <BulletItem key={i} text={item} />
-                  ))}
-                </ul>
-              </DetailSection>
+              {requirementsList.length > 0 && (
+                <DetailSection title="Requirements">
+                  <ul className="list-none p-0 m-0">
+                    {requirementsList.map((item, i) => (
+                      <BulletItem key={i} text={item} />
+                    ))}
+                  </ul>
+                </DetailSection>
               )}
 
               {/* Nice to have */}
-              {job.niceToHave?.length > 0 && (
+              {niceToHaveList.length > 0 && (
                 <DetailSection title="Nice to Have">
                   <ul className="list-none p-0 m-0">
-                    {job.niceToHave.map((item, i) => (
+                    {niceToHaveList.map((item, i) => (
                       <BulletItem key={i} text={item} />
                     ))}
                   </ul>
@@ -423,10 +431,10 @@ useEffect(() => {
               )}
 
               {/* Benefits */}
-              {job.benefits?.length > 0 && (
+              {benefitsList.length > 0 && (
                 <DetailSection title="What We Offer">
                   <ul className="list-none p-0 m-0">
-                    {job.benefits.map((item, i) => (
+                    {benefitsList.map((item, i) => (
                       <BulletItem key={i} text={item} accent />
                     ))}
                   </ul>
@@ -626,13 +634,13 @@ useEffect(() => {
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="group mt-2 relative flex items-center justify-between bg-gradient-to-r from-[#1E5AA5] to-[#29A8E0] text-white p-1 rounded-full overflow-hidden w-[220px] h-[46px] disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(30,90,165,0.35)]"
+                        className="group mt-2 relative flex items-center justify-between bg-gradient-to-r from-[#1E5AA5] to-[#29A8E0] text-white p-1 rounded-full overflow-hidden w-[200px] h-[46px] disabled:opacity-60 disabled:cursor-not-allowed shadow-[0_4px_14px_rgba(30,90,165,0.35)]"
                       >
-                        <span className="text-[14px] font-semibold pl-5 pr-2 whitespace-nowrap transition-transform duration-[400ms] ease-out group-hover:translate-x-[36px] group-disabled:translate-x-0">
+                        <span className="text-[13px] font-semibold pl-4 pr-1 whitespace-nowrap transition-transform duration-400 ease-out group-hover:translate-x-[32px] group-disabled:translate-x-0">
                           {isSubmitting ? 'Sending Application…' : 'Submit Application'}
                         </span>
-                        <div className="w-9 h-9 rounded-full bg-white text-[#1E5AA5] flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover:-translate-x-[144px] group-disabled:translate-x-0">
-                          <Send className="w-4 h-4" />
+                        <div className="w-8 h-8 rounded-full bg-white text-[#1E5AA5] flex items-center justify-center shrink-0 transition-transform duration-400 ease-out group-hover:-translate-x-[152px] group-disabled:translate-x-0">
+                          <Send className="w-3.5 h-3.5" />
                         </div>
                       </button>
 
