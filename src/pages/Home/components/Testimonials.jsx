@@ -230,7 +230,7 @@ const Testimonials = () => {
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                         <Stars filled={4} size="lg" />
-                        <span style={{ fontSize: 14, fontWeight: 500, color: '#374151' }}>4.6 Rate by 1,000+ Reviews</span>
+                        <span style={{ fontSize: 14, fontWeight: 500, color: '#374151' }}>Rated 4.6 by our clients</span>
                     </div>
                 </div>
 

@@ -4,15 +4,13 @@ import { m, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
-/* ── Six service images ─────────────────────────────────────
-   Place in assets/images/ as home-service-1.webp … home-service-6.webp
-──────────────────────────────────────────────────────────── */
-import img1 from '../../../assets/images/home-service-1.webp';
-import img2 from '../../../assets/images/home-service-2.webp';
-import img3 from '../../../assets/images/home-service-3.webp';
-import img4 from '../../../assets/images/home-service-4.webp';
-import img5 from '../../../assets/images/home-service-5.webp';
-import img6 from '../../../assets/images/home-service-6.webp';
+import img1 from '../../../assets/images/home-service- (6).webp';
+import img2 from '../../../assets/images/home-service- (4).webp';
+import img3 from '../../../assets/images/home-service- (3).webp';
+import img4 from '../../../assets/images/home-service- (7).webp';
+import img5 from '../../../assets/images/home-service- (5).webp';
+import img6 from '../../../assets/images/home-service- (2).webp';
+import img7 from '../../../assets/images/home-service- (1).webp';
 
 const servicesList = [
     {
@@ -55,7 +53,7 @@ const servicesList = [
         title: 'Big Data',
         description: 'Advanced processing of massive datasets.',
         tags: ['Data Lakes', 'Stream Processing', 'Big Data Architecture', 'Hadoop'],
-        image: img6,
+        image: img7,
     },
     {
         icon: Server,

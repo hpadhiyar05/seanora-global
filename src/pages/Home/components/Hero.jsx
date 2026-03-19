@@ -291,7 +291,7 @@ const Hero = () => {
                         <AnimatedHeading as="h1" className="text-display-1 font-normal tracking-tight text-left leading-[1.08]">
                             <span className="hero-title-main block">
                                 <AnimatedText text={titleFirst} className="inline text-white" />
-                                {titleSecond ? <AnimatedText text={titleSecond} className="inline text-white/50" /> : null}
+                                {titleSecond ? <AnimatedText text={' ' + titleSecond} className="inline text-white/50" /> : null}
                             </span>
                         </AnimatedHeading>
                     </div>

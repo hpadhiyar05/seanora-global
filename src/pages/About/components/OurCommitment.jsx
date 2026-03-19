@@ -32,11 +32,11 @@ const OurCommitment = () => {
 
         {/* Quote text — single clean fade-up */}
         <p className="text-[1.25rem] md:text-[1.75rem] font-medium text-white leading-[1.6] max-w-4xl mx-auto">
-          At Seanora Global, we believe in building long-lasting relationships
+          At <span className="text-white/60">Seanora Global</span>, we believe in building long-lasting relationships
           with our clients. Our success is measured by yours, and we are
           committed to helping you achieve your business objectives through
           reliable and{' '}
-          <span className="text-white/60">innovative</span> IT solutions.
+          innovative IT solutions.
         </p>
 
         {/* Divider + attribution */}

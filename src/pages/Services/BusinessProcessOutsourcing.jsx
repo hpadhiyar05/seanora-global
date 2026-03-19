@@ -212,14 +212,14 @@ const BusinessProcessOutsourcing = () => (
                             Five ways we <span className="text-[#00000080]">support your business</span>
                         </h2>
                     </m.div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <div className="flex flex-wrap justify-center gap-5">
                         {solutions.map((s, i) => {
                             const Icon = s.icon;
                             return (
                                 <m.div
                                     key={i}
                                     {...fadeUp(i * 0.07)}
-                                    className="group p-7 rounded-2xl bg-white border border-[#E7E7E7] hover:border-[#0284C7]/20 hover:bg-[#F0F9FF] transition-all duration-500 cursor-default"
+                                    className="group p-7 rounded-2xl bg-white border border-[#E7E7E7] hover:border-[#0284C7]/20 hover:bg-[#F0F9FF] transition-all duration-500 cursor-default w-full md:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
                                 >
                                     <div className="w-12 h-12 rounded-xl bg-[#E0F2FE] text-[#0284C7] flex items-center justify-center mb-5 transition-all duration-400 group-hover:bg-[#0284C7] group-hover:text-white group-hover:scale-105">
                                         <Icon size={20} strokeWidth={1.5} />
