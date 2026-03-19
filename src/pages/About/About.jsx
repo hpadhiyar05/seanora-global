@@ -2,10 +2,8 @@ import { Suspense, lazy } from 'react';
 import SEO from '../../components/seo/SEO';
 import WhoWeAre from './components/WhoWeAre';
 
-// Lazy load off-screen components
 const WhyChooseUs = lazy(() => import('./components/WhyChooseUs'));
 const OurCommitment = lazy(() => import('./components/OurCommitment'));
-// const FAQ = lazy(() => import('./components/FAQ'));
 
 const About = () => {
   const aboutSchema = [
