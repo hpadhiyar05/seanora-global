@@ -369,19 +369,17 @@ const Header = () => {
                     {/* ── Right: CTA + hamburger ───────────────────── */}
                     <div className="flex items-center gap-3 shrink-0">
                         {/* CTA — desktop */}
-                        {location.pathname !== '/contact' && (
-                            <Link
-                                to="/contact"
-                                className={`hdr-cta hidden lg:inline-flex items-center gap-2 px-6 py-[10px] rounded-full border text-[14.5px] font-semibold transition-all duration-200 ${
-                                    isDarkHero
-                                        ? 'border-white/40 text-white bg-transparent hover:bg-white/10'
-                                        : 'border-[#1E5AA5] text-[#1E5AA5] bg-transparent hover:bg-[#1E5AA5] hover:text-white'
-                                }`}
-                            >
-                                Get in touch
-                                <ArrowRight size={14} strokeWidth={2.5} className="hdr-cta-arrow" />
-                            </Link>
-                        )}
+                        <Link
+                            to="/contact"
+                            className={`hdr-cta hidden lg:inline-flex items-center gap-2 px-6 py-[10px] rounded-full border text-[14.5px] font-semibold transition-all duration-200 ${
+                                isDarkHero
+                                    ? 'border-white/40 text-white bg-transparent hover:bg-white/10'
+                                    : 'border-[#1E5AA5] text-[#1E5AA5] bg-transparent hover:bg-[#1E5AA5] hover:text-white'
+                            } ${location.pathname === '/contact' ? 'invisible pointer-events-none' : ''}`}
+                        >
+                            Get in touch
+                            <ArrowRight size={14} strokeWidth={2.5} className="hdr-cta-arrow" />
+                        </Link>
 
                         {/* Hamburger — mobile */}
                         <button
