@@ -746,7 +746,16 @@ const Header = () => {
 
     /* ── Scroll listener ───────────────────────────────────── */
     useEffect(() => {
-        const onScroll = () => setIsScrolled(window.scrollY > 10);
+        let ticking = false;
+        const onScroll = () => {
+            if (!ticking) {
+                requestAnimationFrame(() => {
+                    setIsScrolled(window.scrollY > 10);
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        };
         window.addEventListener('scroll', onScroll, { passive: true });
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
@@ -787,7 +796,7 @@ const Header = () => {
 
     /* ── Header bg classes ─────────────────────────────────── */
     const headerBg = isScrolled
-        ? 'bg-white/96 backdrop-blur-md border-b border-black/[0.08] shadow-[0_1px_16px_rgba(0,0,0,0.07)]'
+        ? 'bg-white/96 border-b border-black/[0.08] shadow-[0_1px_16px_rgba(0,0,0,0.07)]'
         : isDarkHero
           ? 'bg-transparent border-b border-transparent'
           : 'bg-white border-b border-black/[0.06]';
@@ -969,11 +978,11 @@ const Header = () => {
                             position: 'absolute',
                             top: 0,
                             right: 0,
-                            width: 500,
-                            height: 500,
+                            width: 280,
+                            height: 280,
                             background: 'rgba(239,246,255,0.5)',
                             borderRadius: '50%',
-                            filter: 'blur(130px)',
+                            filter: 'blur(40px)',
                             transform: 'translate(25%, -33%)',
                             pointerEvents: 'none',
                         }}

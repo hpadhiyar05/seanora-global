@@ -1,11 +1,14 @@
 import AppRouter from './routes/Router';
 import ErrorBoundary from './components/ui/ErrorBoundary';
+import { LazyMotion, domAnimation } from 'framer-motion';
 
 function App() {
   return (
-    <ErrorBoundary>
-      <AppRouter />
-    </ErrorBoundary>
+    <LazyMotion features={domAnimation}>
+      <ErrorBoundary>
+        <AppRouter />
+      </ErrorBoundary>
+    </LazyMotion>
   );
 }
 

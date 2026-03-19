@@ -1,4 +1,4 @@
-import { createClient } from '@sanity/client';
+const { createClient } = await import('@sanity/client')
 
 export const sanityClient = createClient({
     projectId: 'cvehe1bc',

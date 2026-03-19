@@ -6,11 +6,11 @@ const PageLoader = () => (
             <img
                 src={logo}
                 alt="Seanora Global"
-                className="h-40 w-auto object-contain"
-                loading="eager"
+                className="h-14 w-auto object-contain"
+                loading="lazy"
                 decoding="async"
-                width={640}
-                height={160}
+                width={384}
+                height={96}
             />
 
             <div className="relative w-16 h-16" aria-hidden="true">

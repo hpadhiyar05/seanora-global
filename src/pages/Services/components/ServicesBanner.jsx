@@ -79,7 +79,7 @@
 
 // export default ServicesBanner;
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import servicesBanner from '../../../assets/images/services-banner.webp';
 
 const ServicesBanner = () => {
@@ -88,7 +88,8 @@ const ServicesBanner = () => {
             <img
                 src={servicesBanner}
                 alt=""
-                loading="lazy"
+                loading="eager"
+                decoding="async"
                 className="absolute inset-0 w-full h-full object-cover object-center lg:object-[center_40%]"
                 style={{ opacity: 0.92 }}
                 width={1280}
@@ -122,7 +123,7 @@ const ServicesBanner = () => {
             />
 
             <div className="absolute inset-0 flex flex-col items-center justify-start pt-16 md:pt-20 px-4 z-10">
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
@@ -136,7 +137,7 @@ const ServicesBanner = () => {
                         Comprehensive solutions for <span className="text-[#1B1D1E]/65">every stage</span>
                         <br className="hidden md:block" /> of your business journey.
                     </h2>
-                </motion.div>
+                </m.div>
             </div>
         </div>
     );

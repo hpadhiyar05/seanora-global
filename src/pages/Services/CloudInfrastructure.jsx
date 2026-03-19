@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
@@ -80,7 +80,7 @@ const CloudInfrastructure = () => (
                     <div className="absolute left-0 center w-[800px] h-[800px] bg-[#1E5AA5] rounded-full blur-[200px] opacity-[0.07] -translate-x-1/2 top-1/2 -translate-y-1/2" />
                 </div>
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)}>
+                    <m.div {...fadeUp(0)}>
                         <div className="flex items-center gap-2 mb-6">
                             <Link
                                 to="/services"
@@ -104,7 +104,7 @@ const CloudInfrastructure = () => (
                             Scalable, secure cloud platforms powering modern businesses with seamless performance and reliability across
                             AWS, Google Cloud, and Microsoft Azure.
                         </p>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -114,7 +114,8 @@ const CloudInfrastructure = () => (
                     src={cloudBanner}
                     alt="Cloud Infrastructure Banner"
                     className="w-full h-full object-cover object-center"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     width={1920}
                     height={800}
                 />
@@ -122,17 +123,17 @@ const CloudInfrastructure = () => (
             {/* Cloud Providers */}
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                             Cloud Partners
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em]">
                             Three cloud platforms. <span className="text-[#00000080]">One team.</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         {providers.map((p, i) => (
-                            <motion.div
+                            <m.div
                                 key={i}
                                 {...fadeUp(i * 0.1)}
                                 className="group p-8 rounded-2xl border border-[#E7E7E7] hover:border-[#D1D1D1] hover:shadow-lg transition-all duration-500 cursor-default"
@@ -156,7 +157,7 @@ const CloudInfrastructure = () => (
                                         </li>
                                     ))}
                                 </ul>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
                 </div>
@@ -167,7 +168,7 @@ const CloudInfrastructure = () => (
                 <div className="absolute right-0 bottom-0 w-[500px] h-[500px] bg-[#1E5AA5] rounded-full blur-[160px] opacity-[0.07] translate-x-1/3 translate-y-1/3 pointer-events-none" />
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#93C5FD] mb-4 block">
                                 Security First
                             </span>
@@ -178,17 +179,17 @@ const CloudInfrastructure = () => (
                                 We don't bolt on security after the fact. Every cloud solution we architect is designed with security,
                                 compliance, and resilience as core requirements — not afterthoughts.
                             </p>
-                        </motion.div>
+                        </m.div>
                         <div className="grid grid-cols-1 gap-4">
                             {securityFeatures.map((f, i) => (
-                                <motion.div
+                                <m.div
                                     key={i}
                                     {...fadeUp(i * 0.08)}
                                     className="p-6 rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] transition-colors duration-300 cursor-default"
                                 >
                                     <h5 className="text-[1.25rem] font-semibold text-white/80 mb-2">{f.title}</h5>
                                     <p className="text-[1rem] text-white/40 font-light leading-relaxed">{f.desc}</p>
-                                </motion.div>
+                                </m.div>
                             ))}
                         </div>
                     </div>
@@ -199,17 +200,18 @@ const CloudInfrastructure = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <motion.div {...fadeUp(0.12)} className="rounded-3xl h-[420px] overflow-hidden">
+                        <m.div {...fadeUp(0.12)} className="rounded-3xl h-[420px] overflow-hidden">
                             <img
                                 src={cloudSideImage}
                                 alt="Cloud Migration Image"
                                 className="w-full h-full object-cover object-center"
                                 loading="lazy"
+                                decoding="async"
                                 width={900}
                                 height={700}
                             />
-                        </motion.div>
-                        <motion.div {...fadeUp(0)} className="order-1 lg:order-2">
+                        </m.div>
+                        <m.div {...fadeUp(0)} className="order-1 lg:order-2">
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                                 Cloud Migration
                             </span>
@@ -233,7 +235,7 @@ const CloudInfrastructure = () => (
                                     </li>
                                 ))}
                             </ul>
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </section>
@@ -241,7 +243,7 @@ const CloudInfrastructure = () => (
             {/* CTA */}
             <section className="py-16 bg-[#F6F6F6] border-t border-[#E7E7E7]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <m.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div>
                             <h4 className="text-[2rem] font-medium text-[#070707] mb-2">Ready to move to the cloud?</h4>
                             <p className="text-[1rem] text-[#888888] font-light">Let's architect a solution built for your scale.</p>
@@ -256,7 +258,7 @@ const CloudInfrastructure = () => (
                                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
         </main>

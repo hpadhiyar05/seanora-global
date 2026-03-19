@@ -176,7 +176,7 @@
 
 // export default ServicesHero;
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 import Breadcrumb from '../../../components/ui/Breadcrumb';
 import { MonitorSmartphone, GraduationCap, Server, Users, Briefcase, Cloud, CheckCircle2, HardDrive, Database } from 'lucide-react';
@@ -195,7 +195,7 @@ const stats = [
     { value: '7', label: 'Core services' },
     { value: '1,000+', label: 'Clients served' },
     { value: '15+', label: 'Countries' },
-    { value: '10+', label: 'Years experience' },
+    { value: '6+', label: 'Years experience' },
 ];
 
 const ServicesHero = () => {
@@ -206,13 +206,13 @@ const ServicesHero = () => {
 
                 <div className="mt-10 mb-14 md:mb-20 grid grid-cols-1 lg:grid-cols-[1fr_420px] xl:grid-cols-[1fr_460px] gap-10 xl:gap-16 items-start">
                     {/* LEFT */}
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: 28 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.85 }}
                         className="flex flex-col justify-between"
                     >
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, x: -14 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.55 }}
@@ -222,7 +222,7 @@ const ServicesHero = () => {
                             <span className="text-[11px] font-sans tracking-[0.26em] text-[#1E5AA5] font-semibold uppercase">
                                 Our Services
                             </span>
-                        </motion.div>
+                        </m.div>
 
                         <AnimatedHeading
                             as="h1"
@@ -237,17 +237,12 @@ const ServicesHero = () => {
                             <AnimatedText text="solutions." className="block" />
                         </AnimatedHeading>
 
-                        <motion.p
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.65, delay: 0.28 }}
-                            className="text-[16px] text-[#6B6B6B] leading-[1.8] font-light max-w-md mb-10"
-                        >
+                        <p className="text-[16px] text-[#6B6B6B] leading-[1.8] font-light max-w-md mb-10">
                             From IT bootcamps and cloud infrastructure to BPO and big data — a full spectrum of services crafted to enhance
                             efficiency, security, and innovation at every stage of your business.
-                        </motion.p>
+                        </p>
 
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, y: 12 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.65, delay: 0.42 }}
@@ -263,11 +258,11 @@ const ServicesHero = () => {
                                     </div>
                                 </div>
                             ))}
-                        </motion.div>
-                    </motion.div>
+                        </m.div>
+                    </m.div>
 
                     {/* RIGHT — card */}
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, x: 28 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.9, delay: 0.18, ease: 'easeOut' }}
@@ -287,7 +282,7 @@ const ServicesHero = () => {
 
                             <div className="px-3 py-3">
                                 {highlights.map(({ icon: Icon, label, tag }, i) => (
-                                    <motion.div
+                                    <m.div
                                         key={i}
                                         initial={{ opacity: 0, x: 14 }}
                                         animate={{ opacity: 1, x: 0 }}
@@ -303,7 +298,7 @@ const ServicesHero = () => {
                                         <span className="text-[10px] font-semibold tracking-[0.12em] uppercase text-[#1E5AA5]/0 group-hover:text-[#1E5AA5]/70 bg-transparent group-hover:bg-[#DBEAFE] px-2 py-1 rounded-md transition-all duration-250 whitespace-nowrap">
                                             {tag}
                                         </span>
-                                    </motion.div>
+                                    </m.div>
                                 ))}
                             </div>
 
@@ -316,10 +311,10 @@ const ServicesHero = () => {
                                 </div>
                             </div>
                         </div>
-                    </motion.div>
+                    </m.div>
                 </div>
 
-                <motion.div
+                <m.div
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 1.1, delay: 0.55, ease: 'easeOut' }}

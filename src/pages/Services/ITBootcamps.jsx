@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Zap, Cpu, TrendingUp, CheckCircle2, Clock, Globe, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
@@ -78,7 +78,7 @@ const ITBootcamps = () => (
                     <div className="absolute right-0 bottom-0 w-[400px] h-[400px] bg-[#413DF2] rounded-full blur-[150px] opacity-[0.06] translate-x-1/3" />
                 </div>
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)}>
+                    <m.div {...fadeUp(0)}>
                         <div className="flex items-center gap-2 mb-6">
                             <Link
                                 to="/services"
@@ -102,7 +102,7 @@ const ITBootcamps = () => (
                             Real-world projects led by seasoned IT professionals to build practical skills fast — structured for students
                             and professionals targeting global IT careers.
                         </p>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -112,7 +112,7 @@ const ITBootcamps = () => (
                     src={itBootcampBanner}
                     alt="IT Bootcamp Banner"
                     className="w-full h-full object-cover object-center"
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     width={1920}
                     height={800}
@@ -122,19 +122,19 @@ const ITBootcamps = () => (
             {/* Features */}
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                             What You'll Learn
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em] max-w-2xl">
                             Six pillars of <span className="text-[#00000080]">bootcamp excellence</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {features.map((f, i) => {
                             const Icon = f.icon;
                             return (
-                                <motion.div
+                                <m.div
                                     key={i}
                                     {...fadeUp(i * 0.07)}
                                     className="group p-7 rounded-2xl border border-[#E7E7E7] hover:border-[#1E5AA5]/20 hover:bg-[#F3F5FF] transition-all duration-500 cursor-default"
@@ -144,7 +144,7 @@ const ITBootcamps = () => (
                                     </div>
                                     <h5 className="text-[1.25rem] font-semibold text-[#070707] mb-3 leading-snug">{f.title}</h5>
                                     <p className="text-[1rem] text-[#888888] leading-[1.75] font-light">{f.detail}</p>
-                                </motion.div>
+                                </m.div>
                             );
                         })}
                     </div>
@@ -155,17 +155,17 @@ const ITBootcamps = () => (
             <section className="py-20 md:py-28 bg-[#0F1114] relative overflow-hidden">
                 <div className="absolute right-0 top-0 w-[500px] h-[500px] bg-[#413DF2] rounded-full blur-[160px] opacity-[0.05] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#93C5FD] mb-4 block">
                             Training Tracks
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-white leading-[1.08] tracking-[-0.02em]">
                             Choose your <span className="text-[#FFFFFF80]">learning path</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="divide-y divide-white/[0.06]">
                         {tracks.map((t, i) => (
-                            <motion.div
+                            <m.div
                                 key={i}
                                 {...fadeUp(i * 0.06)}
                                 className="group flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-6 hover:bg-white/[0.03] -mx-4 px-4 rounded-xl transition-colors duration-300 cursor-default"
@@ -182,7 +182,7 @@ const ITBootcamps = () => (
                                         {t.duration}
                                     </span>
                                 </div>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
                 </div>
@@ -192,7 +192,7 @@ const ITBootcamps = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                                 Career Support
                             </span>
@@ -217,17 +217,18 @@ const ITBootcamps = () => (
                                     </li>
                                 ))}
                             </ul>
-                        </motion.div>
-                        <motion.div {...fadeUp(0.12)} className="rounded-3xl h-[420px] overflow-hidden">
+                        </m.div>
+                        <m.div {...fadeUp(0.12)} className="rounded-3xl h-[420px] overflow-hidden">
                             <img
                                 src={itBootcampSideImage}
                                 alt="IT Bootcamp Side Image"
                                 className="w-full h-full object-cover object-center"
                                 loading="lazy"
+                                decoding="async"
                                 width={900}
                                 height={700}
                             />
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </section>
@@ -235,7 +236,7 @@ const ITBootcamps = () => (
             {/* CTA */}
             <section className="py-16 bg-[#F6F6F6] border-t border-[#E7E7E7]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <m.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div>
                             <h4 className="text-[2rem] font-medium text-[#070707] mb-2">Ready to launch your IT career?</h4>
                             <p className="text-[1rem] text-[#888888] font-light">Join the next cohort — limited seats available.</p>
@@ -250,7 +251,7 @@ const ITBootcamps = () => (
                                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
         </main>

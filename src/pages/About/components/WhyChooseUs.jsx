@@ -169,7 +169,7 @@
 // export default WhyChooseUs;
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Users, Layers, GraduationCap, BarChart2, HeartPulse, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
@@ -284,7 +284,7 @@ const WhyChooseUs = () => {
             <div className="container mx-auto px-8 md:px-12 lg:px-16 max-w-[1140px] relative z-10">
                 {/* ── Header ── */}
                 <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-16 md:mb-20">
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: 24 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
@@ -301,9 +301,9 @@ const WhyChooseUs = () => {
                             <AnimatedText text="for " />
                             <AnimatedText text="Success" className="text-[#00000066]" />
                         </AnimatedHeading>
-                    </motion.div>
+                    </m.div>
 
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: '-80px' }}
@@ -325,11 +325,11 @@ const WhyChooseUs = () => {
                                 <ArrowUpRight className="w-4 h-4" />
                             </div>
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
 
                 {/* Top rule */}
-                <motion.div
+                <m.div
                     initial={{ scaleX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: true }}
@@ -340,7 +340,7 @@ const WhyChooseUs = () => {
                 {/* ── List rows ── */}
                 <div>
                     {reasons.map(({ Icon, index, title, description }, i) => (
-                        <motion.div
+                        <m.div
                             key={title}
                             custom={i}
                             variants={fadeUp}
@@ -348,7 +348,7 @@ const WhyChooseUs = () => {
                             whileInView="show"
                             viewport={{ once: true, margin: '-40px' }}
                         >
-                            <motion.div
+                            <m.div
                                 variants={rowVariants}
                                 initial="rest"
                                 animate={hoveredIndex === i ? 'hover' : 'rest'}
@@ -358,7 +358,7 @@ const WhyChooseUs = () => {
                                 style={{ zIndex: hoveredIndex === i ? 10 : 1 }}
                             >
                                 {/* Soft brand-tint glow on hover */}
-                                <motion.div
+                                <m.div
                                     aria-hidden
                                     initial={false}
                                     animate={{ opacity: hoveredIndex === i ? 1 : 0 }}
@@ -367,14 +367,14 @@ const WhyChooseUs = () => {
                                 />
 
                                 {/* Divider — fades on hover */}
-                                <motion.div
+                                <m.div
                                     animate={{ opacity: hoveredIndex === i ? 0 : 1 }}
                                     transition={{ duration: DUR, ease: EASE }}
                                     className="absolute bottom-0 left-3 right-3 h-px bg-[#00000033]"
                                 />
 
                                 {/* Left accent bar */}
-                                <motion.div
+                                <m.div
                                     variants={accentVariants}
                                     className="absolute left-0 top-5 bottom-5 w-[3px] rounded-full bg-[#2A27AC] origin-top"
                                 />
@@ -391,40 +391,33 @@ const WhyChooseUs = () => {
                                 "
                                 >
                                     {/* Index */}
-                                    <motion.span
-                                        variants={indexVariants}
-                                        className="text-[0.875rem] font-mono tracking-[0.22em] font-bold uppercase tabular-nums self-start pt-1 md:self-auto md:pt-0"
-                                    >
+                                    <span className="text-[0.875rem] font-mono tracking-[0.22em] font-bold uppercase tabular-nums self-start pt-1 md:self-auto md:pt-0">
                                         {index}
-                                    </motion.span>
+                                    </span>
 
                                     {/* Icon — desktop */}
-                                    <motion.div
+                                    <m.div
                                         variants={iconVariants}
                                         className="hidden md:flex w-[52px] h-[52px] rounded-xl items-center justify-center shrink-0"
                                     >
                                         <Icon className="w-6 h-6" strokeWidth={1.4} />
-                                    </motion.div>
+                                    </m.div>
 
                                     {/* Title + mobile icon */}
                                     <div className="flex items-center gap-4 md:gap-0">
-                                        <motion.div
+                                        <m.div
                                             variants={iconVariants}
                                             className="flex md:hidden w-11 h-11 rounded-xl items-center justify-center shrink-0"
                                         >
                                             <Icon className="w-5 h-5" strokeWidth={1.4} />
-                                        </motion.div>
-                                        <motion.h3
-                                            variants={titleVariants}
-                                            className="text-[1.25rem] md:text-[1.5rem] font-semibold leading-snug tracking-[-0.015em]"
-                                        >
+                                        </m.div>
+                                        <h3 className="text-[1.25rem] md:text-[1.5rem] font-semibold leading-snug tracking-[-0.015em]">
                                             {title}
-                                        </motion.h3>
+                                        </h3>
                                     </div>
 
                                     {/* Description */}
-                                    <motion.p
-                                        variants={descVariants}
+                                    <p
                                         className="
                                             col-start-2 col-span-1 md:col-start-auto md:col-span-1
                                             mt-2.5 md:mt-0
@@ -432,10 +425,10 @@ const WhyChooseUs = () => {
                                         "
                                     >
                                         {description}
-                                    </motion.p>
+                                    </p>
                                 </div>
-                            </motion.div>
-                        </motion.div>
+                            </m.div>
+                        </m.div>
                     ))}
                 </div>
             </div>

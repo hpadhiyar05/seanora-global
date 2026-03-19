@@ -1,6 +1,6 @@
 import { Linkedin, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import logo from '../../assets/logos/Seanora Global.png';
 
 const Footer = () => {
@@ -55,7 +55,7 @@ const Footer = () => {
             </div>
 
             <div className="max-w-[1280px] mx-auto px-4 lg:px-12 relative z-10 w-full flex flex-col">
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-60px' }}
@@ -68,11 +68,11 @@ const Footer = () => {
                             <img
                                 src={logo}
                                 alt="Seanora Global logo"
-                                className="h-36 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                                className="h-10 sm:h-12 lg:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"
                                 decoding="async"
-                                width={512}
-                                height={128}
+                                width={224}
+                                height={67}
                             />
                         </Link>
                         <p className="text-[#1B1D1E]/60 font-medium leading-relaxed mb-2 text-[13px] max-w-[280px] italic">
@@ -204,10 +204,10 @@ const Footer = () => {
                             </li>
                         </ul>
                     </div>
-                </motion.div>
+                </m.div>
 
                 {/* Copyright */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true, margin: '-40px' }}
@@ -225,7 +225,7 @@ const Footer = () => {
                             Terms of Service
                         </Link>
                     </div>
-                </motion.div>
+                </m.div>
             </div>
         </footer>
     );

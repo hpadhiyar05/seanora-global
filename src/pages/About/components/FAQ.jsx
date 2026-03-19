@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import Accordion from '../../../components/ui/Accordion';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
@@ -60,7 +60,7 @@ const FAQ = () => {
 
 
       <div className="container mx-auto px-4 lg:px-12 max-w-6xl relative z-10">
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -77,9 +77,9 @@ const FAQ = () => {
           <p className="text-lg text-[#6B6B6B] font-light leading-relaxed">
             Find answers to the most commonly asked questions about our services, methodologies, and expertise.
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -89,7 +89,7 @@ const FAQ = () => {
             items={faqItems}
             className="w-full max-w-3xl mx-auto flex flex-col gap-3"
           />
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

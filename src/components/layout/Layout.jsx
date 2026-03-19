@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -16,7 +16,7 @@ const ScrollToTopButton = () => {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.button
+        <m.button
           key="scroll-top"
           initial={{ opacity: 0, scale: 0.75, y: 10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -30,14 +30,20 @@ const ScrollToTopButton = () => {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M18 15l-6-6-6 6" />
           </svg>
-        </motion.button>
+        </m.button>
       )}
     </AnimatePresence>
   );
 };
 
 const Layout = () => {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
+
+  useEffect(() => {
+    // Reset scroll on route changes; keep hash-link behavior intact.
+    if (hash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [pathname, hash]);
 
   return (
     <div className="layout min-h-screen flex flex-col">
@@ -50,7 +56,7 @@ const Layout = () => {
       <Header />
       <main id="main-content" className="main-content flex-grow" role="main">
         <AnimatePresence mode="wait" initial={false}>
-          <motion.div
+          <m.div
             key={pathname}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -58,7 +64,7 @@ const Layout = () => {
             transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
           >
             <Outlet />
-          </motion.div>
+          </m.div>
         </AnimatePresence>
       </main>
       <Footer />

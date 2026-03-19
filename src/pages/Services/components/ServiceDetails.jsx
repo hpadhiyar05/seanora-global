@@ -272,7 +272,7 @@
 
 
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
     MonitorSmartphone, GraduationCap, Server, Users, Briefcase, Cloud,
@@ -477,7 +477,7 @@ const BulletList = ({ bullets, accentLight }) => (
         {bullets.map((b, idx) => {
             const Icon = b.icon;
             return (
-                <motion.li
+                <m.li
                     key={idx}
                     initial={{ opacity: 0, x: 10 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -492,7 +492,7 @@ const BulletList = ({ bullets, accentLight }) => (
                         <p className="text-[15px] font-medium text-white/75 leading-snug">{b.text}</p>
                         {b.detail && <p className="text-[14px] text-white/35 leading-relaxed mt-0.5 font-light">{b.detail}</p>}
                     </div>
-                </motion.li>
+                </m.li>
             );
         })}
     </ul>
@@ -501,7 +501,7 @@ const BulletList = ({ bullets, accentLight }) => (
 const CloudPanel = ({ providers, accentLight }) => (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {providers.map((p, i) => (
-            <motion.div
+            <m.div
                 key={i}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -524,7 +524,7 @@ const CloudPanel = ({ providers, accentLight }) => (
                         </li>
                     ))}
                 </ul>
-            </motion.div>
+            </m.div>
         ))}
     </div>
 );
@@ -536,7 +536,7 @@ const BpoPanel = ({ service }) => (
             {service.bpoHighlights.map((h, i) => {
                 const Icon = h.icon;
                 return (
-                    <motion.div
+                    <m.div
                         key={i}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -549,7 +549,7 @@ const BpoPanel = ({ service }) => (
                         </div>
                         <p className="text-[14.5px] font-semibold text-white/70 leading-snug mb-1">{h.title}</p>
                         <p className="text-[13.5px] text-white/35 font-light leading-relaxed">{h.desc}</p>
-                    </motion.div>
+                    </m.div>
                 );
             })}
         </div>
@@ -561,7 +561,7 @@ const BpoPanel = ({ service }) => (
                 {service.bpoSolutions.map((sol, i) => {
                     const Icon = sol.icon;
                     return (
-                        <motion.div
+                        <m.div
                             key={i}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -581,7 +581,7 @@ const BpoPanel = ({ service }) => (
                                     </li>
                                 ))}
                             </ul>
-                        </motion.div>
+                        </m.div>
                     );
                 })}
             </div>
@@ -628,7 +628,7 @@ const BigDataPanel = ({ service }) => (
         <BulletList bullets={service.bullets} accentLight={service.accentLight} />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {service.bigDataPlatforms.map((p, i) => (
-                <motion.div
+                <m.div
                     key={i}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -637,7 +637,7 @@ const BigDataPanel = ({ service }) => (
                 >
                     <h4 className="text-[16px] font-semibold mb-2" style={{ color: p.color }}>{p.name}</h4>
                     <p className="text-[14.5px] text-white/40 font-light leading-relaxed">{p.desc}</p>
-                </motion.div>
+                </m.div>
             ))}
         </div>
     </div>
@@ -652,16 +652,13 @@ const AnalyticsPanel = ({ service }) => (
             </p>
             <div className="flex flex-wrap gap-2">
                 {service.platforms.map((p, i) => (
-                    <motion.span
+                    <span
                         key={i}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.25, delay: i * 0.04 }}
                         className="text-[14px] font-medium px-3 py-1.5 rounded-lg border border-white/[0.08]"
                         style={{ color: service.accentLight, backgroundColor: `${service.accentLight}10` }}
                     >
                         {p}
-                    </motion.span>
+                    </span>
                 ))}
             </div>
         </div>
@@ -727,7 +724,7 @@ const ServiceDetails = () => {
 
             <div className="container mx-auto px-4 lg:px-12 max-w-6xl relative z-10">
                 {/* Header */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-60px' }}
@@ -748,7 +745,7 @@ const ServiceDetails = () => {
                     <p className="text-[14.5px] text-white/40 font-light leading-relaxed max-w-xs md:text-right">
                         Every service is built to integrate seamlessly across your entire technology ecosystem.
                     </p>
-                </motion.div>
+                </m.div>
 
                 {/* Accordion */}
                 <div className="divide-y divide-white/[0.06] pb-16 md:pb-20">
@@ -756,7 +753,7 @@ const ServiceDetails = () => {
                         const Icon = service.icon;
 
                         return (
-                            <motion.div
+                            <m.div
                                 key={service.index}
                                 initial={{ opacity: 0, y: 16 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -788,7 +785,7 @@ const ServiceDetails = () => {
                                         <ArrowUpRight size={12} strokeWidth={2} className="text-[#93C5FD] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                                     </div>
                                 </Link>
-                            </motion.div>
+                            </m.div>
                         );
                     })}
                 </div>

@@ -1,5 +1,6 @@
-import { motion } from 'framer-motion';
-import awsLogo from '../../../assets/clients/aws.png';
+import { useRef } from 'react';
+import { useInView } from 'framer-motion';
+import awsLogo from '../../../assets/clients/aws.jpg';
 import tcsLogo from '../../../assets/clients/tcs.webp';
 import metaLogo from '../../../assets/clients/meta.webp';
 import amazonLogo from '../../../assets/clients/amazon.webp';
@@ -12,6 +13,12 @@ import OracleLogo from '../../../assets/clients/Oracle.webp';
 import ibmLogo from '../../../assets/clients/ibm.webp';
 
 const Clients = () => {
+    const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, {
+        margin: '-20% 0px -20% 0px',
+        amount: 0.2,
+    });
+
     const baseLogos = [
         { src: awsLogo, alt: 'AWS' },
         { src: tcsLogo, alt: 'TCS' },
@@ -28,17 +35,14 @@ const Clients = () => {
     const logos = [...baseLogos, ...baseLogos];
 
     return (
-        <section className="pt-8 pb-12 bg-white overflow-hidden border-t border-black/[0.07]">
+        <section
+            ref={sectionRef}
+            className="pt-8 pb-12 bg-white overflow-hidden border-t border-black/[0.07]"
+        >
             {/* Label */}
-            <motion.p
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.55, ease: 'easeOut' }}
-                className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-[#C4C9D4] mb-8"
-            >
+            <p className="text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-[#C4C9D4] mb-8">
                 Trusted by Brands Worldwide
-            </motion.p>
+            </p>
 
             {/* Marquee */}
             <div className="relative w-full overflow-hidden">
@@ -53,7 +57,11 @@ const Clients = () => {
                     style={{ background: 'linear-gradient(to left, #ffffff, transparent)' }}
                 />
 
-                <div className="flex items-center gap-16 whitespace-nowrap animate-[marquee_30s_linear_infinite] hover:[animation-play-state:paused] w-max">
+                <div
+                    className={`flex items-center gap-16 whitespace-nowrap w-max ${
+                        isInView ? 'animate-[marquee_30s_linear_infinite] hover:[animation-play-state:paused]' : ''
+                    }`}
+                >
                     {logos.map((logo, i) => (
                         <img
                             key={`logo-${i}`}

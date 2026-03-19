@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import {
   ArrowLeft,
   MapPin,
@@ -352,7 +352,7 @@ useEffect(() => {
           />
 
           {/* Job Hero */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
@@ -377,13 +377,13 @@ useEffect(() => {
               {job.experience && <MetaBadge icon={Briefcase} label={`${job.experience} experience`} />}
               {job.salary && <MetaBadge icon={DollarSign} label={job.salary} />}
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Two-column layout */}
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-12 xl:gap-16 items-start">
 
             {/* ── LEFT: Job Details ── */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
@@ -440,10 +440,10 @@ useEffect(() => {
                   </ul>
                 </DetailSection>
               )}
-            </motion.div>
+            </m.div>
 
             {/* ── RIGHT: Application Form ── */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
@@ -648,7 +648,7 @@ useEffect(() => {
                   </>
                 )}
               </div>
-            </motion.div>
+            </m.div>
 
           </div>
         </div>

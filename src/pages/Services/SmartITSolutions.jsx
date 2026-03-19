@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Headphones, TrendingUp, CheckCircle2, Zap, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
@@ -58,7 +58,7 @@ const SmartITSolutions = () => (
                     <div className="absolute left-0 bottom-0 w-[400px] h-[400px] bg-[#1E5AA5] rounded-full blur-[150px] opacity-[0.06] -translate-x-1/3" />
                 </div>
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)}>
+                    <m.div {...fadeUp(0)}>
                         <div className="flex items-center gap-2 mb-6">
                             <Link
                                 to="/services"
@@ -82,7 +82,7 @@ const SmartITSolutions = () => (
                             We assist clients in developing end-to-end software solutions and tools that help them organize and realize the
                             full potential of every phase of project and product development.
                         </p>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -91,10 +91,10 @@ const SmartITSolutions = () => (
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-white/20">
                         {outcomes.map((o, i) => (
-                            <motion.div key={i} {...fadeUp(i * 0.08)} className="px-8 py-2 text-center">
+                            <m.div key={i} {...fadeUp(i * 0.08)} className="px-8 py-2 text-center">
                                 <div className="text-[3rem] font-medium text-white leading-none tracking-[-0.02em] mb-1">{o.value}</div>
                                 <div className="text-[0.875rem] text-white/60 font-light tracking-wide">{o.label}</div>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
                 </div>
@@ -106,7 +106,8 @@ const SmartITSolutions = () => (
                     src={itSolutionBanner}
                     alt="descriptive alt text"
                     className="w-full h-full object-cover object-center"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     width={1920}
                     height={800}
                 />
@@ -116,7 +117,7 @@ const SmartITSolutions = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#0284C7] mb-4 block">
                                 About Our Consulting
                             </span>
@@ -127,8 +128,8 @@ const SmartITSolutions = () => (
                                 With our effective consulting services, any industry or organization can rest confident that strategic plans
                                 will be created and the firm will be driven to attain its objectives in a well-organized and smart manner.
                             </p>
-                        </motion.div>
-                        <motion.div {...fadeUp(0.1)}>
+                        </m.div>
+                        <m.div {...fadeUp(0.1)}>
                             <p className="text-[1.25rem] text-[#888888] font-light leading-[1.8] mb-6">
                                 Our analytics services also enable enterprises to make a paradigm change in order to meet their needs and
                                 expedite the development process in a cost-efficient way.
@@ -137,7 +138,7 @@ const SmartITSolutions = () => (
                                 Our various testing solutions produce flawless results, resulting in an efficient business outcome —
                                 regardless of industry or organizational complexity.
                             </p>
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </section>
@@ -145,19 +146,19 @@ const SmartITSolutions = () => (
             {/* Four pillars */}
             <section className="py-20 md:py-28 bg-[#F6F6F6]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#0284C7] mb-4 block">
                             Our Approach
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em]">
                             Four pillars of <span className="text-[#00000080]">smart consulting</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         {pillars.map((p, i) => {
                             const Icon = p.icon;
                             return (
-                                <motion.div
+                                <m.div
                                     key={i}
                                     {...fadeUp(i * 0.08)}
                                     className="group flex gap-6 p-8 rounded-2xl bg-white border border-[#E7E7E7] hover:border-[#0284C7]/20 hover:bg-[#F0F9FF] transition-all duration-500 cursor-default"
@@ -169,7 +170,7 @@ const SmartITSolutions = () => (
                                         <h5 className="text-[1.25rem] font-semibold text-[#070707] mb-3 leading-snug">{p.title}</h5>
                                         <p className="text-[1rem] text-[#888888] leading-[1.75] font-light">{p.detail}</p>
                                     </div>
-                                </motion.div>
+                                </m.div>
                             );
                         })}
                     </div>
@@ -180,17 +181,17 @@ const SmartITSolutions = () => (
             <section className="py-20 md:py-28 bg-[#0F1114] relative overflow-hidden">
                 <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-[#0284C7] rounded-full blur-[160px] opacity-[0.06] -translate-x-1/3 translate-y-1/3 pointer-events-none" />
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#38BDF8] mb-4 block">
                             How We Work
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-white leading-[1.08] tracking-[-0.02em]">
                             Our consulting <span className="text-[#FFFFFF80]">process</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-0">
                         {['Discover & Audit', 'Strategize', 'Implement', 'Optimize'].map((step, i) => (
-                            <motion.div key={i} {...fadeUp(i * 0.1)} className="relative p-8 border-l border-white/[0.07] first:border-l-0">
+                            <m.div key={i} {...fadeUp(i * 0.1)} className="relative p-8 border-l border-white/[0.07] first:border-l-0">
                                 <div className="text-[3rem] font-light text-white/[0.06] leading-none mb-4 tabular-nums">0{i + 1}</div>
                                 <h5 className="text-[1.25rem] font-medium text-white/80 mb-3">{step}</h5>
                                 <p className="text-[0.875rem] text-white/35 font-light leading-relaxed">
@@ -203,7 +204,7 @@ const SmartITSolutions = () => (
                                         ][i]
                                     }
                                 </p>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
                 </div>
@@ -212,7 +213,7 @@ const SmartITSolutions = () => (
             {/* CTA */}
             <section className="py-16 bg-[#F6F6F6] border-t border-[#E7E7E7]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <m.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div>
                             <h4 className="text-[2rem] font-medium text-[#070707] mb-2">Ready to transform your IT strategy?</h4>
                             <p className="text-[1rem] text-[#888888] font-light">Talk to a consultant — no obligation, just clarity.</p>
@@ -227,7 +228,7 @@ const SmartITSolutions = () => (
                                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
         </main>

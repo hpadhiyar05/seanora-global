@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Database, Zap, Layers, HardDrive, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
@@ -68,7 +68,7 @@ const BigData = () => (
                     <div className="absolute right-0 bottom-0 w-[500px] h-[500px] bg-[#413DF2] rounded-full blur-[180px] opacity-[0.05] translate-x-1/3" />
                 </div>
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)}>
+                    <m.div {...fadeUp(0)}>
                         <div className="flex items-center gap-2 mb-6">
                             <Link
                                 to="/services"
@@ -92,7 +92,7 @@ const BigData = () => (
                             Big data analytics is the use of advanced analytic techniques applied to very large, heterogeneous data sets —
                             helping you make better, faster decisions and forecast future outcomes.
                         </p>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -100,7 +100,7 @@ const BigData = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                                 Overview
                             </span>
@@ -112,14 +112,14 @@ const BigData = () => (
                                 sets — which can contain structured, semi-structured, and unstructured data, as well as data from many
                                 sources and sizes ranging from terabytes to zettabytes.
                             </p>
-                        </motion.div>
-                        <motion.div {...fadeUp(0.1)}>
+                        </m.div>
+                        <m.div {...fadeUp(0.1)}>
                             <p className="text-[1.25rem] text-[#888888] font-light leading-[1.8]">
                                 Big data analytics helps you make better and faster decisions, model and forecast future outcomes, and
                                 enhance business intelligence across your entire organization — giving every team the insights they need to
                                 perform at their best.
                             </p>
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </section>
@@ -130,7 +130,8 @@ const BigData = () => (
                     src={bigDataBanner}
                     alt="Big Data Banner"
                     className="w-full h-full object-cover object-center"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     width={1920}
                     height={800}
                 />
@@ -139,19 +140,19 @@ const BigData = () => (
             {/* Capabilities */}
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                             Capabilities
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em]">
                             What we <span className="text-[#00000080]">engineer</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         {capabilities.map((c, i) => {
                             const Icon = c.icon;
                             return (
-                                <motion.div
+                                <m.div
                                     key={i}
                                     {...fadeUp(i * 0.08)}
                                     className="group flex gap-6 p-8 rounded-2xl border border-[#E7E7E7] hover:border-[#1E5AA5]/20 hover:bg-[#F3F5FF] transition-all duration-500 cursor-default"
@@ -163,7 +164,7 @@ const BigData = () => (
                                         <h5 className="text-[1.25rem] font-semibold text-[#070707] mb-3 leading-snug">{c.title}</h5>
                                         <p className="text-[1rem] text-[#888888] leading-[1.75] font-light">{c.detail}</p>
                                     </div>
-                                </motion.div>
+                                </m.div>
                             );
                         })}
                     </div>
@@ -174,17 +175,17 @@ const BigData = () => (
             <section className="py-20 md:py-28 bg-[#0F1114] relative overflow-hidden">
                 <div className="absolute right-0 top-1/2 w-[600px] h-[600px] bg-[#1E5AA5] rounded-full blur-[180px] opacity-[0.06] translate-x-1/2 -translate-y-1/2 pointer-events-none" />
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#93C5FD] mb-4 block">
                             Platforms
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-white leading-[1.08] tracking-[-0.02em]">
                             Powered by <span className="text-[#FFFFFF80]">industry leaders</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {platforms.map((p, i) => (
-                            <motion.div
+                            <m.div
                                 key={i}
                                 {...fadeUp(i * 0.1)}
                                 className="p-8 rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] transition-colors duration-300 cursor-default"
@@ -194,7 +195,7 @@ const BigData = () => (
                                 </h4>
                                 <p className="text-[1rem] text-white/50 font-light leading-[1.8] mb-4">{p.desc}</p>
                                 <p className="text-[1rem] text-white/35 font-light leading-[1.8]">{p.detail}</p>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
                 </div>
@@ -203,7 +204,7 @@ const BigData = () => (
             {/* CTA */}
             <section className="py-16 bg-[#F6F6F6] border-t border-[#E7E7E7]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <m.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div>
                             <h4 className="text-[2rem] font-medium text-[#070707] mb-2">Ready to harness your big data?</h4>
                             <p className="text-[1rem] text-[#888888] font-light">Let's architect a data solution that scales with you.</p>
@@ -218,7 +219,7 @@ const BigData = () => (
                                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
         </main>

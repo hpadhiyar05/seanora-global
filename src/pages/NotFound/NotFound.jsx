@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Home } from 'lucide-react';
 import SEO from '../../components/seo/SEO';
@@ -30,7 +30,7 @@ const NotFound = () => {
         <div className="container relative z-10 flex flex-col items-center justify-center text-center max-w-3xl px-4 w-full">
 
           {/* Large 404 number */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
@@ -40,7 +40,7 @@ const NotFound = () => {
             <span className="text-[180px] md:text-[260px] font-bold leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#1E5AA5]/10 to-[#1E5AA5]/3 select-none pointer-events-none">
               404
             </span>
-          </motion.div>
+          </m.div>
 
           {/* Heading */}
           <AnimatedHeading
@@ -52,17 +52,12 @@ const NotFound = () => {
           </AnimatedHeading>
 
           {/* Description */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-[15px] text-[#6B7280] font-normal leading-relaxed mb-10 max-w-lg"
-          >
+          <p className="text-[15px] text-[#6B7280] font-normal leading-relaxed mb-10 max-w-lg">
             The page you're looking for has taken a detour. Let's get you back to exploring.
-          </motion.p>
+          </p>
 
           {/* Action buttons */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.45 }}
@@ -89,10 +84,10 @@ const NotFound = () => {
               Contact Support
               <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
-          </motion.div>
+          </m.div>
 
           {/* Quick links */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
@@ -102,7 +97,7 @@ const NotFound = () => {
             <Link to="/services" className="hover:text-[#1E5AA5] transition-colors">Services</Link>
             <Link to="/about" className="hover:text-[#1E5AA5] transition-colors">About Us</Link>
             <Link to="/careers" className="hover:text-[#1E5AA5] transition-colors">Careers</Link>
-          </motion.div>
+          </m.div>
 
         </div>
       </section>

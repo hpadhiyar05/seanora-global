@@ -1,4 +1,4 @@
-import { Suspense, lazy, useLayoutEffect } from 'react';
+import { Suspense, lazy, useEffect, useLayoutEffect } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import PageLoader from '../components/ui/PageLoader';
@@ -23,14 +23,31 @@ const BigData = lazy(() => import('../pages/Services/BigData'));
 const DataWarehousing = lazy(() => import('../pages/Services/DataWarehousing'));
 
 const ScrollToTop = () => {
-    const { pathname } = useLocation();
+    const { pathname, hash } = useLocation();
+
+    useEffect(() => {
+        // Disable browser scroll restoration (Back/Forward cache).
+        if ('scrollRestoration' in globalThis.history) {
+            globalThis.history.scrollRestoration = 'manual';
+        }
+    }, []);
 
     useLayoutEffect(() => {
-        if ('scrollRestoration' in window.history) {
-            window.history.scrollRestoration = 'manual';
-        }
-        window.scrollTo(0, 0);
-    }, [pathname]);
+        // Allow hash links to control scroll position.
+        if (hash) return;
+
+        const scrollRoot = () => {
+            globalThis.scrollTo(0, 0);
+            document.getElementById('main-content')?.scrollTo(0, 0);
+        };
+
+        // Run immediately, then again after paint (covers Suspense/animations/layout shifts).
+        scrollRoot();
+        requestAnimationFrame(() => {
+            scrollRoot();
+            requestAnimationFrame(scrollRoot);
+        });
+    }, [pathname, hash]);
 
     return null;
 };

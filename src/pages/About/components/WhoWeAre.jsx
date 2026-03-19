@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { m, useInView } from 'framer-motion';
 import { Route, Target, Rocket } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 import Breadcrumb from '../../../components/ui/Breadcrumb';
@@ -95,20 +95,15 @@ const WhoWeAre = () => {
                         <div>
                             <Breadcrumb crumbs={[{ label: 'About Us' }]} />
 
-                            <motion.div
+                            <m.div
                                 initial={{ opacity: 0, y: 30 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.85 }}
                                 className="mt-6"
                             >
-                                <motion.span
-                                    initial={{ opacity: 0, y: 12 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.6 }}
-                                    className="text-xs font-sans tracking-[0.22em] text-[#6B6B6B] font-medium uppercase mb-6 block"
-                                >
+                                <span className="text-xs font-sans tracking-[0.22em] text-[#6B6B6B] font-medium uppercase mb-6 block">
                                     ABOUT SEANORA GLOBAL
-                                </motion.span>
+                                </span>
 
                                 <AnimatedHeading
                                     as="h1"
@@ -124,23 +119,18 @@ const WhoWeAre = () => {
                                     </span>
                                 </AnimatedHeading>
 
-                                <motion.p
-                                    initial={{ opacity: 0, y: 16 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ duration: 0.7, delay: 0.25 }}
-                                    className="text-[16px] md:text-[17px] text-[#6B6B6B] font-light leading-relaxed max-w-lg"
-                                >
+                                <p className="text-[16px] md:text-[17px] text-[#6B6B6B] font-light leading-relaxed max-w-lg">
                                     Founded in 2020 at our Sheridan, WY. Seanora Global connects exceptional talent with meaningful
                                     opportunities. From specialized IT development and consulting roots, we've grown into your trusted
                                     global partner for cutting-edge digital solutions, workforce management, and strategic
                                     transformation—leveraging Wyoming's business-friendly policies to deliver world-class services
                                     nationwide and beyond.
-                                </motion.p>
-                            </motion.div>
+                                </p>
+                            </m.div>
                         </div>
 
                         {/* ── Right: image ── */}
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, x: 40 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.9, delay: 0.2, ease: 'easeOut' }}
@@ -164,6 +154,7 @@ const WhoWeAre = () => {
                                     src={aboutusHero}
                                     alt="Seanora Global team collaborating"
                                     loading="eager"
+                                    decoding="async"
                                     className="w-full h-[340px] md:h-[420px] lg:h-[460px] object-cover object-center"
                                     width={1280}
                                     height={720}
@@ -182,7 +173,7 @@ const WhoWeAre = () => {
                                 />
 
                                 {/* Floating badge — bottom left */}
-                                <motion.div
+                                <m.div
                                     initial={{ opacity: 0, y: 12 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: 0.7 }}
@@ -192,10 +183,10 @@ const WhoWeAre = () => {
                                         Trusted Since
                                     </p>
                                     <p className="text-[1.25rem] font-medium text-[#111827] leading-none">2020</p>
-                                </motion.div>
+                                </m.div>
 
                                 {/* Floating badge — top right */}
-                                <motion.div
+                                <m.div
                                     initial={{ opacity: 0, y: -12 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.6, delay: 0.85 }}
@@ -205,9 +196,9 @@ const WhoWeAre = () => {
                                         Global Reach
                                     </p>
                                     <p className="text-[1.25rem] font-medium text-white leading-none">15+ Countries</p>
-                                </motion.div>
+                                </m.div>
                             </div>
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </div>
@@ -217,7 +208,7 @@ const WhoWeAre = () => {
       ════════════════════════════════════════ */}
             <div className="mt-16 md:mt-20 relative z-10 bg-[#1A1C1E]">
                 <div className="container mx-auto px-4 lg:px-12 max-w-6xl">
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.7, delay: 0.35 }}
@@ -231,7 +222,7 @@ const WhoWeAre = () => {
                                 <div className="text-[11px] uppercase tracking-[0.16em] font-semibold text-white/45">{stat.label}</div>
                             </div>
                         ))}
-                    </motion.div>
+                    </m.div>
                 </div>
             </div>
 
@@ -240,7 +231,7 @@ const WhoWeAre = () => {
       ════════════════════════════════════════ */}
             <div className="py-16 md:py-24 relative z-10">
                 <div className="container mx-auto px-4 lg:px-12 max-w-6xl">
-                    <motion.div
+                    <m.div
                         className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
                         variants={cardVariants}
                         initial="hidden"
@@ -248,7 +239,7 @@ const WhoWeAre = () => {
                         viewport={{ once: true, margin: '-60px' }}
                     >
                         {cards.map(({ number, Icon, label, title, description }) => (
-                            <motion.div
+                            <m.div
                                 key={label}
                                 variants={cardItem}
                                 className="group relative p-9 lg:p-10 bg-white border border-black/[0.06] rounded-[24px] flex flex-col h-full text-left overflow-hidden transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(0,0,0,0.07)] hover:border-transparent cursor-default"
@@ -274,9 +265,9 @@ const WhoWeAre = () => {
 
                                 {/* Description */}
                                 <p className="text-[15px] text-[#6B6B6B] leading-relaxed font-light flex-grow">{description}</p>
-                            </motion.div>
+                            </m.div>
                         ))}
-                    </motion.div>
+                    </m.div>
                 </div>
             </div>
         </section>

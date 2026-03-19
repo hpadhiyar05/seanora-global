@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
     DollarSign,
@@ -115,7 +115,7 @@ const BusinessProcessOutsourcing = () => (
                     <div className="absolute left-0 bottom-0 w-[400px] h-[400px] bg-[#1E5AA5] rounded-full blur-[150px] opacity-[0.06] -translate-x-1/3" />
                 </div>
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)}>
+                    <m.div {...fadeUp(0)}>
                         <div className="flex items-center gap-2 mb-6">
                             <Link
                                 to="/services"
@@ -139,7 +139,7 @@ const BusinessProcessOutsourcing = () => (
                             Smart outsourcing solutions to help your business grow faster. At Seanora Global, we work as an extension of
                             your team — managing time-consuming processes so you can focus on strategy, innovation, and customers.
                         </p>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -147,7 +147,7 @@ const BusinessProcessOutsourcing = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#0284C7] mb-4 block">
                                 About BPO
                             </span>
@@ -163,12 +163,12 @@ const BusinessProcessOutsourcing = () => (
                                 Instead of investing heavily in in-house teams and infrastructure, businesses choose BPO services to gain
                                 strategic advantages and redirect resources toward core growth initiatives.
                             </p>
-                        </motion.div>
+                        </m.div>
                         <div className="grid grid-cols-1 gap-4">
                             {highlights.map((h, i) => {
                                 const Icon = h.icon;
                                 return (
-                                    <motion.div
+                                    <m.div
                                         key={i}
                                         {...fadeUp(i * 0.07)}
                                         className="group flex gap-5 p-5 rounded-2xl border border-[#E7E7E7] hover:border-[#0284C7]/20 hover:bg-[#F0F9FF] transition-all duration-400 cursor-default"
@@ -180,7 +180,7 @@ const BusinessProcessOutsourcing = () => (
                                             <h6 className="text-[1.25rem] font-semibold text-[#070707] mb-1">{h.title}</h6>
                                             <p className="text-[1rem] text-[#888888] font-light leading-relaxed">{h.desc}</p>
                                         </div>
-                                    </motion.div>
+                                    </m.div>
                                 );
                             })}
                         </div>
@@ -194,7 +194,8 @@ const BusinessProcessOutsourcing = () => (
                     src={bpoBanner}
                     alt="descriptive alt text"
                     className="w-full h-full object-cover object-center"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     width={1920}
                     height={800}
                 />
@@ -203,19 +204,19 @@ const BusinessProcessOutsourcing = () => (
             {/* Solutions */}
             <section className="py-20 md:py-28 bg-[#F6F6F6]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#0284C7] mb-4 block">
                             Our BPO Service Solutions
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em]">
                             Five ways we <span className="text-[#00000080]">support your business</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {solutions.map((s, i) => {
                             const Icon = s.icon;
                             return (
-                                <motion.div
+                                <m.div
                                     key={i}
                                     {...fadeUp(i * 0.07)}
                                     className="group p-7 rounded-2xl bg-white border border-[#E7E7E7] hover:border-[#0284C7]/20 hover:bg-[#F0F9FF] transition-all duration-500 cursor-default"
@@ -234,7 +235,7 @@ const BusinessProcessOutsourcing = () => (
                                         ))}
                                     </ul>
                                     {s.note && <p className="text-[0.875rem] text-[#888888] font-light italic">{s.note}</p>}
-                                </motion.div>
+                                </m.div>
                             );
                         })}
                     </div>
@@ -245,7 +246,7 @@ const BusinessProcessOutsourcing = () => (
             <section className="py-20 md:py-28 bg-[#0F1114] relative overflow-hidden">
                 <div className="absolute left-0 top-0 w-[500px] h-[500px] bg-[#0284C7] rounded-full blur-[160px] opacity-[0.06] -translate-x-1/3 -translate-y-1/3 pointer-events-none" />
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)} className="text-center mb-14">
+                    <m.div {...fadeUp(0)} className="text-center mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#38BDF8] mb-4 block">
                             Competitive Edge
                         </span>
@@ -253,30 +254,30 @@ const BusinessProcessOutsourcing = () => (
                             How BPO helps your business <span className="text-[#FFFFFF80]">stay competitive</span>
                         </h2>
                         <p className="text-[1.25rem] text-white/40 font-light">Strategic advantages that drive growth</p>
-                    </motion.div>
+                    </m.div>
 
                     <div className="flex flex-wrap justify-center gap-6 mb-14">
                         {advantages.map((a, i) => {
                             const Icon = a.icon;
                             return (
-                                <motion.div key={i} {...fadeUp(i * 0.08)} className="flex flex-col items-center gap-3 min-w-[120px]">
+                                <m.div key={i} {...fadeUp(i * 0.08)} className="flex flex-col items-center gap-3 min-w-[120px]">
                                     <div className="w-16 h-16 rounded-full border border-white/10 bg-white/[0.04] flex items-center justify-center">
                                         <Icon size={24} className="text-[#38BDF8]" strokeWidth={1.5} />
                                     </div>
                                     <span className="text-[1rem] text-white/60 font-light text-center">{a.label}</span>
-                                </motion.div>
+                                </m.div>
                             );
                         })}
                     </div>
 
-                    <motion.div {...fadeUp(0.1)} className="text-center mb-12">
+                    <m.div {...fadeUp(0.1)} className="text-center mb-12">
                         <p className="text-[1.25rem] italic text-white/25 font-light">
                             "Outsourcing is not just about saving money — it's about working smarter."
                         </p>
-                    </motion.div>
+                    </m.div>
 
                     {/* Industries */}
-                    <motion.div {...fadeUp(0.1)} className="border-t border-white/[0.07] pt-10">
+                    <m.div {...fadeUp(0.1)} className="border-t border-white/[0.07] pt-10">
                         <p className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-white/25 mb-5 text-center">
                             Industries We Support
                         </p>
@@ -290,14 +291,14 @@ const BusinessProcessOutsourcing = () => (
                                 </span>
                             ))}
                         </div>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
             {/* CTA */}
             <section className="py-16 bg-[#F6F6F6] border-t border-[#E7E7E7]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <m.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div>
                             <h4 className="text-[2rem] font-medium text-[#070707] mb-2">Ready to grow faster with BPO?</h4>
                             <p className="text-[1rem] text-[#888888] font-light">Let us handle the processes — you focus on growth.</p>
@@ -312,7 +313,7 @@ const BusinessProcessOutsourcing = () => (
                                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
         </main>

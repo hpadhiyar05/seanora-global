@@ -447,7 +447,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { MapPin, Clock, ArrowUpRight, ChevronDown, Briefcase, Mail } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 import { CATEGORIES, JOB_TYPES, LOCATIONS } from '../data/jobs';
@@ -477,7 +477,7 @@ const FilterDropdown = ({ value, defaultValue, options, open, onToggle, onSelect
 
                 <AnimatePresence>
                     {open && (
-                        <motion.div
+                        <m.div
                             initial={{ opacity: 0, y: -6, scale: 0.97 }}
                             animate={{ opacity: 1, y: 0, scale: 1 }}
                             exit={{ opacity: 0, y: -6, scale: 0.97 }}
@@ -500,7 +500,7 @@ const FilterDropdown = ({ value, defaultValue, options, open, onToggle, onSelect
                                     {value === option && <span className="w-1.5 h-1.5 rounded-full bg-[#1E5AA5] shrink-0" />}
                                 </button>
                             ))}
-                        </motion.div>
+                        </m.div>
                     )}
                 </AnimatePresence>
             </div>
@@ -510,7 +510,7 @@ const FilterDropdown = ({ value, defaultValue, options, open, onToggle, onSelect
 
 /* ─── Empty State ──────────────────────────────────────────────── */
 const EmptyState = ({ hasFilters, onClear }) => (
-    <motion.div
+    <m.div
         key="empty"
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -519,39 +519,29 @@ const EmptyState = ({ hasFilters, onClear }) => (
         className="py-24 flex flex-col items-center text-center"
     >
         {/* Icon */}
-        <motion.div
+        <m.div
             initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.1 }}
             className="w-20 h-20 rounded-3xl bg-[#EFF6FF] border border-[#1E5AA5]/10 flex items-center justify-center mb-7 shadow-[0_4px_16px_rgba(30,90,165,0.06)]"
         >
             <Briefcase className="w-8 h-8 text-[#1B1D1E]/25" strokeWidth={1.5} />
-        </motion.div>
+        </m.div>
 
         {/* Heading */}
-        <motion.h3
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="text-[1.75rem] font-medium text-[#1B1D1E] mb-3 tracking-[-0.01em]"
-        >
+        <h3 className="text-[1.75rem] font-medium text-[#1B1D1E] mb-3 tracking-[-0.01em]">
             {hasFilters ? 'No matching positions' : 'No open positions right now'}
-        </motion.h3>
+        </h3>
 
         {/* Description */}
-        <motion.p
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-[1rem] text-[#6B6B6B] font-light max-w-[380px] leading-[1.8] mb-8"
-        >
+        <p className="text-[1rem] text-[#6B6B6B] font-light max-w-[380px] leading-[1.8] mb-8">
             {hasFilters
                 ? "We don't have any roles matching your current filters. Try broadening your search or check back soon."
                 : "We're not actively hiring right now, but we're always open to exceptional talent. Reach out and introduce yourself."}
-        </motion.p>
+        </p>
 
         {/* Actions */}
-        <motion.div
+        <m.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.25 }}
@@ -573,18 +563,13 @@ const EmptyState = ({ hasFilters, onClear }) => (
                 <Mail className="w-3.5 h-3.5" strokeWidth={1.5} />
                 Send us your resume
             </a>
-        </motion.div>
+        </m.div>
 
         {/* Footnote */}
-        <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            className="text-[0.875rem] text-[#6B6B6B]/60 mt-8 font-light"
-        >
+        <p className="text-[0.875rem] text-[#6B6B6B]/60 mt-8 font-light">
             New roles are posted regularly — check back soon.
-        </motion.p>
-    </motion.div>
+        </p>
+    </m.div>
 );
 
 /* ═══════════════════════════════════════════════════════════════ */
@@ -647,7 +632,7 @@ const CareersBoard = () => {
                 <Breadcrumb crumbs={[{ label: 'Careers' }]} />
 
                 {/* Header */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8 }}
@@ -672,7 +657,7 @@ const CareersBoard = () => {
                     </div>
 
                     {/* Right: illustration */}
-                    <motion.div
+                    <m.div
                         initial={{ opacity: 0, x: 24 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
@@ -685,11 +670,11 @@ const CareersBoard = () => {
                             width={800}
                             height={600}
                         />
-                    </motion.div>
-                </motion.div>
+                    </m.div>
+                </m.div>
 
                 {/* ── Filters ────────────────────────────────────────────── */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
@@ -710,10 +695,10 @@ const CareersBoard = () => {
                             {category}
                         </button>
                     ))}
-                </motion.div>
+                </m.div>
 
                 {/* Job Type + Location dropdowns */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 16 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.18 }}
@@ -747,7 +732,7 @@ const CareersBoard = () => {
                     {/* Clear pill — only when filters are active */}
                     <AnimatePresence>
                         {hasActiveFilters && (
-                            <motion.button
+                            <m.button
                                 key="clear"
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -758,10 +743,10 @@ const CareersBoard = () => {
                                 className="px-5 py-2.5 rounded-full text-[0.875rem] font-medium text-[#6B6B6B] border border-black/10 hover:border-black/20 hover:text-[#1B1D1E] transition-all duration-300"
                             >
                                 Clear all
-                            </motion.button>
+                            </m.button>
                         )}
                     </AnimatePresence>
-                </motion.div>
+                </m.div>
 
                 {/* Divider */}
                 <div className="w-full h-px bg-black/5 mb-4" />
@@ -769,15 +754,12 @@ const CareersBoard = () => {
                 {/* Results count */}
                 <AnimatePresence mode="wait">
                     {filteredJobs.length > 0 && (
-                        <motion.p
+                        <p
                             key={filteredJobs.length}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
                             className="text-[0.875rem] text-[#6B6B6B] uppercase tracking-[0.15em] font-medium mb-2 px-1"
                         >
                             {filteredJobs.length} {filteredJobs.length === 1 ? 'position' : 'positions'} found
-                        </motion.p>
+                        </p>
                     )}
                 </AnimatePresence>
 
@@ -785,7 +767,7 @@ const CareersBoard = () => {
                 <div className="flex flex-col">
                     <AnimatePresence mode="popLayout">
                         {loading ? (
-                            <motion.div
+                            <m.div
                                 key="loading"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -793,9 +775,9 @@ const CareersBoard = () => {
                                 className="py-24 flex justify-center items-center"
                             >
                                 <div className="w-8 h-8 rounded-full border-2 border-black/10 border-t-[#1E5AA5] animate-spin"></div>
-                            </motion.div>
+                            </m.div>
                         ) : error ? (
-                            <motion.div
+                            <m.div
                                 key="error"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -803,10 +785,10 @@ const CareersBoard = () => {
                                 className="py-24 text-center text-red-500 font-medium"
                             >
                                 Failed to load positions: {error}
-                            </motion.div>
+                            </m.div>
                         ) : filteredJobs.length > 0 ? (
                             filteredJobs.map((job) => (
-                                <motion.div
+                                <m.div
                                     key={job.id}
                                     layout
                                     initial={{ opacity: 0, y: 30 }}
@@ -875,7 +857,7 @@ const CareersBoard = () => {
                                             </Link>
                                         </div>
                                     </div>
-                                </motion.div>
+                                </m.div>
                             ))
                         ) : (
                             <EmptyState hasFilters={hasActiveFilters} onClear={clearFilters} />

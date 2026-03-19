@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Award, Lightbulb, Heart, ShieldCheck, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
@@ -62,7 +62,7 @@ const WhyChooseSeanora = () => {
 
             <div className="container mx-auto px-4 lg:px-12 max-w-6xl relative z-10">
                 {/* ── Section heading ── */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
@@ -87,10 +87,10 @@ const WhyChooseSeanora = () => {
                     <p className="text-[15px] text-[#6B6B6B] font-light leading-relaxed max-w-xs lg:text-right lg:mb-1">
                         Trusted by 200+ clients across 15 countries — here's what sets us apart.
                     </p>
-                </motion.div>
+                </m.div>
 
                 {/* ── Cards — horizontal layout, left accent border ── */}
-                <motion.div
+                <m.div
                     className="grid grid-cols-1 md:grid-cols-2 gap-5"
                     variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1 } } }}
                     initial="hidden"
@@ -100,7 +100,7 @@ const WhyChooseSeanora = () => {
                     {reasons.map((reason) => {
                         const Icon = reason.icon;
                         return (
-                            <motion.div
+                            <m.div
                                 key={reason.index}
                                 variants={{
                                     hidden: { opacity: 0, y: 28 },
@@ -171,13 +171,13 @@ const WhyChooseSeanora = () => {
                                         {reason.description}
                                     </p>
                                 </div>
-                            </motion.div>
+                            </m.div>
                         );
                     })}
-                </motion.div>
+                </m.div>
 
                 {/* ── CTA strip ── */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-40px' }}
@@ -203,7 +203,7 @@ const WhyChooseSeanora = () => {
                             <ArrowUpRight className="w-4 h-4" />
                         </div>
                     </Link>
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );

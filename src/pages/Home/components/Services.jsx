@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { MonitorSmartphone, Server, Briefcase, GraduationCap, Headset, ShieldCheck } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
@@ -71,7 +71,7 @@ const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
     const Icon = service.icon;
 
     return (
-        <motion.div
+        <m.div
             onMouseEnter={isMobile ? undefined : onHover}
             onMouseLeave={isMobile ? undefined : onLeave}
             className="group relative border-b border-black/[0.08] last:border-b-0 cursor-default"
@@ -102,7 +102,7 @@ const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
                             {/* Expanded content */}
                             <AnimatePresence initial={false}>
                                 {isActive && (
-                                    <motion.div
+                                    <m.div
                                         key="expanded"
                                         initial={{ opacity: 0, height: 0 }}
                                         animate={{ opacity: 1, height: 'auto' }}
@@ -144,7 +144,7 @@ const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
                                                 </svg>
                                             </Link>
                                         </div>
-                                    </motion.div>
+                                    </m.div>
                                 )}
                             </AnimatePresence>
                         </div>
@@ -165,6 +165,7 @@ const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
                         src={service.image}
                         alt={service.title}
                         loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover transition-all duration-500"
                         style={{
                             filter: isActive ? 'grayscale(0%)' : 'grayscale(100%)',
@@ -177,7 +178,7 @@ const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
                 </div>
                 )}
             </div>
-        </motion.div>
+        </m.div>
     );
 };
 
@@ -202,7 +203,7 @@ const Services = () => {
         <section className="py-16 md:py-24 bg-white relative overflow-hidden">
             <div className="w-[80%] mx-auto relative z-10">
                 {/* ── Section header — two column like reference ── */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
@@ -240,10 +241,10 @@ const Services = () => {
                             </div>
                         </Link>
                     </div>
-                </motion.div>
+                </m.div>
 
                 {/* ── Accordion list ── */}
-                <motion.div
+                <m.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, margin: '-60px' }}
@@ -261,7 +262,7 @@ const Services = () => {
                             isMobile={isMobile}
                         />
                     ))}
-                </motion.div>
+                </m.div>
             </div>
         </section>
     );

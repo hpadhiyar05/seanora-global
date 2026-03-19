@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 
 const AccordionItem = ({ question, answer, isOpen, onClick }) => {
   return (
@@ -34,7 +34,7 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
 
       <AnimatePresence initial={false}>
         {isOpen && (
-          <motion.div
+          <m.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -43,7 +43,7 @@ const AccordionItem = ({ question, answer, isOpen, onClick }) => {
             <p className="px-5 pb-4 text-sm text-[#6B6B6B] leading-relaxed font-normal pr-10">
               {answer}
             </p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </div>

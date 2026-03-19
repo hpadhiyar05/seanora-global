@@ -205,7 +205,7 @@ const Hero = () => {
                             alt=""
                             aria-hidden="true"
                             className="hero-bg-img w-full h-full object-cover object-center"
-                            loading={i === 0 ? 'eager' : 'lazy'}
+                            loading="eager"
                             decoding="async"
                             fetchPriority={i === 0 ? 'high' : undefined}
                             width={1280}
@@ -338,7 +338,7 @@ const Hero = () => {
                                 src={`https://i.pravatar.cc/100?img=${img}`}
                                 alt=""
                                 aria-hidden="true"
-                                loading="eager"
+                                loading="lazy"
                                 decoding="async"
                                 width={36}
                                 height={36}
@@ -355,7 +355,7 @@ const Hero = () => {
                             <StarEmpty />
                         </div>
                         <span className="text-[12px] font-medium text-white/45">
-                            Trusted by <span className="text-white/80 font-semibold">1,000+</span> clients worldwide
+                            A trusted partner for global clients
                         </span>
                     </div>
                 </div>

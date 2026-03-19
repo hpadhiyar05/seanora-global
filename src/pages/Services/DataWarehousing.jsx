@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Layers, BarChart3, TrendingUp, Zap, DollarSign, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
@@ -77,7 +77,7 @@ const DataWarehousing = () => (
                     <div className="absolute left-0 bottom-0 w-[400px] h-[400px] bg-[#413DF2] rounded-full blur-[150px] opacity-[0.05] -translate-x-1/3" />
                 </div>
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)}>
+                    <m.div {...fadeUp(0)}>
                         <div className="flex items-center gap-2 mb-6">
                             <Link
                                 to="/services"
@@ -102,7 +102,7 @@ const DataWarehousing = () => (
                             organization's operations. Centralized data hubs powering analytics, reporting, and real-time business
                             intelligence.
                         </p>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -110,7 +110,7 @@ const DataWarehousing = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#0284C7] mb-4 block">
                                 Overview
                             </span>
@@ -121,8 +121,8 @@ const DataWarehousing = () => (
                                 Every business has a plethora of data strewn across several business structures. The depth of information
                                 gathered is the most essential factor for precise inspection in determining how accurate an analysis is.
                             </p>
-                        </motion.div>
-                        <motion.div {...fadeUp(0.1)}>
+                        </m.div>
+                        <m.div {...fadeUp(0.1)}>
                             <p className="text-[1.25rem] text-[#888888] font-light leading-[1.8] mb-6">
                                 Customers can achieve this with the help of our DW and BI practice. We have the expertise and resources to
                                 meet client needs and complete projects on time.
@@ -131,7 +131,7 @@ const DataWarehousing = () => (
                                 We build centralized data hubs that power your analytics, reporting, and real-time business intelligence —
                                 giving every team faster access to the insights that matter most.
                             </p>
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </section>
@@ -142,7 +142,8 @@ const DataWarehousing = () => (
                     src={dataBanner}
                     alt="data warehousing banner"
                     className="w-full h-full object-cover object-center"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     width={1920}
                     height={800}
                 />
@@ -151,19 +152,19 @@ const DataWarehousing = () => (
             {/* Features */}
             <section className="py-20 md:py-28 bg-[#F6F6F6]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#0284C7] mb-4 block">
                             Capabilities
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em]">
                             Five pillars of <span className="text-[#00000080]">data warehousing</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                         {features.map((f, i) => {
                             const Icon = f.icon;
                             return (
-                                <motion.div
+                                <m.div
                                     key={i}
                                     {...fadeUp(i * 0.07)}
                                     className={`group flex gap-5 p-7 rounded-2xl bg-white border border-[#E7E7E7] hover:border-[#0284C7]/20 hover:bg-[#F0F9FF] transition-all duration-500 cursor-default ${i === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}
@@ -175,7 +176,7 @@ const DataWarehousing = () => (
                                         <h5 className="text-[1.25rem] font-semibold text-[#070707] mb-2 leading-snug">{f.title}</h5>
                                         <p className="text-[1rem] text-[#888888] leading-[1.75] font-light">{f.detail}</p>
                                     </div>
-                                </motion.div>
+                                </m.div>
                             );
                         })}
                     </div>
@@ -186,17 +187,17 @@ const DataWarehousing = () => (
             <section className="py-20 md:py-28 bg-[#0F1114] relative overflow-hidden">
                 <div className="absolute left-0 bottom-0 w-[500px] h-[500px] bg-[#0284C7] rounded-full blur-[160px] opacity-[0.06] -translate-x-1/3 translate-y-1/3 pointer-events-none" />
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#38BDF8] mb-4 block">
                             Our Process
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-white leading-[1.08] tracking-[-0.02em]">
                             How we <span className="text-[#FFFFFF80]">build your warehouse</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="divide-y divide-white/[0.06]">
                         {process.map((p, i) => (
-                            <motion.div
+                            <m.div
                                 key={i}
                                 {...fadeUp(i * 0.07)}
                                 className="group grid grid-cols-[3rem_1fr_2fr] items-start gap-8 py-7 hover:bg-white/[0.02] -mx-4 px-4 rounded-xl transition-colors duration-300 cursor-default"
@@ -206,7 +207,7 @@ const DataWarehousing = () => (
                                     {p.title}
                                 </h5>
                                 <p className="text-[1rem] text-white/40 font-light leading-[1.8]">{p.desc}</p>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
                 </div>
@@ -216,7 +217,7 @@ const DataWarehousing = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#0284C7] mb-4 block">
                                 Why It Matters
                             </span>
@@ -240,17 +241,18 @@ const DataWarehousing = () => (
                                     </li>
                                 ))}
                             </ul>
-                        </motion.div>
-                        <motion.div {...fadeUp(0.12)} className="rounded-3xl h-[420px] overflow-hidden">
+                        </m.div>
+                        <m.div {...fadeUp(0.12)} className="rounded-3xl h-[420px] overflow-hidden">
                             <img
                                 src={dataSideImage}
                                 alt="data warehousing side image"
                                 className="w-full h-full object-cover object-center"
                                 loading="lazy"
+                                decoding="async"
                                 width={900}
                                 height={700}
                             />
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </section>
@@ -258,7 +260,7 @@ const DataWarehousing = () => (
             {/* CTA */}
             <section className="py-16 bg-[#F6F6F6] border-t border-[#E7E7E7]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <m.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div>
                             <h4 className="text-[2rem] font-medium text-[#070707] mb-2">Ready to centralise your data?</h4>
                             <p className="text-[1rem] text-[#888888] font-light">
@@ -275,7 +277,7 @@ const DataWarehousing = () => (
                                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
         </main>

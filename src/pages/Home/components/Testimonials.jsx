@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { m, useInView } from 'framer-motion';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 
 import img1 from '../../../assets/images/testimonial-image -1.webp';
@@ -185,12 +185,21 @@ function injectStyles() {
 const Testimonials = () => {
     injectStyles();
 
+    const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, {
+        margin: '-20% 0px -20% 0px',
+        amount: 0.25,
+    });
+
     const duplicated = [...testimonials, ...testimonials];
 
     return (
-        <section style={{ padding: '5rem 0 7rem', background: '#F5F5F5', overflow: 'hidden' }}>
+        <section
+            ref={sectionRef}
+            style={{ padding: '5rem 0 7rem', background: '#F5F5F5', overflow: 'hidden' }}
+        >
             {/* ── Header ─────────────────────────────────────── */}
-            <motion.div
+            <m.div
                 initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
@@ -229,20 +238,17 @@ const Testimonials = () => {
                     <AnimatedText text="What our clients say" />
                 </AnimatedHeading>
 
-                <motion.p
-                    initial={{ opacity: 0, y: 12 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-40px' }}
-                    transition={{ duration: 0.5, ease: 'easeOut', delay: 0.2 }}
-                    style={{ fontSize: 15, color: '#6B7280', maxWidth: 380, margin: '0 auto', lineHeight: 1.6 }}
-                >
+                <p style={{ fontSize: 15, color: '#6B7280', maxWidth: 380, margin: '0 auto', lineHeight: 1.6 }}>
                     Trusted by teams and businesses worldwide, here&rsquo;s what people love about working with us.
-                </motion.p>
-            </motion.div>
+                </p>
+            </m.div>
 
             {/* ── Carousel ───────────────────────────────────── */}
             <div className="tm-carousel">
-                <div className="tm-track">
+                <div
+                    className="tm-track"
+                    style={{ animationPlayState: isInView ? 'running' : 'paused' }}
+                >
                     {duplicated.map((t, i) => (
                         <div key={`${t.id}-${i}`} className="tm-slide">
                             <TestimonialCard t={t} isCenter={false} />

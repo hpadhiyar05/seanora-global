@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Home } from 'lucide-react';
 
 /**
@@ -14,7 +14,7 @@ import { Home } from 'lucide-react';
  * The last crumb (no `to`) renders as the current-page label.
  */
 const Breadcrumb = ({ crumbs = [] }) => (
-  <motion.div
+  <m.div
     initial={{ opacity: 0, y: -8 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.45, ease: 'easeOut' }}
@@ -61,7 +61,7 @@ const Breadcrumb = ({ crumbs = [] }) => (
 
       </ol>
     </nav>
-  </motion.div>
+  </m.div>
 );
 
 export default Breadcrumb;

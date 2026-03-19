@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { BarChart3, PieChart, TrendingUp, Database, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
@@ -82,7 +82,7 @@ const AnalyticsAndReporting = () => (
                     <div className="absolute right-0 bottom-0 w-[400px] h-[400px] bg-[#413DF2] rounded-full blur-[150px] opacity-[0.06] translate-x-1/3" />
                 </div>
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)}>
+                    <m.div {...fadeUp(0)}>
                         <div className="flex items-center gap-2 mb-6">
                             <Link
                                 to="/services"
@@ -106,7 +106,7 @@ const AnalyticsAndReporting = () => (
                             Analytics has been one of our core competencies — spanning HR, financial forecasting, digital marketing, project
                             management, and business intelligence.
                         </p>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
 
@@ -116,7 +116,8 @@ const AnalyticsAndReporting = () => (
                     src={analyticsBanner}
                     alt="Analytics and Reporting Banner"
                     className="w-full h-full object-cover object-center"
-                    loading="lazy"
+                    loading="eager"
+                    decoding="async"
                     width={1920}
                     height={800}
                 />
@@ -126,7 +127,7 @@ const AnalyticsAndReporting = () => (
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-                        <motion.div {...fadeUp(0)}>
+                        <m.div {...fadeUp(0)}>
                             <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                                 Our Expertise
                             </span>
@@ -137,8 +138,8 @@ const AnalyticsAndReporting = () => (
                                 Our data management and reporting services are expertly crafted and rationally planned. Our extensive
                                 knowledge with data mining has been put to good use in the development of analytical models for businesses.
                             </p>
-                        </motion.div>
-                        <motion.div {...fadeUp(0.1)}>
+                        </m.div>
+                        <m.div {...fadeUp(0.1)}>
                             <p className="text-[1.25rem] text-[#888888] font-light leading-[1.8] mb-6">
                                 We have the most significant competitive edge in combining data from different sources with analytics tools
                                 — delivering data correlation and insight to discover growth trends and ever-changing client requests.
@@ -147,7 +148,7 @@ const AnalyticsAndReporting = () => (
                                 Many businesses have used our analytical reporting to gauge consumer confidence in real time and make
                                 faster, smarter decisions.
                             </p>
-                        </motion.div>
+                        </m.div>
                     </div>
                 </div>
             </section>
@@ -155,19 +156,19 @@ const AnalyticsAndReporting = () => (
             {/* Capabilities */}
             <section className="py-20 md:py-28 bg-[#F6F6F6]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                             Capabilities
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em]">
                             What we <span className="text-[#00000080]">deliver</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                         {capabilities.map((c, i) => {
                             const Icon = c.icon;
                             return (
-                                <motion.div
+                                <m.div
                                     key={i}
                                     {...fadeUp(i * 0.08)}
                                     className="group flex gap-6 p-8 rounded-2xl bg-white border border-[#E7E7E7] hover:border-[#1E5AA5]/20 hover:bg-[#F3F5FF] transition-all duration-500 cursor-default"
@@ -179,7 +180,7 @@ const AnalyticsAndReporting = () => (
                                         <h5 className="text-[1.25rem] font-semibold text-[#070707] mb-3 leading-snug">{c.title}</h5>
                                         <p className="text-[1rem] text-[#888888] leading-[1.75] font-light">{c.detail}</p>
                                     </div>
-                                </motion.div>
+                                </m.div>
                             );
                         })}
                     </div>
@@ -190,22 +191,22 @@ const AnalyticsAndReporting = () => (
             <section className="py-20 md:py-28 bg-[#0F1114] relative overflow-hidden">
                 <div className="absolute right-0 top-0 w-[500px] h-[500px] bg-[#1E5AA5] rounded-full blur-[160px] opacity-[0.06] translate-x-1/3 -translate-y-1/3 pointer-events-none" />
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px] relative z-10">
-                    <motion.div {...fadeUp(0)} className="mb-14">
+                    <m.div {...fadeUp(0)} className="mb-14">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#93C5FD] mb-4 block">Domains</span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-white leading-[1.08] tracking-[-0.02em]">
                             Areas of <span className="text-[#FFFFFF80]">specialisation</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {domains.map((d, i) => (
-                            <motion.div
+                            <m.div
                                 key={i}
                                 {...fadeUp(i * 0.07)}
                                 className="p-6 rounded-2xl border border-white/[0.07] bg-white/[0.03] hover:bg-white/[0.06] transition-colors duration-300 cursor-default"
                             >
                                 <h5 className="text-[1.25rem] font-medium text-white/80 mb-2">{d.name}</h5>
                                 <p className="text-[1rem] text-white/35 font-light leading-relaxed">{d.desc}</p>
-                            </motion.div>
+                            </m.div>
                         ))}
                     </div>
                 </div>
@@ -214,23 +215,22 @@ const AnalyticsAndReporting = () => (
             {/* Platforms */}
             <section className="py-20 md:py-28 bg-white">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="mb-10">
+                    <m.div {...fadeUp(0)} className="mb-10">
                         <span className="text-[0.875rem] font-semibold tracking-[0.22em] uppercase text-[#1E5AA5] mb-4 block">
                             Technology
                         </span>
                         <h2 className="text-[3rem] md:text-[4rem] font-medium text-[#070707] leading-[1.08] tracking-[-0.02em]">
                             Platforms we <span className="text-[#00000080]">work with</span>
                         </h2>
-                    </motion.div>
+                    </m.div>
                     <div className="flex flex-wrap gap-3">
                         {platforms.map((p, i) => (
-                            <motion.span
+                            <span
                                 key={i}
-                                {...fadeUp(i * 0.04)}
                                 className="text-[1rem] font-medium px-5 py-3 rounded-full border border-[#E7E7E7] bg-[#F6F6F6] text-[#4F4F4F] hover:border-[#1E5AA5]/30 hover:bg-[#EDF3FF] hover:text-[#1E5AA5] transition-all duration-300 cursor-default"
                             >
                                 {p}
-                            </motion.span>
+                            </span>
                         ))}
                     </div>
                 </div>
@@ -239,7 +239,7 @@ const AnalyticsAndReporting = () => (
             {/* CTA */}
             <section className="py-16 bg-[#F6F6F6] border-t border-[#E7E7E7]">
                 <div className="container mx-auto px-6 lg:px-16 max-w-[1140px]">
-                    <motion.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <m.div {...fadeUp(0)} className="flex flex-col md:flex-row items-center justify-between gap-8">
                         <div>
                             <h4 className="text-[2rem] font-medium text-[#070707] mb-2">Ready to unlock your data's potential?</h4>
                             <p className="text-[1rem] text-[#888888] font-light">Let's build dashboards that actually drive decisions.</p>
@@ -254,7 +254,7 @@ const AnalyticsAndReporting = () => (
                                 className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                             />
                         </Link>
-                    </motion.div>
+                    </m.div>
                 </div>
             </section>
         </main>

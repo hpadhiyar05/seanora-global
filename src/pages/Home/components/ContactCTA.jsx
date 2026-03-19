@@ -1,5 +1,5 @@
 import { ArrowUpRight, Mail, Phone } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
 import ctaBg from '../../../assets/images/CTA.webp';
@@ -7,7 +7,7 @@ import ctaBg from '../../../assets/images/CTA.webp';
 const ContactCTA = () => {
   return (
     <section className="w-full py-16 md:py-24 px-4 lg:px-12 bg-white">
-      <motion.div
+      <m.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-80px' }}
@@ -31,7 +31,7 @@ const ContactCTA = () => {
         <div className="relative z-10 py-14 md:py-20 px-8 md:px-14 lg:px-20 flex flex-col justify-between h-full">
 
           {/* Top row — label + contact info */}
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-40px' }}
@@ -56,7 +56,7 @@ const ContactCTA = () => {
                 +1 325-667-0125
               </a>
             </div>
-          </motion.div>
+          </m.div>
 
           {/* Main content — text left, button right on lg */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-10">
@@ -71,20 +71,14 @@ const ContactCTA = () => {
                 <AnimatedText text="it together." className="block text-white/50" />
               </AnimatedHeading>
 
-              <motion.p
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
-                className="text-[15px] text-white/50 leading-relaxed max-w-lg font-normal"
-              >
+              <p className="text-[15px] text-white/50 leading-relaxed max-w-lg font-normal">
                 Whether you need cloud infrastructure, custom software, or IT consulting —
                 our team is ready to turn your vision into reality.
-              </motion.p>
+              </p>
             </div>
 
             {/* CTA button */}
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
@@ -102,11 +96,11 @@ const ContactCTA = () => {
                   <ArrowUpRight className="w-4 h-4" />
                 </div>
               </Link>
-            </motion.div>
+            </m.div>
           </div>
 
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 };

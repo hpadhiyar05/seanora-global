@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import SEO from '../../components/seo/SEO';
 import Breadcrumb from '../../components/ui/Breadcrumb';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
@@ -61,14 +61,9 @@ const PrivacyPolicy = () => {
                 <Breadcrumb crumbs={[{ label: 'Privacy Policy' }]} />
 
                 {/* Overline */}
-                <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-[13px] font-medium text-[#1E5AA5] mt-6 mb-5 tracking-wide"
-                >
+                <p className="text-[13px] font-medium text-[#1E5AA5] mt-6 mb-5 tracking-wide">
                     Legal
-                </motion.p>
+                </p>
 
                 {/* Heading */}
                 <AnimatedHeading
@@ -80,25 +75,20 @@ const PrivacyPolicy = () => {
                 </AnimatedHeading>
 
                 {/* Divider */}
-                <motion.div
+                <m.div
                     initial={{ scaleX: 0 }}
                     animate={{ scaleX: 1 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                     className="w-12 h-px bg-[#E5E7EB] mb-6 origin-left"
                 />
 
-                <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.15 }}
-                    className="text-[13px] text-[#9CA3AF] mb-10 font-normal"
-                >
+                <p className="text-[13px] text-[#9CA3AF] mb-10 font-normal">
                     Last updated: March 2026
-                </motion.p>
+                </p>
 
                 <div className="space-y-10 text-[15px] text-[#6B7280] leading-relaxed font-normal">
                     {sections.map((s, i) => (
-                        <motion.section
+                        <m.section
                             key={i}
                             custom={i}
                             initial="hidden"
@@ -118,11 +108,11 @@ const PrivacyPolicy = () => {
                                     .
                                 </p>
                             )}
-                        </motion.section>
+                        </m.section>
                     ))}
                 </div>
 
-                <motion.div
+                <m.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -132,7 +122,7 @@ const PrivacyPolicy = () => {
                     <Link to="/" className="text-[13px] font-medium text-[#6B6B6B] hover:text-[#1E5AA5] transition-colors">
                         ← Back to Home
                     </Link>
-                </motion.div>
+                </m.div>
             </div>
         </section>
         </>
