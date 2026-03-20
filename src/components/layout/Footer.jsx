@@ -5,10 +5,10 @@ import logo from '../../assets/logos/Seanora Global.png';
 
 const Footer = () => {
     const socialLinks = [
-        { label: 'Facebook', href: 'https://www.facebook.com', Icon: Facebook },
-        { label: 'Twitter', href: 'https://x.com', Icon: Twitter },
-        { label: 'Instagram', href: 'https://www.instagram.com', Icon: Instagram },
-        { label: 'LinkedIn', href: 'https://www.linkedin.com', Icon: Linkedin },
+        // { label: 'Facebook', href: 'https://www.facebook.com', Icon: Facebook },
+        // { label: 'Twitter', href: 'https://x.com', Icon: Twitter },
+        // { label: 'Instagram', href: 'https://www.instagram.com', Icon: Instagram },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/company/seanora-global/', Icon: Linkedin },
     ];
 
     return (

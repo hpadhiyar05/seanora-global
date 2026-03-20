@@ -60,7 +60,7 @@ const servicesList = [
         title: 'Data Warehousing',
         description: 'Unified storage for precise business analysis.',
         tags: ['ETL', 'Integration', 'Query Optimization', 'Data Integrity'],
-        image: img6, // Reusing img6 as a placeholder for the 7th item
+        image: img6, 
     },
 ];
 
@@ -79,7 +79,6 @@ const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
                 <div className="flex-1 min-w-0">
                     {/* Index + title row */}
                     <div className="flex items-start gap-5 mb-0">
-
                         <div className="flex-1">
                             {/* Title */}
                             <div className="flex items-center gap-3 mb-1">
@@ -151,29 +150,29 @@ const ServiceRow = ({ service, isActive, onHover, onLeave, isMobile }) => {
 
                 {/* ── Right: image thumbnail (hidden on mobile) ── */}
                 {!isMobile && (
-                <div
-                    className="shrink-0 overflow-hidden rounded-xl"
-                    style={{
-                        transition: 'width 0.4s cubic-bezier(0.22,1,0.36,1), height 0.4s cubic-bezier(0.22,1,0.36,1)',
-                        width: isActive ? '260px' : '96px',
-                        height: isActive ? '180px' : '68px',
-                    }}
-                >
-                    <img
-                        src={service.image}
-                        alt={service.title}
-                        loading="lazy"
-                        decoding="async"
-                        className="w-full h-full object-cover transition-all duration-500"
+                    <div
+                        className="shrink-0 overflow-hidden rounded-xl"
                         style={{
-                            filter: isActive ? 'grayscale(0%)' : 'grayscale(100%)',
-                            transform: isActive ? 'scale(1)' : 'scale(1.04)',
-                            transition: 'filter 0.5s ease, transform 0.5s ease',
+                            transition: 'width 0.4s cubic-bezier(0.22,1,0.36,1), height 0.4s cubic-bezier(0.22,1,0.36,1)',
+                            width: isActive ? '260px' : '96px',
+                            height: isActive ? '180px' : '68px',
                         }}
-                        width={600}
-                        height={400}
-                    />
-                </div>
+                    >
+                        <img
+                            src={service.image}
+                            alt={service.title}
+                            loading="lazy"
+                            decoding="async"
+                            className="w-full h-full object-cover transition-all duration-500"
+                            style={{
+                                filter: isActive ? 'grayscale(0%)' : 'grayscale(100%)',
+                                transform: isActive ? 'scale(1)' : 'scale(1.04)',
+                                transition: 'filter 0.5s ease, transform 0.5s ease',
+                            }}
+                            width={600}
+                            height={400}
+                        />
+                    </div>
                 )}
             </div>
         </m.div>
@@ -235,7 +234,19 @@ const Services = () => {
                                 Explore Services
                             </span>
                             <div className="w-9 h-9 rounded-full bg-white text-[#1E5AA5] flex items-center justify-center shrink-0 transition-transform duration-[400ms] ease-out group-hover:-translate-x-[144px]">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2.5"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                >
+                                    <path d="M5 12h14" />
+                                    <path d="m12 5 7 7-7 7" />
+                                </svg>
                             </div>
                         </Link>
                     </div>

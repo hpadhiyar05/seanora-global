@@ -3,16 +3,6 @@ import { Link } from 'react-router-dom';
 import { m } from 'framer-motion';
 import { Home } from 'lucide-react';
 
-/**
- * Breadcrumb
- *
- * Usage:
- *   <Breadcrumb crumbs={[{ label: 'About Us' }]} />
- *   <Breadcrumb crumbs={[{ label: 'Careers', to: '/careers' }, { label: job.title }]} />
- *
- * "Home" is always prepended automatically.
- * The last crumb (no `to`) renders as the current-page label.
- */
 const Breadcrumb = ({ crumbs = [] }) => (
   <m.div
     initial={{ opacity: 0, y: -8 }}

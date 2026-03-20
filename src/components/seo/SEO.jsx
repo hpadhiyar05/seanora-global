@@ -1,4 +1,3 @@
-import { Helmet } from 'react-helmet-async';
 import { useLocation } from 'react-router-dom';
 
 const SITE_NAME = 'Seanora Global';
@@ -42,8 +41,8 @@ const SEO = ({
     const keywordsContent = Array.isArray(keywords) ? keywords.filter(Boolean).join(', ') : keywords;
 
     return (
-        <Helmet>
-            <html lang="en" />
+        <>
+            {/* React 19 natively hoists these to <head> */}
             <title>{pageTitle}</title>
             <meta name="description" content={description} />
             {keywordsContent ? <meta name="keywords" content={keywordsContent} /> : null}
@@ -70,7 +69,7 @@ const SEO = ({
                     {JSON.stringify(schema)}
                 </script>
             ))}
-        </Helmet>
+        </>
     );
 };
 

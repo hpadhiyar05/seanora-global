@@ -14,7 +14,6 @@ const ContactCTA = () => {
         transition={{ duration: 0.7, ease: 'easeOut' }}
         className="max-w-7xl mx-auto rounded-[32px] overflow-hidden relative min-h-[480px] md:min-h-[520px]"
       >
-        {/* Background image */}
         <img
           src={ctaBg}
           alt=""
@@ -25,7 +24,6 @@ const ContactCTA = () => {
           height={500}
         />
 
-        {/* Dark gradient overlay — heavier on left for text readability */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/20" />
 
         <div className="relative z-10 py-14 md:py-20 px-8 md:px-14 lg:px-20 flex flex-col justify-between h-full">

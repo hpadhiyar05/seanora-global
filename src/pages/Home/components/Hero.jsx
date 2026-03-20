@@ -1,17 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatedHeading, AnimatedText } from '../../../components/ui/AnimatedHeading';
-import heroBg from '../../../assets/hero-section/hero.webp';
-import heroBg2 from '../../../assets/hero-section/hero-2.webp';
-import heroBg3 from '../../../assets/hero-section/hero-3.webp';
+import heroBg1 from '../../../assets/hero-section/1.webp';
+import heroBg2 from '../../../assets/hero-section/2.webp';
+import heroBg3 from '../../../assets/hero-section/3.webp';
+import heroBg4 from '../../../assets/hero-section/4.webp';
+import heroBg5 from '../../../assets/hero-section/5.webp';
+import avatar1 from '../../../assets/hero-section/c1.webp';
+import avatar2 from '../../../assets/hero-section/c2.webp';
+import avatar3 from '../../../assets/hero-section/c3.webp';
 
 /* ── Carousel data: 3 images × 5 titles (images repeat) ── */
 const heroSlides = [
-    { image: heroBg, title: 'Reliably Guiding Your IT Consulting Needs' },
+    { image: heroBg1, title: 'Reliably Guiding Your IT Consulting Needs' },
     { image: heroBg2, title: 'Providing Top IT Talent to Support Your Business' },
     { image: heroBg3, title: 'Developing Scalable Solutions for Your Business' },
-    { image: heroBg, title: 'Turning ambition into opportunity worldwide' },
-    { image: heroBg2, title: 'Guiding global talent with smart solutions' },
+    { image: heroBg4, title: 'Turning ambition into opportunity worldwide' },
+    { image: heroBg5, title: 'Guiding global talent with smart solutions' },
 ];
 
 /* ── Inline SVGs — zero imports ────────────────────────── */
@@ -164,7 +169,14 @@ function injectCSS() {
 const Hero = () => {
     injectCSS();
     const [activeIndex, setActiveIndex] = useState(0);
+    const [isSecondaryReady, setIsSecondaryReady] = useState(false);
     const totalSlides = heroSlides.length;
+
+    useEffect(() => {
+        // Delay secondary images (slides 2-5 and avatars) to ensure LCP image loads first
+        const timer = setTimeout(() => setIsSecondaryReady(true), 2400);
+        return () => clearTimeout(timer);
+    }, []);
 
     useEffect(() => {
         const t = setInterval(() => {
@@ -201,13 +213,13 @@ const Hero = () => {
                         aria-hidden={i !== activeIndex}
                     >
                         <img
-                            src={slide.image}
+                            src={i === 0 || isSecondaryReady || i === activeIndex ? slide.image : null}
                             alt=""
                             aria-hidden="true"
                             className="hero-bg-img w-full h-full object-cover object-center"
-                            loading="eager"
+                            loading={i === 0 ? 'eager' : 'lazy'}
                             decoding="async"
-                            fetchPriority={i === 0 ? 'high' : undefined}
+                            fetchPriority={i === 0 ? 'high' : 'low'}
                             width={1280}
                             height={720}
                         />
@@ -330,16 +342,17 @@ const Hero = () => {
                 <div className="hero-item hero-item-5 flex items-center gap-5">
                     {/* Avatar stack */}
                     <div className="flex -space-x-2.5">
-                        {[11, 33, 68, 59].map((img, i) => (
-                            <img
-                                key={img}
+                        {[avatar1, avatar2, avatar3].map((img, i) => (
+                             <img
+                                key={i}
                                 className="w-9 h-9 rounded-full border-2 border-white/20 bg-gray-600 object-cover"
-                                style={{ zIndex: 4 - i }}
-                                src={`https://i.pravatar.cc/100?img=${img}`}
+                                style={{ zIndex: 3 - i }}
+                                src={img}
                                 alt=""
                                 aria-hidden="true"
                                 loading="lazy"
                                 decoding="async"
+                                fetchPriority="low"
                                 width={36}
                                 height={36}
                             />
