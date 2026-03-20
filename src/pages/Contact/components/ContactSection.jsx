@@ -181,7 +181,7 @@ const ContactSection = () => {
         setIsSubmitting(true);
         setErrorMsg('');
         const payload = new FormData();
-        payload.append('name',    formData.name);
+        payload.append('fullName', formData.name);
         payload.append('email',   formData.email);
         payload.append('phone',   formData.phone);
         payload.append('subject', formData.subject);
