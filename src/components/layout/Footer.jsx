@@ -1,7 +1,7 @@
 import { Linkedin, Instagram, Twitter, Facebook } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { m } from 'framer-motion';
-import logo from '../../assets/logos/Seanora Global.png';
+import logo from '../../assets/logos/logo.svg';
 
 const Footer = () => {
     const socialLinks = [
@@ -68,11 +68,21 @@ const Footer = () => {
                             <img
                                 src={logo}
                                 alt="Seanora Global logo"
-                                className="h-10 sm:h-12 lg:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                                className="object-contain transition-transform duration-300 group-hover:scale-105"
+                                style={{
+                                    /*
+                                     * FIX: Explicit dimensions matching the cropped SVG viewBox
+                                     * aspect ratio (494:140 = 3.53:1).
+                                     * h-14 equivalent (56px) → width 198px.
+                                     * Prevents layout shift and renders at proper size.
+                                     */
+                                    height: '56px',
+                                    width: '198px',
+                                }}
                                 loading="lazy"
                                 decoding="async"
-                                width={224}
-                                height={67}
+                                width={198}
+                                height={56}
                             />
                         </Link>
                         <p className="text-[#1B1D1E]/60 font-medium leading-relaxed mb-2 text-[13px] max-w-[280px] italic">

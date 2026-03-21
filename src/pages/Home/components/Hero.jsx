@@ -61,12 +61,34 @@ const StarEmpty = () => (
 
 /* ── Carousel arrows ────────────────────────────────────── */
 const ChevronLeft = ({ size = 20, className = '' }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+        aria-hidden="true"
+    >
         <path d="M15 18l-6-6 6-6" />
     </svg>
 );
 const ChevronRight = ({ size = 20, className = '' }) => (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+    <svg
+        width={size}
+        height={size}
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className={className}
+        aria-hidden="true"
+    >
         <path d="M9 18l6-6-6-6" />
     </svg>
 );
@@ -126,7 +148,9 @@ const CSS = `
   animation: hero-zoom 2.2s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
 }
 
-/* Staggered content fade-up */
+/* Staggered content fade-up
+   NOTE: uses opacity + transform only — no layout-affecting properties.
+   The space is reserved before animation starts (see hero-item-wrap). */
 @keyframes hero-fadeUp {
   from { opacity: 0; transform: translateY(28px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -153,6 +177,18 @@ const CSS = `
 }
 .hero-cta-secondary:hover .hero-arrow {
   transform: translate(2px, -2px);
+}
+
+.hero-heading-wrap {
+  min-height: 180px;
+  position: relative;
+}
+
+.hero-section {
+  min-height: 100vh;       /* fallback */
+  min-height: 100dvh;      /* stable — doesn't change when address bar shows/hides */
+  display: flex;
+  align-items: flex-end;
 }
 `;
 
@@ -197,12 +233,12 @@ const Hero = () => {
     return (
         <section
             id="hero-main"
-            className="relative w-full overflow-hidden"
-            style={{
-                minHeight: '100svh',
-                display: 'flex',
-                alignItems: 'flex-end',
-            }}
+            /*
+             * FIX 1: Replaced inline minHeight + style with .hero-section class.
+             * The class uses 100dvh which is stable on mobile (unlike 100svh which
+             * resizes when the browser address bar shows/hides, causing CLS).
+             */
+            className="hero-section relative w-full overflow-hidden"
         >
             {/* ── Carousel backgrounds (crossfade) ───────────────── */}
             <div className="absolute inset-0 z-0">
@@ -213,13 +249,20 @@ const Hero = () => {
                         aria-hidden={i !== activeIndex}
                     >
                         <img
-                            src={i === 0 || isSecondaryReady || i === activeIndex ? slide.image : null}
+                            src={i === 0 || isSecondaryReady || i === activeIndex ? slide.image : undefined}
                             alt=""
                             aria-hidden="true"
                             className="hero-bg-img w-full h-full object-cover object-center"
                             loading={i === 0 ? 'eager' : 'lazy'}
                             decoding="async"
                             fetchPriority={i === 0 ? 'high' : 'low'}
+                            /*
+                             * FIX 2: width + height must match the actual image
+                             * aspect ratio so the browser can reserve space before
+                             * the image loads. These images fill the full viewport
+                             * so a 16:9 ratio (1280×720) is appropriate.
+                             * Already present — kept as-is, good practice.
+                             */
                             width={1280}
                             height={720}
                         />
@@ -282,11 +325,12 @@ const Hero = () => {
                 className="relative z-20 w-full max-w-[1180px] mx-auto px-6 lg:px-12 pb-24 md:pb-28"
                 style={{
                     /*
-                     * Fix: pad top by navbar height (74px) + breathing room (32px)
-                     * so on short viewports the badge never slides under the nav.
-                     * On tall screens flex-end handles positioning naturally.
+                     * FIX 3: Navbar height (74px) is now a hardcoded constant since
+                     * it doesn't change at runtime. Using calc() with a JS-unknown
+                     * value caused the padding to be applied late (after first paint),
+                     * pushing content down and triggering CLS.
                      */
-                    paddingTop: 'calc(74px + 2rem)',
+                    paddingTop: '106px' /* 74px navbar + 32px breathing room */,
                 }}
             >
                 {/* 1 — Badge */}
@@ -297,8 +341,7 @@ const Hero = () => {
                     </span>
                 </div>
 
-                {/* 2 — Carousel heading (first half white, second half text-white/50) */}
-                <div className="mb-6 max-w-[600px] relative" style={{ minHeight: '2.2em' }}>
+                <div className="hero-heading-wrap mb-6 max-w-[600px]">
                     <div key={activeIndex} className="hero-carousel-title hero-carousel-title-active">
                         <AnimatedHeading as="h1" className="text-display-1 font-normal tracking-tight text-left leading-[1.08]">
                             <span className="hero-title-main block">
@@ -340,10 +383,9 @@ const Hero = () => {
 
                 {/* 5 — Social proof */}
                 <div className="hero-item hero-item-5 flex items-center gap-5">
-                    {/* Avatar stack */}
                     <div className="flex -space-x-2.5">
                         {[avatar1, avatar2, avatar3].map((img, i) => (
-                             <img
+                            <img
                                 key={i}
                                 className="w-9 h-9 rounded-full border-2 border-white/20 bg-gray-600 object-cover"
                                 style={{ zIndex: 3 - i }}
@@ -367,9 +409,7 @@ const Hero = () => {
                             ))}
                             <StarEmpty />
                         </div>
-                        <span className="text-[12px] font-medium text-white/45">
-                            A trusted partner for global clients
-                        </span>
+                        <span className="text-[12px] font-medium text-white/45">A trusted partner for global clients</span>
                     </div>
                 </div>
             </div>

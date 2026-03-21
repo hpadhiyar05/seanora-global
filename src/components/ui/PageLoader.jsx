@@ -1,4 +1,4 @@
-import logo from '../../assets/logos/Seanora Global.png';
+import logo from '../../assets/logos/logo.svg';
 
 const PageLoader = () => (
     <div className="min-h-screen w-full flex items-center justify-center bg-[#F9FAF8]">
@@ -6,11 +6,15 @@ const PageLoader = () => (
             <img
                 src={logo}
                 alt="Seanora Global"
-                className="h-14 w-auto object-contain"
-                loading="lazy"
+                className="object-contain"
+                style={{
+                    height: '56px',
+                    width: '198px',
+                }}
+                loading="eager"
                 decoding="async"
-                width={384}
-                height={96}
+                width={198}
+                height={56}
             />
 
             <div className="relative w-16 h-16" aria-hidden="true">
@@ -33,4 +37,3 @@ const PageLoader = () => (
 );
 
 export default PageLoader;
-

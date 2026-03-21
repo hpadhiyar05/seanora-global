@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../../assets/logos/Seanora Global.png';
+import logo from '../../assets/logos/logo.svg';
 
 const ArrowRight = ({ size = 14, strokeWidth = 2.5, className = '' }) => (
     <svg
@@ -262,18 +262,30 @@ const Header = () => {
                         <img
                             src={logo}
                             alt="Seanora Global"
-                            className="h-12 w-auto max-h-[48px] object-contain object-left transition-transform duration-300 group-hover:scale-[1.04]"
-                            style={
-                                isDarkHero
+                            className="object-contain object-left transition-transform duration-300 group-hover:scale-[1.04]"
+                            style={{
+                                /*
+                                 * FIX: The SVG viewBox was 500×500 (square), so w-auto h-12
+                                 * was rendering as a tiny 48×48 square — making the logo
+                                 * appear very small. The viewBox is now cropped to 494×140
+                                 * (ratio 3.53:1). We set explicit pixel dimensions here so:
+                                 * 1. The browser reserves the correct space before the SVG loads (no CLS).
+                                 * 2. The logo renders at a proper readable width.
+                                 * At 40px tall → 141px wide (compact, fits navbar well).
+                                 */
+                                height: '40px',
+                                width: '141px',
+                                ...(isDarkHero
                                     ? {
                                           filter: 'drop-shadow(0 0 20px rgba(255,255,255,1)) drop-shadow(0 0 40px rgba(255,255,255,1)) drop-shadow(0 0 80px rgba(255,255,255,0.7))',
                                       }
-                                    : undefined
-                            }
+                                    : {}),
+                            }}
                             loading="eager"
+                            fetchPriority="high"
                             decoding="async"
-                            width={300}
-                            height={80}
+                            width={141}
+                            height={40}
                         />
                     </Link>
 
