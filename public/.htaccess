@@ -1,3 +1,5 @@
+ErrorDocument 404 /index.html
+
 # public/.htaccess
 
 Options -MultiViews
@@ -29,7 +31,8 @@ AddEncoding gzip .gz
 # SPA fallback — all routes serve index.html
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.html [L]
+RewriteCond %{REQUEST_URI} !\.php$
+RewriteRule ^ /index.html [L]
 
 # Cache static assets aggressively
 <IfModule mod_expires.c>
