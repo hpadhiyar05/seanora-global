@@ -2,7 +2,7 @@ import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { BarChart3, PieChart, TrendingUp, Database, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import analyticsBanner from '../../assets/services/analyticsBanner.webp';
 
 const fadeUp = (delay = 0) => ({
@@ -64,14 +64,22 @@ const AnalyticsAndReporting = () => (
             title="Analytics and Reporting"
             description="Build real-time dashboards, custom reporting, and predictive analytics with Seanora Global. Turn multi-source data into decisions."
             path="/services/analytics-and-reporting"
-            keywords={[
-                'analytics and reporting',
-                'business intelligence',
-                'dashboards',
-                'data visualization',
-                'predictive analytics',
-                'Power BI',
-                'Tableau',
+            jsonLd={[
+                buildServiceSchema({
+                    name: 'Analytics and Reporting',
+                    description:
+                        'Build real-time dashboards, custom reporting, and predictive analytics with Seanora Global. Turn multi-source data into decisions.',
+                    path: '/services/analytics-and-reporting',
+                    serviceType: 'Analytics and Reporting Services',
+                }),
+                buildBreadcrumbSchema([
+                    { name: 'Home', item: 'https://seanoraglobal.com/' },
+                    { name: 'Services', item: 'https://seanoraglobal.com/services' },
+                    {
+                        name: 'Analytics and Reporting',
+                        item: 'https://seanoraglobal.com/services/analytics-and-reporting',
+                    },
+                ]),
             ]}
         />
         <main className="bg-white overflow-hidden">

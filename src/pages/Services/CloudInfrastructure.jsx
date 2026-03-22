@@ -2,7 +2,7 @@ import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import cloudBanner from '../../assets/services/cloudBanner.webp';
 import cloudSideImage from '../../assets/services/cloudSideImage.webp';
 
@@ -71,7 +71,23 @@ const CloudInfrastructure = () => (
             title="Cloud Infrastructure & Security"
             description="Migrate, modernize, and secure your cloud infrastructure with Seanora Global. AWS, Azure, and Google Cloud solutions with enterprise-grade security."
             path="/services/cloud-infrastructure"
-            keywords={['cloud infrastructure', 'cloud security', 'AWS', 'Azure', 'Google Cloud', 'cloud migration', 'disaster recovery']}
+            jsonLd={[
+                buildServiceSchema({
+                    name: 'Cloud Infrastructure & Security',
+                    description:
+                        'Migrate, modernize, and secure your cloud infrastructure with Seanora Global. AWS, Azure, and Google Cloud solutions with enterprise-grade security.',
+                    path: '/services/cloud-infrastructure',
+                    serviceType: 'Cloud Infrastructure and Security Services',
+                }),
+                buildBreadcrumbSchema([
+                    { name: 'Home', item: 'https://seanoraglobal.com/' },
+                    { name: 'Services', item: 'https://seanoraglobal.com/services' },
+                    {
+                        name: 'Cloud Infrastructure & Security',
+                        item: 'https://seanoraglobal.com/services/cloud-infrastructure',
+                    },
+                ]),
+            ]}
         />
         <main className="bg-white overflow-hidden">
             {/* Hero */}

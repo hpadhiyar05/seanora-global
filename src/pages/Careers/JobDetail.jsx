@@ -329,7 +329,7 @@ useEffect(() => {
       <SEO
         title={`${job.title} | Careers at Seanora Global`}
         description={job.description}
-        path={`/careers/${job.id}`}
+        path={`/careers/${id}`}
         robots="noindex,nofollow"
       />
 

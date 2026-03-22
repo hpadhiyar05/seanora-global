@@ -2,7 +2,7 @@ import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Zap, Cpu, TrendingUp, CheckCircle2, Clock, Globe, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import itBootcampBanner from '../../assets/services/itBootcampsBanner.webp';
 import itBootcampSideImage from '../../assets/services/itBootcampsSideImage.webp';
 
@@ -61,13 +61,19 @@ const ITBootcamps = () => (
             title="IT Bootcamps"
             description="Hands-on IT bootcamps by Seanora Global—career-focused training in cloud, DevOps, cybersecurity, data science, and full-stack development."
             path="/services/it-bootcamps"
-            keywords={[
-                'IT bootcamps',
-                'cloud and DevOps',
-                'AWS training',
-                'cybersecurity training',
-                'full-stack development',
-                'data science',
+            jsonLd={[
+                buildServiceSchema({
+                    name: 'IT Bootcamps',
+                    description:
+                        'Hands-on IT bootcamps by Seanora Global—career-focused training in cloud, DevOps, cybersecurity, data science, and full-stack development.',
+                    path: '/services/it-bootcamps',
+                    serviceType: 'IT Bootcamps and Technology Training',
+                }),
+                buildBreadcrumbSchema([
+                    { name: 'Home', item: 'https://seanoraglobal.com/' },
+                    { name: 'Services', item: 'https://seanoraglobal.com/services' },
+                    { name: 'IT Bootcamps', item: 'https://seanoraglobal.com/services/it-bootcamps' },
+                ]),
             ]}
         />
         <main className="bg-white overflow-hidden">

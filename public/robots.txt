@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.seanoraglobal.com/sitemap.xml
+Sitemap: https://seanoraglobal.com/sitemap.xml

@@ -2,7 +2,7 @@ import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Database, Zap, Layers, HardDrive, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import bigDataBanner from '../../assets/services/bigDataBanner.webp';
 
 const fadeUp = (delay = 0) => ({
@@ -58,7 +58,20 @@ const BigData = () => (
             title="Big Data"
             description="Design scalable big data architectures, real-time pipelines, and data lakes with Seanora Global—built for performance from terabytes to zettabytes."
             path="/services/big-data"
-            keywords={['big data', 'data lake', 'stream processing', 'data architecture', 'Hadoop', 'Cassandra']}
+            jsonLd={[
+                buildServiceSchema({
+                    name: 'Big Data',
+                    description:
+                        'Design scalable big data architectures, real-time pipelines, and data lakes with Seanora Global—built for performance from terabytes to zettabytes.',
+                    path: '/services/big-data',
+                    serviceType: 'Big Data Engineering Services',
+                }),
+                buildBreadcrumbSchema([
+                    { name: 'Home', item: 'https://seanoraglobal.com/' },
+                    { name: 'Services', item: 'https://seanoraglobal.com/services' },
+                    { name: 'Big Data', item: 'https://seanoraglobal.com/services/big-data' },
+                ]),
+            ]}
         />
         <main className="bg-white overflow-hidden">
             {/* Hero */}

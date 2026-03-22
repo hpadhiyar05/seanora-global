@@ -2,7 +2,7 @@ import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Layers, BarChart3, TrendingUp, Zap, DollarSign, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import dataBanner from '../../assets/services/dataBanner.webp';
 import dataSideImage from '../../assets/services/dataSideImage.webp';
 
@@ -67,7 +67,20 @@ const DataWarehousing = () => (
             title="Data Warehousing"
             description="Unify and modernize your data warehouse with Seanora Global—cloud-native architecture, ETL pipelines, BI integration, and performance optimization."
             path="/services/data-warehousing"
-            keywords={['data warehousing', 'ETL', 'BI integration', 'data architecture', 'analytics enablement']}
+            jsonLd={[
+                buildServiceSchema({
+                    name: 'Data Warehousing',
+                    description:
+                        'Unify and modernize your data warehouse with Seanora Global—cloud-native architecture, ETL pipelines, BI integration, and performance optimization.',
+                    path: '/services/data-warehousing',
+                    serviceType: 'Data Warehousing Services',
+                }),
+                buildBreadcrumbSchema([
+                    { name: 'Home', item: 'https://seanoraglobal.com/' },
+                    { name: 'Services', item: 'https://seanoraglobal.com/services' },
+                    { name: 'Data Warehousing', item: 'https://seanoraglobal.com/services/data-warehousing' },
+                ]),
+            ]}
         />
         <main className="bg-white overflow-hidden">
             {/* Hero */}

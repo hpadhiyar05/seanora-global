@@ -17,7 +17,7 @@ import {
     ChevronRight,
 } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import bpoBanner from '../../assets/services/bpoBanner.webp';
 
 const fadeUp = (delay = 0) => ({
@@ -99,12 +99,19 @@ const BusinessProcessOutsourcing = () => (
             title="Business Process Outsourcing (BPO)"
             description="Scale operations with Seanora Global BPO—customer support, back office, finance & accounting, and more. Reduce costs and improve efficiency."
             path="/services/bpo"
-            keywords={[
-                'business process outsourcing',
-                'BPO',
-                'customer support outsourcing',
-                'back office outsourcing',
-                'finance and accounting outsourcing',
+            jsonLd={[
+                buildServiceSchema({
+                    name: 'Business Process Outsourcing (BPO)',
+                    description:
+                        'Scale operations with Seanora Global BPO—customer support, back office, finance & accounting, and more. Reduce costs and improve efficiency.',
+                    path: '/services/bpo',
+                    serviceType: 'Business Process Outsourcing',
+                }),
+                buildBreadcrumbSchema([
+                    { name: 'Home', item: 'https://seanoraglobal.com/' },
+                    { name: 'Services', item: 'https://seanoraglobal.com/services' },
+                    { name: 'Business Process Outsourcing', item: 'https://seanoraglobal.com/services/bpo' },
+                ]),
             ]}
         />
         <main className="bg-white overflow-hidden">
@@ -192,7 +199,7 @@ const BusinessProcessOutsourcing = () => (
             <div className="relative h-[400px] md:h-[500px] overflow-hidden">
                 <img
                     src={bpoBanner}
-                    alt="descriptive alt text"
+                    alt="Business process outsourcing services for customer support, back office, and finance operations"
                     className="w-full h-full object-cover object-center"
                     loading="eager"
                     decoding="async"

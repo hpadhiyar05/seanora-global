@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import ServicesHero from './components/ServicesHero';
 import ServicesBanner from './components/ServicesBanner'
 
@@ -15,16 +15,17 @@ const SectionLoader = () => (
 
 const Services = () => {
   const servicesSchema = [
-    {
-      '@context': 'https://schema.org',
-      '@type': 'Service',
+    buildServiceSchema({
+      name: 'IT Services',
+      description:
+        'Explore Seanora Global services including cloud computing, system integration, IT consulting, technical services, and digital product development.',
+      path: '/services',
       serviceType: 'IT Services and Consulting',
-      provider: {
-        '@type': 'Organization',
-        name: 'Seanora Global',
-      },
-      areaServed: 'Global',
-    },
+    }),
+    buildBreadcrumbSchema([
+      { name: 'Home', item: 'https://seanoraglobal.com/' },
+      { name: 'Services', item: 'https://seanoraglobal.com/services' },
+    ]),
   ];
 
   return (
@@ -33,13 +34,6 @@ const Services = () => {
         title="IT Services"
         description="Explore Seanora Global services including cloud computing, system integration, IT consulting, technical services, and digital product development."
         path="/services"
-        keywords={[
-          'IT services',
-          'cloud computing',
-          'IT consulting',
-          'system integration',
-          'technical services',
-        ]}
         jsonLd={servicesSchema}
       />
       <div className="flex flex-col">

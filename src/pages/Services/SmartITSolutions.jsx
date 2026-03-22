@@ -2,7 +2,7 @@ import { m } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Headphones, TrendingUp, CheckCircle2, Zap, ArrowUpRight, ChevronRight } from 'lucide-react';
 import { AnimatedHeading, AnimatedText } from '../../components/ui/AnimatedHeading';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema, buildServiceSchema } from '../../components/seo/SEO';
 import itSolutionBanner from '../../assets/services/itSolutionsBanner.webp';
 
 const fadeUp = (delay = 0) => ({
@@ -48,7 +48,23 @@ const SmartITSolutions = () => (
             title="Smart IT Solutions & Professional Consulting"
             description="Strategy, assessment, support, and optimization—Seanora Global helps you align IT with business outcomes and deliver scalable improvements."
             path="/services/smart-it-solutions"
-            keywords={['IT consulting', 'IT strategy', 'technology assessment', 'technical support', 'business process optimization']}
+            jsonLd={[
+                buildServiceSchema({
+                    name: 'Smart IT Solutions & Professional Consulting',
+                    description:
+                        'Strategy, assessment, support, and optimization—Seanora Global helps you align IT with business outcomes and deliver scalable improvements.',
+                    path: '/services/smart-it-solutions',
+                    serviceType: 'IT Consulting and Professional Services',
+                }),
+                buildBreadcrumbSchema([
+                    { name: 'Home', item: 'https://seanoraglobal.com/' },
+                    { name: 'Services', item: 'https://seanoraglobal.com/services' },
+                    {
+                        name: 'Smart IT Solutions & Professional Consulting',
+                        item: 'https://seanoraglobal.com/services/smart-it-solutions',
+                    },
+                ]),
+            ]}
         />
         <main className="bg-white overflow-hidden">
             {/* Hero */}
@@ -104,7 +120,7 @@ const SmartITSolutions = () => (
             <div className="relative h-[400px] md:h-[500px] overflow-hidden">
                 <img
                     src={itSolutionBanner}
-                    alt="descriptive alt text"
+                    alt="Seanora Global consultants delivering smart IT solutions and professional consulting services"
                     className="w-full h-full object-cover object-center"
                     loading="eager"
                     decoding="async"

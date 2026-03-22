@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import SEO from '../../components/seo/SEO';
+import SEO, { buildBreadcrumbSchema } from '../../components/seo/SEO';
 import PageLoader from '../../components/ui/PageLoader';
 
 const CareersBoard = lazy(() => import('./components/CareersBoard'));
@@ -11,7 +11,12 @@ const Careers = () => {
       '@type': 'CollectionPage',
       name: 'Careers at Seanora Global',
       description: 'Explore open positions at Seanora Global and grow your career with an innovation-driven team.',
+      url: 'https://seanoraglobal.com/careers',
     },
+    buildBreadcrumbSchema([
+      { name: 'Home', item: 'https://seanoraglobal.com/' },
+      { name: 'Careers', item: 'https://seanoraglobal.com/careers' },
+    ]),
   ];
 
   return (
@@ -20,7 +25,6 @@ const Careers = () => {
         title="Careers | Be Part of Our Mission"
         description="Join Seanora Global and help build impactful technology solutions. Browse current opportunities across teams."
         path="/careers"
-        keywords={['IT jobs', 'tech careers', 'remote jobs', 'career opportunities']}
         jsonLd={careersSchema}
       />
       <Suspense fallback={<PageLoader />}>
